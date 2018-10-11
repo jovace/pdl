@@ -4,6 +4,7 @@ public class Token{
 	private boolean completo;
 	private int type;
 	private int indice;
+	private boolean consumeCaracter;
 	
 	//entero type nos da informacion del token
 	//si >0, es la tabla en la que se encuentra el token
@@ -11,11 +12,11 @@ public class Token{
 	//si -2, es un token incompleto que NO CONSUME SIMBOLO (por ejemplo una letra que va despues de un +)
 
 	//Metodo para crear un token incompleto
-	public Token(int tipo){
+	public Token(boolean consumeCaracter){
 		this.completo=false;
 		this.type=tipo;
 		this.indice=-1;
-	
+		this.consumeCaracter=consumeCaracter;
 	}
 
 	//Constructor para crear token completo
@@ -28,5 +29,9 @@ public class Token{
 	
 	public int getType() {
 		return this.type;
+	}
+	
+	public boolean consumeCaracter(){
+		return this.consumeCaracter;
 	}
 }
