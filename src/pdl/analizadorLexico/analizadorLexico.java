@@ -18,13 +18,13 @@ public class analizadorLexico{
 			
 			Token resultado=nextChar(c);
 			if(resultado.getType()>-1) {
-				//Tenemos un token completo, lo añadimos a la lista de tokens
+				//Tenemos un token completo, lo aÃ±adimos a la lista de tokens
 				listaTokens.add(resultado);
 				i++;
-			}else if(resultado.getType()==-1) {
+			}else if(resultado.getType()==-1 && resultado.consumeCaracter()) {
 				//Tenemos un token incompleto que consume caracter
 				i++;
-			}else if(resultado.getType()==-2){
+			}else if(resultado.getType()==-1 && !resultado.consumeCaracter()){
 				//Tenemos un token incompleto que NO CONSUME CARACTER
 				//No incrementamos i, para que asi se vuelva a enviar
 			}
@@ -61,7 +61,7 @@ public class analizadorLexico{
 				cadena="";
 				estadoActual=0;
 			}else{
-				resultado=new Token(-2);
+				resultado=new Token(false);
 				cadena="";
 				estadoActual=0;
 			}
@@ -101,7 +101,7 @@ PRUEBA PERSONAL
 		estado0.put(new Character('-'), new Token(1));
 		//...
 		
-		//Añadimos el mapa de rtansiciones del estado 0 en la posicion 0 del array
+		//AÃ±adimos el mapa de rtansiciones del estado 0 en la posicion 0 del array
 		transiciones.add(estado0);
 		
 		
