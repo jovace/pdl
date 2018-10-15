@@ -39,6 +39,13 @@ public class analizadorLexico{
 		Token resultado=new Token(-1);
 		
 		if(estadoActual==0) {
+//			if(Character.isDigit(c)) {//si es un numero
+//				int num=c;
+//				c=0;
+//			}
+//			if(Character.isLetter(c)) {//si es un numero
+//				string palabra =c;
+//				c=a;
 			switch(c) {
 			case '+':
 				cadena+="+";
@@ -48,8 +55,22 @@ public class analizadorLexico{
 				cadena+="-";
 				estadoActual=1;
 				break;
-			//case ...
-			}
+			case '|':
+				cadena+="|";
+				estadoActual=1;
+				break;
+			case '/': //comentarios
+				cadena+="/";
+				estadoActual=2;
+				break;			
+//			case '0': //si es un numero
+//				cadena==num;
+//				estadoActual=5;
+//				break;
+//			case 'a': //si es un letra
+//				cadena==palabra;
+//				estadoActual=6;
+//				break;
 			
 		}else if(estadoActual==1) {
 			if(cadena.equals("+")&& c=='+') {
@@ -65,7 +86,46 @@ public class analizadorLexico{
 				cadena="";
 				estadoActual=0;
 			}
-		}else if(true) { //...
+		}
+		else if(estadoActual==2) { //cuando haya comentarios leeremos hasta detectar el siguiente asterisco barra
+			if (c == '*') {//aqui ya sabemos que es comentario
+					estadoActual=3;					
+				}
+			else {
+				//tendriamos que ver que puede haber despues de una / si no es comentario
+			}
+			}
+		else if(estadoActual==3){//haremos bucle para el comentario hasta que salga otro asterisco barra
+			if (c !='*') {//es parte del comentario
+			estadoActual=3;
+		}
+		else{
+			estadoActual=4;//si sale un asterisco tenemos que ir a otro estado y vemos si hay barra y se acaba el comentario o si no hay barra y sigue
+		}}
+		else if(estadoActual==4) {
+			if (c == '/') {
+				estadoActual=0;
+			}
+			else {
+				estadoActual=2;
+			}
+		}
+		}
+		else if(estadoActual==5) { //cuando venga un numero
+			if(Character.isDigit(c)) {
+			cadena = cadena*10 +c
+				estadoActual=5;
+			}
+		}
+			else if(estadoActual==6) { //cuando venga una letra
+			if (Character.isLetter(c)) {
+				cadena = cadena+c;
+					estadoActual=6;}
+			else {//tendriamos que ver que es c (necesitaria el automata)
+				
+			}
+			}
+		else if(true) { //...
 			
 		}
 		
