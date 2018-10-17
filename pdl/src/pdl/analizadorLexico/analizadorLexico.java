@@ -1,5 +1,5 @@
 package pdl.analizadorLexico;
-//hola
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -36,100 +36,168 @@ public class analizadorLexico{
 	}
 	
 	private static Token nextChar(char c) {
-		Token resultado=new Token(-1);
+		//Salvo que se genere un token diferente (un token completo o incompleto que no consume)
+		//devolveremos un Token incompleto que consume caracter
+		Token resultado=new Token(true);
 		
+		
+		//Dependiendo del estado en el que se encuentre el automata
 		if(estadoActual==0) {
-//			if(Character.isDigit(c)) {//si es un numero
-//				int num=c;
-//				c=0;
-//			}
-//			if(Character.isLetter(c)) {//si es un numero
-//				string palabra =c;
-//				c=a;
 			switch(c) {
-			case '+':
-				cadena+="+";
-				estadoActual=1;
-				break;
-			case '-':
-				cadena+="-";
-				estadoActual=1;
-				break;
-			case '|':
-				cadena+="|";
-				estadoActual=1;
-				break;
-			case '/': //comentarios
-				cadena+="/";
-				estadoActual=2;
-				break;			
-//			case '0': //si es un numero
-//				cadena==num;
-//				estadoActual=5;
-//				break;
-//			case 'a': //si es un letra
-//				cadena==palabra;
-//				estadoActual=6;
-//				break;
-			
+				case '+':
+					cadena+="+";
+					estadoActual=1;
+					break;
+				case '-':
+					cadena+="-";
+					estadoActual=1;
+					break;
+				case '%':
+					cadena+="%";
+					estadoActual=1;
+					break;
+				case '*':
+					cadena+="*";
+					estadoActual=1;
+					break;
+				case '{':
+					cadena+="{";
+					estadoActual=1;
+					break;
+				case '}':
+					cadena+="}";
+					estadoActual=1;
+					break;
+				case '(':
+					cadena+="(";
+					estadoActual=1;
+					break;
+				case ')':
+					cadena+=")";
+					estadoActual=1;
+					break;
+				case ';':
+					cadena+=";";
+					estadoActual=1;
+					break;
+				case ',':
+					cadena+="'";
+					estadoActual=1;
+					break;
+				case '"':
+					cadena+="\"";
+					estadoActual=11;
+					break;
+				case '/':
+					cadena+="/";
+					estadoActual=17;
+					break;
+				case '=':
+					cadena+="=";
+					estadoActual=14;
+					break;
+				case '!':
+					cadena+="!";
+					estadoActual=14;
+					break;
+				case '<':
+					cadena+="<";
+					estadoActual=14;
+					break;
+				case '>':
+					cadena+=">";
+					estadoActual=14;
+					break;
+				case '|':
+					cadena+="|";
+					estadoActual=6;
+					break;
+				case '&':
+					cadena+="&";
+					estadoActual=4;
+					break;
+				case '\t':
+					cadena="";
+					estadoActual=0;
+					break;
+				case '\n':
+					cadena="";
+					estadoActual=0;
+					break;
+				default:
+					if(Character.isDigit(c)) {
+						cadena+=c;
+						estadoActual=9;
+						break;
+					}else if(Character.isAlphabetic(c)) {
+						cadena+=c;
+						estadoActual=2;
+						break;
+					}
+			}	
 		}else if(estadoActual==1) {
-			if(cadena.equals("+")&& c=='+') {
-				resultado=new Token(1,5);
-				cadena="";
-				estadoActual=0;
-			}else if(cadena.equals("-")&& c=='-') {
-				resultado=new Token(1,6);
-				cadena="";
-				estadoActual=0;
-			}else{
-				resultado=new Token(false);
-				cadena="";
-				estadoActual=0;
+			switch(cadena) {
+				case "+":
+					resultado=new Token(1,0);
+					cadena="";
+					estadoActual=0;
+					break;
+				case "-":
+					resultado=new Token(1,1);
+					cadena="";
+					estadoActual=0;
+					break;
+				case "*":
+					resultado=new Token(1,2);
+					cadena="";
+					estadoActual=0;
+					break;
+				case "%":
+					resultado=new Token(1,4);
+					cadena="";
+					estadoActual=0;
+					break;
+				case "{":
+					resultado=new Token(4,0);
+					cadena="";
+					estadoActual=0;
+					break;
+				case "}":
+					resultado=new Token(4,1);
+					cadena="";
+					estadoActual=0;
+					break;
+				case "(":
+					resultado=new Token(4,2);
+					cadena="";
+					estadoActual=0;
+					break;
+				case ")":
+					resultado=new Token(4,3);
+					cadena="";
+					estadoActual=0;
+					break;
+				case ";":
+					resultado=new Token(4,4);
+					cadena="";
+					estadoActual=0;
+					break;							
 			}
-		}
-		else if(estadoActual==2) { //cuando haya comentarios leeremos hasta detectar el siguiente asterisco barra
-			if (c == '*') {//aqui ya sabemos que es comentario
-					estadoActual=3;					
-				}
-			else {
-				//tendriamos que ver que puede haber despues de una / si no es comentario
-			}
-			}
-		else if(estadoActual==3){//haremos bucle para el comentario hasta que salga otro asterisco barra
-			if (c !='*') {//es parte del comentario
-			estadoActual=3;
-		}
-		else{
-			estadoActual=4;//si sale un asterisco tenemos que ir a otro estado y vemos si hay barra y se acaba el comentario o si no hay barra y sigue
-		}}
-		else if(estadoActual==4) {
-			if (c == '/') {
-				estadoActual=0;
-			}
-			else {
-				estadoActual=2;
-			}
-		}
-		}
-		else if(estadoActual==5) { //cuando venga un numero
-			if(Character.isDigit(c)) {
-			cadena = cadena*10 +c
-				estadoActual=5;
-			}
-		}
-			else if(estadoActual==6) { //cuando venga una letra
-			if (Character.isLetter(c)) {
-				cadena = cadena+c;
-					estadoActual=6;}
-			else {//tendriamos que ver que es c (necesitaria el automata)
-				
-			}
-			}
-		else if(true) { //...
+		}else if(estadoActual==2) {
+			
+		}else if(estadoActual==3){
+			
+		}else if(estadoActual==4){
+			
+		}else if(estadoActual==5){
+			
+		}else if(estadoActual==6){
+			
+		}else if(true) {
 			
 		}
 		
-		return new Token(0);
+		return resultado;
 	}
 
 	
