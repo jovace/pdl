@@ -14,7 +14,7 @@ public class Token{
 	//Metodo para crear un token incompleto
 	public Token(boolean consumeCaracter){
 		this.completo=false;
-		this.type=tipo;
+		this.type=-1;
 		this.indice=-1;
 		this.consumeCaracter=consumeCaracter;
 	}
