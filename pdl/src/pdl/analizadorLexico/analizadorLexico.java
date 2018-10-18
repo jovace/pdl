@@ -36,6 +36,7 @@ public class analizadorLexico{
 	}
 	
 	private static Token nextChar(char c) {
+		//Token(0,1)
 		//Salvo que se genere un token diferente (un token completo o incompleto que no consume)
 		//devolveremos un Token incompleto que consume caracter
 		Token resultado=new Token(true);
@@ -183,12 +184,18 @@ public class analizadorLexico{
 					estadoActual=0;
 					break;							
 			}
-		}else if(estadoActual==2) {
+		}else if(estadoActual==2){
 			
 		}else if(estadoActual==3){
 			
 		}else if(estadoActual==4){
-			
+			switch(c){
+				case '&':
+					resultado=new Token(2,0);
+					cadena="";
+					estadoActual=0;
+					break;
+			}
 		}else if(estadoActual==5){
 			
 		}else if(estadoActual==6){
