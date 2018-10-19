@@ -241,39 +241,3 @@ public class analizadorLexico{
 
 	
 }
-/*
-PRUEBA PERSONAL
-//Arraylist que contiene los mapas de transicion para todos los estados
-		ArrayList<HashMap<Character, Token>> transiciones = new ArrayList<HashMap<Character, Token>>();
-		
-		//Un token de cada tipo e indice
-		Token sumaAO = new Token(1,0);
-		Token restaAO = new Token(1,1);
-		Token multAO = new Token(1,2);
-		Token divAO = new Token(1,3);
-		Token modAO = new Token(1,4);
-		Token suma2AO = new Token(1,5);
-		Token resta2AO = new Token(1,6);
-		
-		Token
-		//...
-		
-		
-		//Creas el Map de cada estado, que asigna un token generado a cada caracter de entrada
-		//En este primer caso, pasamos del estado 0 al 1 con cualquiera de los siguientes simbolos
-		//Como es un token incompleto, lo inicializamos solo con el estado al que pasamos
-		HashMap<Character,Token> estado0 = new HashMap<Character,Token>();
-		estado0.put(new Character('+'), new Token(1));
-		estado0.put(new Character('-'), new Token(1));
-		//...
-		
-		//Añadimos el mapa de rtansiciones del estado 0 en la posicion 0 del array
-		transiciones.add(estado0);
-		
-		
-		HashMap<Character,Token> estado1 = new HashMap<Character,Token>();
-		estado1.put(new Character('+'), suma2AO);
-		estado1.put(new Character('-'), resta2AO);
-		estado1.put(new Character(' '),  sumaAO);
-		estado1.put(new Character(' '),  sumaAO);
-*/
