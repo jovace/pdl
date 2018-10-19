@@ -90,7 +90,7 @@ public class analizadorLexico{
 					estadoActual=1;
 					break;
 				case ',':
-					cadena+="'"; // esto no se si es errata no seria ,
+					cadena+=",";
 					estadoActual=1;
 					break;
 				case '&':
@@ -101,43 +101,30 @@ public class analizadorLexico{
 					cadena+="|";
 					estadoActual=6;
 					break;
-//				case '/':
-//					cadena+="/";//mira 
-//					estadoActual=8;
-//					break;
 				case '"':
-					cadena+="\"";// esto no se si es errata no seria "
+					cadena+="\"";
 					estadoActual=11;
 					break;				
-				case '='://esto no seria 15??
+				case '=':
 					cadena+="=";
 					estadoActual=14;
 					break;
-				case '!'://esto no seria 15??
+				case '!':
 					cadena+="!";
 					estadoActual=14;
 					break;
-				case '<'://esto no seria 15??
+				case '<':
 					cadena+="<";
 					estadoActual=14;
 					break;
-				case '>'://esto no seria 15??
+				case '>':
 					cadena+=">";
 					estadoActual=14;
 					break;
-//				case '='://done
-//					cadena+="=";
-//					estadoActual=15;
-//					break;
-//				case '>'://done
-//					cadena+=">";
-//					estadoActual=15;
-//					break;
 				case '/':
 					cadena+="/";
-					estadoActual=17;//esto seria al estado 8??? si es asi lo he puestop comentado arriba
-					break;
-				
+					estadoActual=17;
+					break;				
 				default:
 					if(Character.isDigit(c)) {
 						cadena+=c;
@@ -198,9 +185,9 @@ public class analizadorLexico{
 					break;							
 			}
 		}else if(estadoActual==2){
-			
+			//TODO
 		}else if(estadoActual==3){
-			
+			//TODO
 		}else if(estadoActual==4){
 			switch(c){
 				case '&':
@@ -210,11 +197,43 @@ public class analizadorLexico{
 					break;
 			}
 		}else if(estadoActual==5){
-			
+			//TODO
 		}else if(estadoActual==6){
-			
-		}else if(true) {
-			
+			//TODO
+		}else if(estadoActual==7) {
+			//TODO
+		}else if(estadoActual==8) {
+			//TODO
+		}else if(estadoActual==9) {
+			//TODO
+		}else if(estadoActual==10) {
+			//TODO
+		}else if(estadoActual==11) {
+			//TODO
+		}else if(estadoActual==12) {
+			//TODO
+		}else if(estadoActual==13) {
+			//TODO
+		}else if(estadoActual==14) {
+			//TODO
+		}else if(estadoActual==15) {
+			//TODO
+		}else if(estadoActual==16) {
+			//TODO
+		}else if(estadoActual==17) {
+			//TODO
+		}else if(estadoActual==18) {
+			//TODO
+		}else if(estadoActual==19) {
+			//TODO
+		}else if(estadoActual==20) {
+			//TODO
+		}else if(estadoActual==21) {
+			//TODO
+		}else if(estadoActual==22) {
+			//TODO
+		}else if(estadoActual==23) {
+			//TODO
 		}
 		
 		return resultado;
