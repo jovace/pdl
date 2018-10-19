@@ -18,7 +18,7 @@ public class analizadorLexico{
 			
 			Token resultado=nextChar(c);
 			if(resultado.getType()>-1) {
-				//Tenemos un token completo, lo aÃ±adimos a la lista de tokens
+				//Tenemos un token completo, lo añadimos a la lista de tokens
 				listaTokens.add(resultado);
 				i++;
 			}else if(resultado.getType()==-1 && resultado.consumeCaracter()) {
@@ -45,6 +45,14 @@ public class analizadorLexico{
 		//Dependiendo del estado en el que se encuentre el automata
 		if(estadoActual==0) {
 			switch(c) {
+				case '\t':
+					cadena="";
+					estadoActual=0;
+					break;
+				case '\n':
+					cadena="";
+					estadoActual=0;
+					break;
 				case '+':
 					cadena+="+";
 					estadoActual=1;
@@ -82,49 +90,54 @@ public class analizadorLexico{
 					estadoActual=1;
 					break;
 				case ',':
-					cadena+="'";
+					cadena+="'"; // esto no se si es errata no seria ,
 					estadoActual=1;
-					break;
-				case '"':
-					cadena+="\"";
-					estadoActual=11;
-					break;
-				case '/':
-					cadena+="/";
-					estadoActual=17;
-					break;
-				case '=':
-					cadena+="=";
-					estadoActual=14;
-					break;
-				case '!':
-					cadena+="!";
-					estadoActual=14;
-					break;
-				case '<':
-					cadena+="<";
-					estadoActual=14;
-					break;
-				case '>':
-					cadena+=">";
-					estadoActual=14;
-					break;
-				case '|':
-					cadena+="|";
-					estadoActual=6;
 					break;
 				case '&':
 					cadena+="&";
 					estadoActual=4;
 					break;
-				case '\t':
-					cadena="";
-					estadoActual=0;
+				case '|':
+					cadena+="|";
+					estadoActual=6;
 					break;
-				case '\n':
-					cadena="";
-					estadoActual=0;
+//				case '/':
+//					cadena+="/";//mira 
+//					estadoActual=8;
+//					break;
+				case '"':
+					cadena+="\"";// esto no se si es errata no seria "
+					estadoActual=11;
+					break;				
+				case '='://esto no seria 15??
+					cadena+="=";
+					estadoActual=14;
 					break;
+				case '!'://esto no seria 15??
+					cadena+="!";
+					estadoActual=14;
+					break;
+				case '<'://esto no seria 15??
+					cadena+="<";
+					estadoActual=14;
+					break;
+				case '>'://esto no seria 15??
+					cadena+=">";
+					estadoActual=14;
+					break;
+//				case '='://done
+//					cadena+="=";
+//					estadoActual=15;
+//					break;
+//				case '>'://done
+//					cadena+=">";
+//					estadoActual=15;
+//					break;
+				case '/':
+					cadena+="/";
+					estadoActual=17;//esto seria al estado 8??? si es asi lo he puestop comentado arriba
+					break;
+				
 				default:
 					if(Character.isDigit(c)) {
 						cadena+=c;
@@ -211,7 +224,6 @@ public class analizadorLexico{
 }
 /*
 PRUEBA PERSONAL
-
 //Arraylist que contiene los mapas de transicion para todos los estados
 		ArrayList<HashMap<Character, Token>> transiciones = new ArrayList<HashMap<Character, Token>>();
 		
@@ -236,7 +248,7 @@ PRUEBA PERSONAL
 		estado0.put(new Character('-'), new Token(1));
 		//...
 		
-		//AÃ±adimos el mapa de rtansiciones del estado 0 en la posicion 0 del array
+		//Añadimos el mapa de rtansiciones del estado 0 en la posicion 0 del array
 		transiciones.add(estado0);
 		
 		
