@@ -18,7 +18,7 @@ public class analizadorLexico{
 
 			Token resultado=nextChar(c);
 			if(resultado.getType()>-1) {
-				//Tenemos un token completo, lo añadimos a la lista de tokens
+				//Tenemos un token completo, lo aï¿½adimos a la lista de tokens
 				listaTokens.add(resultado);
 				i++;
 			}else if(resultado.getType()==-1 && resultado.consumeCaracter()) {
@@ -188,66 +188,52 @@ public class analizadorLexico{
 			if(Character.isDigit(c)) {
 				cadena+=c;
 				estadoActual=2;
-				break;
 			}else if(Character.isAlphabetic(c)) {
 				cadena+=c;
 				estadoActual=2;
-				break;
-			}
-			else {
+			}else{
 				resultado=new Token(2,0);//no se que token seria
 				cadena="";
 				estadoActual=0;
-				break;
-
 			}
-
-			//TODO
 		}else if(estadoActual==3){
 			//TODO
 		}else if(estadoActual==4){
 			switch(c){
-			case '&':
-				resultado=new Token(2,0);
-				cadena="";
-				estadoActual=0;
-				break;
-			}
+				case '&':
+					resultado=new Token(2,0);
+					cadena="";
+					estadoActual=0;
+					break;
+				}
 		}else if(estadoActual==5){
 			//TODO
 		}else if(estadoActual==6){
 			switch(c) {
-		case '|':
-			resultado=new Token(2,1);
-			cadena="";
-			estadoActual=0;
-			break;
-		case '=':
-			resultado=new Token(1,8);
-			cadena="";
-			estadoActual=0;
-			break;
-		}
-		//TODO
+				case '|':
+					resultado=new Token(2,1);
+					cadena="";
+					estadoActual=0;
+					break;
+				case '=':
+					resultado=new Token(1,8);
+					cadena="";
+					estadoActual=0;
+					break;
+				}
 	}else if(estadoActual==7) {
 		//TODO
 	}else if(estadoActual==8) {
 		//TODO
 	}else if(estadoActual==9) {
-
 		if(Character.isDigit(c)) {
 			cadena+=c;
 			estadoActual=9;
-			break;
-		}
-		else {
+		}else {
 			resultado=new Token(2,0);//no se que token seria
 			cadena="";
 			estadoActual=0;
-			break;
-
 		}
-		//TODO
 	}else if(estadoActual==10) {
 		//TODO
 	}else if(estadoActual==11) {
@@ -257,82 +243,81 @@ public class analizadorLexico{
 	}else if(estadoActual==13) {
 		//TODO
 	}else if(estadoActual==14) {
-
-		switch(cadena) {//hago switch cadena para ver que venia 
-	case '=':
-		switch(c) {//hago switch c para ver si lo que viene es un = o no
-	case '=':
-		resultado=new Token(3,0);
-		cadena="";
-		estadoActual=0;
-		break;
-		default:
-			resultado=new Token(1,7);
-			cadena="";
-			estadoActual=0;
-			break;
-			
+		//hago switch cadena para ver que venia
+		if(cadena.equals("=")) {
+			//hago switch c para ver si lo que viene es un = o no
+			switch(c) {
+				case '=':
+					resultado=new Token(3,0);
+					cadena="";
+					estadoActual=0;
+					break;
+				default:
+					resultado=new Token(1,7);
+					cadena="";
+					estadoActual=0;
+					break;			
+			}
+		}else if(cadena.equals("!")){
+			switch(c) {
+				case '=':
+					resultado=new Token(3,2);
+					cadena="";
+					estadoActual=0;
+					break;
+				default:
+					resultado=new Token(1,3);
+					cadena="";
+					estadoActual=0;
+					break;
+			}
+		}else if(cadena.equals("<")){
+			switch(c) {
+				case '=':
+					resultado=new Token(3,4);
+					cadena="";
+					estadoActual=0;
+					break;
+				default:
+					resultado=new Token(3,2);
+					cadena="";
+					estadoActual=0;
+					break;
+			}
+		}else if(cadena.equals(">")) {
+			switch(c) {
+				case '=':
+					resultado=new Token(3,5);
+					cadena="";
+					estadoActual=0;
+					break;
+				default:
+					resultado=new Token(3,3);
+					cadena="";
+					estadoActual=0;
+					break;
+			}
 		}
-	case '!':
-		switch(c) {
-		case '=':
-			resultado=new Token(3,2);
-			cadena="";
-			estadoActual=0;
-			break;
-			default:
-				resultado=new Token(1,3);
-				cadena="";
-				estadoActual=0;
-				break;}
-	case '<':
-		switch(c) {
-		case '=':
-			resultado=new Token(3,4);
-			cadena="";
-			estadoActual=0;
-			break;
-			default:
-				resultado=new Token(3,2);
-				cadena="";
-				estadoActual=0;
-				break;}
-	case '>':
-		switch(c) {
-		case '=':
-			resultado=new Token(3,5);
-			cadena="";
-			estadoActual=0;
-			break;
-			default:
-				resultado=new Token(3,3);
-				cadena="";
-				estadoActual=0;
-				break;
-				}}
-		//TODO
 	}else if(estadoActual==15) {
 		//TODO
 	}else if(estadoActual==16) {
 		//TODO
 	}else if(estadoActual==17) {
 		switch(c) {
-		case '*':
-			cadena+="*";
-			estadoActual=21;
-			break;
-		case '/':
-			cadena+="/";
-			estadoActual=19;
-			break;
+			case '*':
+				cadena+="*";
+				estadoActual=21;
+				break;
+			case '/':
+				cadena+="/";
+				estadoActual=19;
+				break;
 			default:
 				resultado=new Token(1,3);
 				cadena="";
 				estadoActual=0;
 				break;
-				
 		}
-		//TODO
 	}else if(estadoActual==18) {
 		//TODO
 	}else if(estadoActual==19) {
