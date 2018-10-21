@@ -9,7 +9,9 @@ public class analizadorLexico{
 
 	public static void main(String[] args){
 		//En esta variable (o como sea que lo hagamos) tendremos los caracteres de codigo de entrada
-		String codigo="codigo fuente de prueba";
+		//ACABA SIEMPRE CON EL CARACTER \t, QUE SERIA EL END OF FILE. 
+		String codigo="if(1=1) {print(\"Hola mundo!\");}\t";
+		System.out.println(codigo);
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
 		int i=0;
@@ -18,20 +20,18 @@ public class analizadorLexico{
 
 			Token resultado=nextChar(c);
 			if(resultado.getType()>-1) {
-				//Tenemos un token completo, lo a�adimos a la lista de tokens
+				//Tenemos un token completo, lo anadimos a la lista de tokens
 				listaTokens.add(resultado);
+				System.out.println(resultado.toString());
+			}
+			if(resultado.consumeCaracter()) {
 				i++;
-			}else if(resultado.getType()==-1 && resultado.consumeCaracter()) {
-				//Tenemos un token incompleto que consume caracter
-				i++;
-			}else if(resultado.getType()==-1 && !resultado.consumeCaracter()){
-				//Tenemos un token incompleto que NO CONSUME CARACTER
-				//No incrementamos i, para que asi se vuelva a enviar
 			}
 		}
 
 		//listaTokens contiene la lista de tokens completa, lo que hay que devolver. Se puede llamar a su metodo .toString para 
 		//el fichero de salida que hay que generar.
+		//System.out.println("");
 
 	}
 
@@ -50,6 +50,10 @@ public class analizadorLexico{
 				estadoActual=0;
 				break;
 			case '\n':
+				cadena="";
+				estadoActual=0;
+				break;
+			case ' ':
 				cadena="";
 				estadoActual=0;
 				break;
@@ -102,7 +106,7 @@ public class analizadorLexico{
 				estadoActual=6;
 				break;
 			case '"':
-				cadena+="\"";
+				cadena+=""; //TODO
 				estadoActual=11;
 				break;				
 			case '=':
@@ -140,6 +144,7 @@ public class analizadorLexico{
 			switch(cadena) {
 			case "+":
 				resultado=new Token(1,0);
+				resultado.setConsumeCaracter(false);
 				cadena="";
 				estadoActual=0;
 				break;
@@ -182,7 +187,13 @@ public class analizadorLexico{
 				resultado=new Token(4,4);
 				cadena="";
 				estadoActual=0;
-				break;							
+				break;
+			default:
+				resultado=new Token(false);
+				resultado.setConsumeCaracter(false);
+				cadena="";
+				estadoActual=0;
+				break;
 			}
 		}else if(estadoActual==2){
 			if(Character.isDigit(c)) {
@@ -192,13 +203,39 @@ public class analizadorLexico{
 				cadena+=c;
 				estadoActual=2;
 			}else{
-				resultado=new Token(cadena);//no se que token seria
+				
+				String comp=cadena.toLowerCase();
+				if(comp.equals("function")) {
+					resultado=new Token(0,0);
+				}else if(comp.equals("var")) {
+					resultado=new Token(0,1);
+				}else if(comp.equals("int")) {
+					resultado=new Token(0,2);
+				}else if(comp.equals("char")) {
+					resultado=new Token(0,3);
+				}else if(comp.equals("bool")) {
+					resultado=new Token(0,4);
+				}else if(comp.equals("for")) {
+					resultado=new Token(0,5);
+				}else if(comp.equals("true")) {
+					resultado=new Token(0,6);
+				}else if(comp.equals("false")) {
+					resultado=new Token(0,7);
+				}else if(comp.equals("return")) {
+					resultado=new Token(0,8);
+				}else if(comp.equals("write")) {
+					resultado=new Token(0,9);
+				}else if(comp.equals("prompt")) {
+					resultado=new Token(0,10);
+				}else {
+					resultado=new Token(cadena, true);
+				}
 				resultado.setConsumeCaracter(false);
 				cadena="";
 				estadoActual=0;
 			}
 		}else if(estadoActual==3){
-			//TODO
+			//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 		}else if(estadoActual==4){
 			switch(c){
 				case '&':
@@ -208,7 +245,7 @@ public class analizadorLexico{
 					break;
 				}
 		}else if(estadoActual==5){
-			//TODO
+			//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 		}else if(estadoActual==6){
 			switch(c) {
 				case '|':
@@ -223,27 +260,47 @@ public class analizadorLexico{
 					break;
 				}
 	}else if(estadoActual==7) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==8) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==9) {
 		if(Character.isDigit(c)) {
 			cadena+=c;
 			estadoActual=9;
 		}else {
-			resultado=new Token(Integer.parseInt(cadena));//no se que token seria
+			resultado=new Token(Integer.parseInt(cadena));
 			resultado.setConsumeCaracter(false);
 			cadena="";
 			estadoActual=0;
 		}
 	}else if(estadoActual==10) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==11) {
-		//TODO
+		switch(c) {
+			case '\\':
+				estadoActual=12;
+			case '"':
+				resultado=new Token(cadena, false);
+				cadena="";
+				estadoActual=0;
+				break;
+			case '\n':
+				//ERROR
+				break;
+			default:
+				cadena+=c;
+				estadoActual=11;
+				break;
+		}
 	}else if(estadoActual==12) {
-		//TODO
+		if(c=='\n') {
+			//error
+		}else {
+			cadena+=c;
+			estadoActual=11;
+		}
 	}else if(estadoActual==13) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==14) {
 		//hago switch cadena para ver que venia
 		if(cadena.equals("=")) {
@@ -305,9 +362,9 @@ public class analizadorLexico{
 			}
 		}
 	}else if(estadoActual==15) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==16) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==17) {
 		switch(c) {
 			case '*':
@@ -326,17 +383,36 @@ public class analizadorLexico{
 				break;
 		}
 	}else if(estadoActual==18) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==19) {
-		//TODO
+		//El comentario no genera token, por lo que simplemente reseteamos todo y si te he visto no me acuerdo
+		if(c=='\n') {
+			estadoActual=0;
+			cadena="";
+		}else {
+			estadoActual=19;
+			cadena+=c;
+		}
 	}else if(estadoActual==20) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==21) {
-		//TODO
+		if(c=='*') {
+			estadoActual=22;
+			cadena+=c;
+		}else {
+			estadoActual=21;
+			cadena+=c;
+		}
 	}else if(estadoActual==22) {
-		//TODO
+		if(c=='\\') {
+			estadoActual=0;
+			cadena="";
+		}else{
+			estadoActual=21;
+			cadena+=c;
+		}
 	}else if(estadoActual==23) {
-		//TODO
+		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}
 
 	return resultado;
