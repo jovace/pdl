@@ -192,7 +192,8 @@ public class analizadorLexico{
 				cadena+=c;
 				estadoActual=2;
 			}else{
-				resultado=new Token(2,0);//no se que token seria
+				resultado=new Token(cadena);//no se que token seria
+				resultado.setConsumeCaracter(false);
 				cadena="";
 				estadoActual=0;
 			}
@@ -230,7 +231,8 @@ public class analizadorLexico{
 			cadena+=c;
 			estadoActual=9;
 		}else {
-			resultado=new Token(2,0);//no se que token seria
+			resultado=new Token(Integer.parseInt(cadena));//no se que token seria
+			resultado.setConsumeCaracter(false);
 			cadena="";
 			estadoActual=0;
 		}
@@ -254,6 +256,7 @@ public class analizadorLexico{
 					break;
 				default:
 					resultado=new Token(1,7);
+					resultado.setConsumeCaracter(false);
 					cadena="";
 					estadoActual=0;
 					break;			
@@ -267,6 +270,7 @@ public class analizadorLexico{
 					break;
 				default:
 					resultado=new Token(1,3);
+					resultado.setConsumeCaracter(false);
 					cadena="";
 					estadoActual=0;
 					break;
@@ -280,6 +284,7 @@ public class analizadorLexico{
 					break;
 				default:
 					resultado=new Token(3,2);
+					resultado.setConsumeCaracter(false);
 					cadena="";
 					estadoActual=0;
 					break;
@@ -293,6 +298,7 @@ public class analizadorLexico{
 					break;
 				default:
 					resultado=new Token(3,3);
+					resultado.setConsumeCaracter(false);
 					cadena="";
 					estadoActual=0;
 					break;
@@ -314,6 +320,7 @@ public class analizadorLexico{
 				break;
 			default:
 				resultado=new Token(1,3);
+				resultado.setConsumeCaracter(false);
 				cadena="";
 				estadoActual=0;
 				break;
