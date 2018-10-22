@@ -10,7 +10,7 @@ public class analizadorLexico{
 	public static void main(String[] args){
 		//En esta variable (o como sea que lo hagamos) tendremos los caracteres de codigo de entrada
 		//ACABA SIEMPRE CON EL CARACTER \t, QUE SERIA EL END OF FILE. 
-		String codigo="if(1=1) {print(\"Hola mundo!\");}\t";
+		String codigo="function(1=1) {prompt(\"Hola mundo!\");}\t";
 		System.out.println(codigo);
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
@@ -144,7 +144,6 @@ public class analizadorLexico{
 			switch(cadena) {
 			case "+":
 				resultado=new Token(1,0);
-				resultado.setConsumeCaracter(false);
 				cadena="";
 				estadoActual=0;
 				break;
@@ -190,11 +189,12 @@ public class analizadorLexico{
 				break;
 			default:
 				resultado=new Token(false);
-				resultado.setConsumeCaracter(false);
 				cadena="";
 				estadoActual=0;
 				break;
 			}
+
+			resultado.setConsumeCaracter(false);
 		}else if(estadoActual==2){
 			if(Character.isDigit(c)) {
 				cadena+=c;
