@@ -1,7 +1,8 @@
 //// Comentario de inicio de fichero 
-Axioma = J 
+ 
 NoTerminales = { J D T I E G GG EE X XX F H A AA C S R B SS } 
 Terminales = { var id int string $ = ( ) ! bool + ++ - -- < > >= <= { } function return ; , * |= / % && || print prompt false true for char cte_int cte_cadena cte_logica} 
+Axioma = J
 Producciones = { 
 J -> D J  
 J -> F J
@@ -21,6 +22,9 @@ G -> ! B
 G -> cte_int
 G -> cte_cadena
 G -> cte_logica
+GG -> lambda
+GG -> ++
+GG -> --
 EE -> + G EE
 EE -> - G EE
 EE -> lambda
