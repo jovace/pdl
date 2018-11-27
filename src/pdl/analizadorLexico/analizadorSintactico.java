@@ -13,32 +13,96 @@ public class analizadorSintactico {
 	Set<String> terminales = new HashSet<>();
 	Set<String> noTerminales = new HashSet<>();
 	Map<String,String> tokenaTerminales = new HashMap<>();
-	Map<Character,Token> terminalesAToken = new HashMap<>();
+	//tipo,indice -> cadena
+	//8,9        -> sumasuma 
+	//Map<Character,Token> terminalesAToken = new HashMap<>();
 	
 	public analizadorSintactico() {
-		terminales.add("a");
-		terminales.add("b");
-		terminales.add("c");
+		//Inicializar lista terminales, no terminales y tabla de transicion
+		
+		//iniz terminales
+		terminales.add("var");
+		terminales.add("id");
+		terminales.add("int");
 		terminales.add("$");
+		terminales.add("=");
+		terminales.add("(");
+		terminales.add(")");
+		terminales.add("!");
+		terminales.add("bool");
+		terminales.add("+");
+		terminales.add("++");
+		terminales.add("-");
+		terminales.add("--");
+		terminales.add(">");
+		terminales.add("<");
+		terminales.add("<=");
+		terminales.add(">=");
+		terminales.add("{");
+		terminales.add("}");
+		terminales.add("function");
+		terminales.add("return");
+		terminales.add(";");
+		terminales.add(",");
+		terminales.add("*");
+		terminales.add("|=");
+		terminales.add("/");
+		terminales.add("%");
+		terminales.add("&&");
+		terminales.add("||");
+		terminales.add("print");
+		terminales.add("prompt");
+		terminales.add("false");
+		terminales.add("true");
+		terminales.add("for");
+		terminales.add("char");
+		terminales.add("cte_int");
+		terminales.add("cte_cadena");
+		terminales.add("cte_logica");
 		
-		noTerminales.add("A");
-		noTerminales.add("B");
-		noTerminales.add("C");
+		//iniz no terminales
+		noTerminales.add("J");
 		noTerminales.add("D");
+		noTerminales.add("T");
+		noTerminales.add("I");
 		noTerminales.add("E");
+		noTerminales.add("G");
+		noTerminales.add("GG");
+		noTerminales.add("EE");
+		noTerminales.add("X");
+		noTerminales.add("XX");
 		noTerminales.add("F");
+		noTerminales.add("H");
+		noTerminales.add("A");
+		noTerminales.add("AA");
+		noTerminales.add("C");
+		noTerminales.add("S");
+		noTerminales.add("R");
+		noTerminales.add("B");
 		
-		ArrayList<String> produccionAa = new ArrayList<>();
+		//iniz tabla
+		ArrayList<String> produccionAcierrap = new ArrayList<>();
+		ArrayList<String> produccionAbool = new ArrayList<>();
+		ArrayList<String> produccionAint = new ArrayList<>();
+		ArrayList<String> produccionAstring = new ArrayList<>();
 		Map<String, ArrayList<String>> filaA = new HashMap<>();
-		produccionAa.add("a");
-		produccionAa.add("D");
-		filaA.put("a",produccionAa);
+		produccionAcierrap.add("38");
+		filaA.put(")",produccionAcierrap);
+		produccionAbool.add("37");
+		produccionAbool.add("T");
+		produccionAbool.add("id");
+		produccionAbool.add("AA");
+		filaA.put("bool", produccionAbool);
+		filaA.put("int", produccionAbool);
+		filaA.put("string", produccionAbool);
+		
+		
 		tablaTransicion.put("A", filaA);
 		
 		ArrayList<String> produccionDa = new ArrayList<>();
 		ArrayList<String> produccionDb = new ArrayList<>();
 		Map<String, ArrayList<String>> filaD = new HashMap<>();
-		produccionDa.add("A");
+		//produccionAa.add("A");
 		filaD.put("a", produccionDa);
 		produccionDb.add("B");
 		filaD.put("b", produccionDb);
@@ -129,13 +193,13 @@ public class analizadorSintactico {
 	}
 
 
-	private String convertirTokenaTerminales(ArrayList<Token> listaTokens) {
-		String codigo="";
+	private ArrayList<String> convertirTokenaTerminales(ArrayList<Token> listaTokens) {
+		ArrayList<String> codigo=new ArrayList<>();
 		
 		for(Token token : listaTokens) {
-			codigo+=tokenaTerminales.get(token.tokenTipo());
+			codigo.add(tokenaTerminales.get(token.tokenTipo()));
 		}
 		
-		return null;
+		return codigo;
 	}
 }
