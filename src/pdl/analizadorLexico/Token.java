@@ -81,4 +81,8 @@ public class Token{
 	public String toString() {
 		return "{"+this.type+"; "+this.indice+"; "+this.lexema+"}";
 	}
+	
+	public String tokenTipo() {
+		return "{"+this.type+"; "+this.indice+"}";
+	}
 }

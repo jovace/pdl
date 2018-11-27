@@ -10,7 +10,7 @@ public class analizadorLexico{
 	public static void main(String[] args){
 		//En esta variable (o como sea que lo hagamos) tendremos los caracteres de codigo de entrada
 		//ACABA SIEMPRE CON EL CARACTER \t, QUE SERIA EL END OF FILE. 
-		String codigo="function(1=1) {prompt(\"Hola mundo!\");}\t";
+		String codigo="1+2\t";
 		System.out.println(codigo);
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
