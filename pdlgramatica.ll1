@@ -1,0 +1,67 @@
+//// Comentario de inicio de fichero 
+ 
+NoTerminales = { J D T I E G GG EE X XX F H A AA C S R B SS } 
+Terminales = { var id int string $ = ( ) ! bool + ++ - -- < > >= <= { } function return ; , * |= / % && || print prompt false true for char cte_int cte_cadena cte_logica} 
+Axioma = J
+Producciones = { 
+J -> D J  
+J -> F J
+J -> S J
+J -> $
+D -> var T id I
+T -> int
+T -> string
+T -> bool
+I -> = E
+I -> |= E
+I -> lambda
+E -> G EE 
+G -> ( X )
+G -> id GG
+G -> ! B
+G -> cte_int
+G -> cte_cadena
+G -> cte_logica
+GG -> lambda
+GG -> ++
+GG -> --
+EE -> + G EE
+EE -> - G EE
+EE -> lambda
+EE -> * G EE
+EE -> / G EE
+EE -> % G EE
+X -> E XX
+XX -> < E
+XX -> > E
+XX -> >= E
+XX -> <= E
+XX -> || E
+XX -> && E
+F -> function H id ( A ) { C }
+H -> T
+H -> lambda
+A -> T id AA
+A -> lambda
+AA -> , T id AA
+AA -> lambda
+C -> D C
+C -> S C
+C -> lambda
+S -> id = X ;
+S -> return R ;
+S -> print ( X ) ;
+S -> prompt ( id ) ;
+S -> for ( D ; X ; SS ) { C }
+R -> X
+R -> lambda
+B -> ( X )
+B -> cte_logica
+B -> id
+SS -> id GG
+SS -> S
+
+
+
+} 
+//// Comentario de final de fichero 
