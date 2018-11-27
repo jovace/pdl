@@ -16,8 +16,72 @@ public class analizadorSintactico {
 	Map<Character,Token> terminalesAToken = new HashMap<>();
 	
 	public analizadorSintactico() {
+		terminales.add('a');
+		terminales.add('b');
+		terminales.add('c');
+		terminales.add('$');
 		
+		noTerminales.add('A');
+		noTerminales.add('B');
+		noTerminales.add('C');
+		noTerminales.add('D');
+		noTerminales.add('E');
+		noTerminales.add('F');
+		
+		ArrayList<Character> produccionAa = new ArrayList<>();
+		Map<Character, ArrayList<Character>> filaA = new HashMap<>();
+		produccionAa.add('a');
+		produccionAa.add('D');
+		filaA.put('a',produccionAa);
+		tablaTransicion.put('A', filaA);
+		
+		ArrayList<Character> produccionDa = new ArrayList<>();
+		ArrayList<Character> produccionDb = new ArrayList<>();
+		Map<Character, ArrayList<Character>> filaD = new HashMap<>();
+		produccionDa.add('A');
+		filaD.put('a', produccionDa);
+		produccionDb.add('B');
+		filaD.put('b', produccionDb);
+		tablaTransicion.put('D', filaD);
+		
+		ArrayList<Character> produccionBb = new ArrayList<>();
+		Map<Character, ArrayList<Character>> filaB = new HashMap<>();
+		produccionBb.add('b');
+		produccionBb.add('E');
+		filaB.put('b', produccionBb);
+		tablaTransicion.put('B', filaB);
+		
+		ArrayList<Character> produccionEb = new ArrayList<>();
+		ArrayList<Character> produccionEc = new ArrayList<>();
+		Map<Character, ArrayList<Character>> filaE = new HashMap<>();
+		produccionEb.add('B');
+		filaE.put('b',produccionEb);
+		produccionEc.add('C');
+		filaE.put('c', produccionEc);
+		tablaTransicion.put('E', filaE);
+		
+		ArrayList<Character> produccionCc = new ArrayList<>();
+		Map<Character, ArrayList<Character>> filaC = new HashMap<>();
+		produccionCc.add('c');
+		produccionCc.add('F');
+		filaC.put('c', produccionCc);
+		tablaTransicion.put('C', filaC);
+		
+		ArrayList<Character> produccionFc = new ArrayList<>();
+		ArrayList<Character> produccionF$ = new ArrayList<>();
+		Map<Character, ArrayList<Character>> filaF = new HashMap<>();
+		produccionFc.add('C');
+		filaF.put('c', produccionFc);
+		produccionF$.clear();
+		filaF.put('$', produccionF$);
+		tablaTransicion.put('F', filaF);
+		
+		
+		
+		boolean bol=analizar("aabc$");
+		System.out.println(bol);
 		//Construccion de tabla de transiciones
+		
 	}
 	
 	
@@ -26,12 +90,12 @@ public class analizadorSintactico {
 	 * Lo transformamos en sus correspondientes simbolos terminales.
 	 * Analizamos sintacticamente
 	 */
-	public boolean analizar(ArrayList<Token> listaTokens) {
+	public boolean analizar(/*ArrayList<Token>*/String listaTokens) {
 		
-		String codigo=convertirTokenaTerminales(listaTokens);
-		
+		String codigo=listaTokens;//convertirTokenaTerminales(listaTokens);
+		pila.clear();
 		pila.push('$');
-		pila.push('S');
+		pila.push('A');
 		int puntero=0;
 		
 		while(pila.peek()!='$') {
