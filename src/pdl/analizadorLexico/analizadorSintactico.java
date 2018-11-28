@@ -83,8 +83,6 @@ public class analizadorSintactico {
 		//iniz tabla
 		ArrayList<String> produccionAcierrap = new ArrayList<>();
 		ArrayList<String> produccionAbool = new ArrayList<>();
-		ArrayList<String> produccionAint = new ArrayList<>();
-		ArrayList<String> produccionAstring = new ArrayList<>();
 		Map<String, ArrayList<String>> filaA = new HashMap<>();
 		produccionAcierrap.add("38");
 		filaA.put(")",produccionAcierrap);
@@ -95,57 +93,448 @@ public class analizadorSintactico {
 		filaA.put("bool", produccionAbool);
 		filaA.put("int", produccionAbool);
 		filaA.put("string", produccionAbool);
-		
-		
 		tablaTransicion.put("A", filaA);
 		
-		ArrayList<String> produccionDa = new ArrayList<>();
-		ArrayList<String> produccionDb = new ArrayList<>();
-		Map<String, ArrayList<String>> filaD = new HashMap<>();
-		//produccionAa.add("A");
-		filaD.put("a", produccionDa);
-		produccionDb.add("B");
-		filaD.put("b", produccionDb);
-		tablaTransicion.put("D", filaD);
+		ArrayList<String> produccionAAcierrap = new ArrayList<>();
+		ArrayList<String> produccionAAcomaT = new ArrayList<>();
+		Map<String, ArrayList<String>> filaAA = new HashMap<>();
+		produccionAAcierrap.add("40");
+		filaAA.put(")", produccionAAcierrap);
+		produccionAAcomaT.add("39");
+		produccionAAcomaT.add(",");
+		produccionAAcomaT.add("T");
+		produccionAAcomaT.add("id");
+		produccionAAcomaT.add("AA");
+		filaAA.put(",", produccionAAcomaT);
+		tablaTransicion.put("D", filaAA);
 		
-		ArrayList<String> produccionBb = new ArrayList<>();
+		ArrayList<String> produccionBabrep = new ArrayList<>();
+		ArrayList<String> produccionBctelog = new ArrayList<>();
+		ArrayList<String> produccionBid = new ArrayList<>();
 		Map<String, ArrayList<String>> filaB = new HashMap<>();
-		produccionBb.add("b");
-		produccionBb.add("E");
-		filaB.put("b", produccionBb);
+		produccionBabrep.add("51");
+		produccionBabrep.add("(");
+		produccionBabrep.add("X");
+		produccionBabrep.add(")");
+		filaB.put("(", produccionBabrep);
+		produccionBctelog.add("52");
+		produccionBctelog.add("cte_logica");
+		filaB.put("cte_logica", produccionBctelog);
+		produccionBid.add("53");
+		produccionBid.add("id");
+		filaB.put("id", produccionBid);
 		tablaTransicion.put("B", filaB);
 		
-		ArrayList<String> produccionEb = new ArrayList<>();
-		ArrayList<String> produccionEc = new ArrayList<>();
-		Map<String, ArrayList<String>> filaE = new HashMap<>();
-		produccionEb.add("B");
-		filaE.put("b",produccionEb);
-		produccionEc.add("C");
-		filaE.put("c", produccionEc);
-		tablaTransicion.put("E", filaE);
 		
-		ArrayList<String> produccionCc = new ArrayList<>();
+		ArrayList<String> produccionCSC = new ArrayList<>();
+		ArrayList<String> produccionCDC = new ArrayList<>();
+		ArrayList<String> produccionClambda = new ArrayList<>();
 		Map<String, ArrayList<String>> filaC = new HashMap<>();
-		produccionCc.add("c");
-		produccionCc.add("F");
-		filaC.put("c", produccionCc);
+		produccionCSC.add("42");
+		produccionCSC.add("S");
+		produccionCSC.add("C");
+		filaC.put("for", produccionCSC);
+		filaC.put("id", produccionCSC);
+		filaC.put("print", produccionCSC);
+		filaC.put("prompt", produccionCSC);
+		filaC.put("return", produccionCSC);
+		produccionCDC.add("41");
+		produccionCDC.add("D");
+		produccionCDC.add("C");
+		filaC.put("var", produccionCDC);
+		produccionClambda.add("43");
+		filaC.put("}", produccionClambda);
 		tablaTransicion.put("C", filaC);
 		
-		ArrayList<String> produccionFc = new ArrayList<>();
-		ArrayList<String> produccionF$ = new ArrayList<>();
+		
+		ArrayList<String> produccionD = new ArrayList<>();
+		Map<String, ArrayList<String>> filaD = new HashMap<>();
+		produccionD.add("4");
+		produccionD.add("var");
+		produccionD.add("T");
+		produccionD.add("id");
+		produccionD.add("I");
+		filaD.put("var", produccionD);
+		tablaTransicion.put("D", filaD);
+		
+		
+		ArrayList<String> produccionE = new ArrayList<>();
+		Map<String, ArrayList<String>> filaE = new HashMap<>();
+		produccionE.add("11");
+		produccionE.add("G");
+		produccionE.add("EE");
+		filaE.put("!", produccionE);
+		filaE.put("(", produccionE);
+		filaE.put("cte_cadena", produccionE);
+		filaE.put("cte_int", produccionE);
+		filaE.put("cte_logica", produccionE);
+		filaE.put("id", produccionE);
+		tablaTransicion.put("E", filaE);
+		
+		
+		
+		ArrayList<String> produccionElambda = new ArrayList<>();
+		ArrayList<String> produccionEmod = new ArrayList<>();
+		ArrayList<String> produccionEmult = new ArrayList<>();
+		ArrayList<String> produccionEdiv = new ArrayList<>();
+		ArrayList<String> produccionEsum = new ArrayList<>();
+		ArrayList<String> produccionEresta = new ArrayList<>();
+		Map<String, ArrayList<String>> filaEE = new HashMap<>();
+		produccionElambda.add("23");
+		filaEE.put("$", produccionElambda);
+		filaEE.put("&&", produccionElambda);
+		filaEE.put(")", produccionElambda);
+		filaEE.put(";", produccionElambda);
+		filaEE.put("<", produccionElambda);
+		filaEE.put("<=", produccionElambda);
+		filaEE.put(">", produccionElambda);
+		filaEE.put(">=", produccionElambda);
+		filaEE.put("for", produccionElambda);
+		filaEE.put("function", produccionElambda);
+		filaEE.put("id", produccionElambda);
+		filaEE.put("print", produccionElambda);
+		filaEE.put("prompt", produccionElambda);
+		filaEE.put("return", produccionElambda);
+		filaEE.put("var", produccionElambda);
+		filaEE.put("}", produccionElambda);
+		produccionEmod.add("26");
+		produccionEmod.add("%");
+		produccionEmod.add("G");
+		produccionEmod.add("EE");
+		filaEE.put("%", produccionEmod);
+		produccionEmult.add("24");
+		produccionEmult.add("*");
+		produccionEmult.add("G");
+		produccionEmult.add("EE");
+		filaEE.put("*", produccionEmult);
+		produccionEdiv.add("25");
+		produccionEdiv.add("/");
+		produccionEdiv.add("G");
+		produccionEdiv.add("EE");
+		filaEE.put("/", produccionEdiv);
+		produccionEsum.add("21");
+		produccionEsum.add("+");
+		produccionEsum.add("G");
+		produccionEsum.add("EE");
+		filaEE.put("+", produccionEsum);
+		produccionEresta.add("22");
+		produccionEresta.add("-");
+		produccionEresta.add("G");
+		produccionEresta.add("EE");
+		filaEE.put("-", produccionEresta);
+		tablaTransicion.put("EE", filaEE);
+		
+		
+		ArrayList<String> produccionFfunction = new ArrayList<>();
 		Map<String, ArrayList<String>> filaF = new HashMap<>();
-		produccionFc.add("C");
-		filaF.put("c", produccionFc);
-		produccionF$.clear();
-		filaF.put("$", produccionF$);
+		produccionFfunction.add("34");
+		produccionFfunction.add("function");
+		produccionFfunction.add("H");
+		produccionFfunction.add("id");
+		produccionFfunction.add("(");
+		produccionFfunction.add("A");
+		produccionFfunction.add(")");
+		produccionFfunction.add("{");
+		produccionFfunction.add("C");
+		produccionFfunction.add("}");		
+		filaF.put("function",produccionFfunction);
 		tablaTransicion.put("F", filaF);
 		
 		
+		ArrayList<String> produccionGnoB = new ArrayList<>();
+		ArrayList<String> produccionGpXp = new ArrayList<>();
+		ArrayList<String> produccionGctecadena = new ArrayList<>();
+		ArrayList<String> produccionGcteint = new ArrayList<>();
+		ArrayList<String> produccionGctelogica = new ArrayList<>();
+		ArrayList<String> produccionGidGG = new ArrayList<>();
+		Map<String, ArrayList<String>> filaG = new HashMap<>();
+		produccionGnoB.add("14");
+		produccionGnoB.add("!");
+		produccionGnoB.add("B");
+		produccionGpXp.add("12");
+		produccionGpXp.add("(");
+		produccionGpXp.add("X");
+		produccionGpXp.add(")");
+		produccionGctecadena.add("16");
+		produccionGctecadena.add("cte_cadena");
+		produccionGcteint.add("15");
+		produccionGcteint.add("cte_int");
+		produccionGctelogica.add("17");
+		produccionGctelogica.add("cte_logica");
+		produccionGidGG.add("13");
+		produccionGidGG.add("id");
+		produccionGidGG.add("GG");		
+		filaG.put("!",produccionGnoB);
+		filaG.put("(",produccionGpXp);
+		filaG.put("cte_cadena",produccionGctecadena);
+		filaG.put("cte_int",produccionGcteint);
+		filaG.put("cte_logica",produccionGctelogica);
+		filaG.put("id",produccionGidGG);		
+		tablaTransicion.put("G", filaG);
+		
+		
+		ArrayList<String> produccionGGlambda = new ArrayList<>();
+		ArrayList<String> produccionGGmasmas = new ArrayList<>();
+		ArrayList<String> produccionGGmenosmenos = new ArrayList<>();
+		Map<String, ArrayList<String>> filaGG = new HashMap<>();
+		produccionGGlambda.add("18");		
+		produccionGGmasmas.add("20");
+		produccionGGmasmas.add("++");
+		produccionGGmenosmenos.add("19");
+		produccionGGmenosmenos.add("--");		
+		filaGG.put("$",produccionGGlambda);
+		filaGG.put("%",produccionGGlambda);
+		filaGG.put("&&",produccionGGlambda);
+		filaGG.put(")",produccionGGlambda);
+		filaGG.put("*",produccionGGlambda);
+		filaGG.put("+",produccionGGlambda);
+		filaGG.put("-",produccionGGlambda);
+		filaGG.put("//",produccionGGlambda);
+		filaGG.put(";",produccionGGlambda);
+		filaGG.put("<",produccionGGlambda);
+		filaGG.put("<=",produccionGGlambda);
+		filaGG.put(">=",produccionGGlambda);
+		filaGG.put(">",produccionGGlambda);
+		filaGG.put("for",produccionGGlambda);
+		filaGG.put("function",produccionGGlambda);
+		filaGG.put("id",produccionGGlambda);
+		filaGG.put("print",produccionGGlambda);
+		filaGG.put("prompt",produccionGGlambda);
+		filaGG.put("return",produccionGGlambda);
+		filaGG.put("var",produccionGGlambda);
+		filaGG.put("||",produccionGGlambda);
+		filaGG.put("}",produccionGGlambda);		
+		filaGG.put("++",produccionGGmasmas);
+		filaGG.put("--",produccionGGmenosmenos);		
+		tablaTransicion.put("GG", filaGG);
+		
+		
+		ArrayList<String> produccionHT = new ArrayList<>();
+		ArrayList<String> produccionHlambda = new ArrayList<>();
+		Map<String, ArrayList<String>> filaH = new HashMap<>();
+		produccionHT.add("35");
+		produccionHT.add("T");		
+		produccionHlambda.add("36");			
+		filaH.put("bool",produccionHT);
+		filaH.put("int",produccionHT);
+		filaH.put("string",produccionHT);		
+		filaH.put("id",produccionHlambda);		
+		tablaTransicion.put("H", filaH);
+		
+		
+		
+		ArrayList<String> produccionIlambda = new ArrayList<>();
+		ArrayList<String> produccionIigualE = new ArrayList<>();
+		ArrayList<String> produccionIoigualE = new ArrayList<>();		
+		Map<String, ArrayList<String>> filaI = new HashMap<>();
+		produccionIlambda.add("10");
+		produccionIigualE.add("8");
+		produccionIigualE.add("=");
+		produccionIigualE.add("E");
+		produccionIoigualE.add("9");
+		produccionIoigualE.add("|=");
+		produccionIoigualE.add("E");		
+		filaI.put("$",produccionIlambda);
+		filaI.put(";",produccionIlambda);
+		filaI.put("for",produccionIlambda);
+		filaI.put("function",produccionIlambda);
+		filaI.put("id",produccionIlambda);
+		filaI.put("print",produccionIlambda);
+		filaI.put("prompt",produccionIlambda);
+		filaI.put("return",produccionIlambda);
+		filaI.put("var",produccionIlambda);
+		filaI.put("}",produccionIlambda);		
+		filaI.put("=",produccionIigualE);
+		filaI.put("|=",produccionIoigualE);		
+		tablaTransicion.put("I", filaI);
+		
+		
+		
+		ArrayList<String> produccionJdol = new ArrayList<>();
+		ArrayList<String> produccionJSJ = new ArrayList<>();
+		ArrayList<String> produccionJFJ = new ArrayList<>();
+		ArrayList<String> produccionJDJ = new ArrayList<>();
+		Map<String, ArrayList<String>> filaJ = new HashMap<>();
+		produccionJdol.add("3");
+		produccionJdol.add("$");
+		produccionJSJ.add("2");
+		produccionJSJ.add("S");
+		produccionJSJ.add("J");
+		produccionJFJ.add("1");
+		produccionJFJ.add("F");
+		produccionJFJ.add("J");
+		produccionJDJ.add("0");
+		produccionJDJ.add("D");
+		produccionJDJ.add("J");
+		filaJ.put("$", produccionJdol);
+		filaJ.put("for", produccionJSJ);
+		filaJ.put("id", produccionJSJ);
+		filaJ.put("print", produccionJSJ);
+		filaJ.put("prompt", produccionJSJ);
+		filaJ.put("return", produccionJSJ);
+		filaJ.put("function", produccionJFJ);
+		filaJ.put("var", produccionJDJ);
+		tablaTransicion.put("J", filaJ);
+		
+		
+		
+		
+		ArrayList<String> produccionRlamba = new ArrayList<>();
+		ArrayList<String> produccionRimplicaX = new ArrayList<>();
+		Map<String, ArrayList<String>> filaR= new HashMap<>();
+		produccionRlamba.add("50");
+		produccionRimplicaX.add("49");
+		produccionRimplicaX.add("X");
+		filaR.put("!",produccionRimplicaX);
+		filaR.put("(",produccionRimplicaX);
+		filaR.put(";",produccionRlamba);
+		filaR.put("cte_logica",produccionRimplicaX);
+		filaR.put("cte_cadena",produccionRimplicaX);
+		filaR.put("cte_int",produccionRimplicaX);
+		filaR.put("id",produccionRimplicaX);
+		tablaTransicion.put("R", filaR);
+
+
+		Map<String, ArrayList<String>> filaS= new HashMap<>();
+		ArrayList<String> produccionSforpDpuntocomaXpuntocomaetc = new ArrayList<>();
+		ArrayList<String> produccionSidigualx = new ArrayList<>();
+		ArrayList<String> produccionSprintpxp = new ArrayList<>();
+		ArrayList<String> produccionSpromtpidp = new ArrayList<>();
+		ArrayList<String> produccionSreturnR = new ArrayList<>();
+		produccionSforpDpuntocomaXpuntocomaetc.add("48");
+		produccionSforpDpuntocomaXpuntocomaetc.add("for");
+		produccionSforpDpuntocomaXpuntocomaetc.add("(");
+		produccionSforpDpuntocomaXpuntocomaetc.add("D");
+		produccionSforpDpuntocomaXpuntocomaetc.add(";");
+		produccionSforpDpuntocomaXpuntocomaetc.add("X");
+		produccionSforpDpuntocomaXpuntocomaetc.add(";");
+		produccionSforpDpuntocomaXpuntocomaetc.add("SS");
+		produccionSforpDpuntocomaXpuntocomaetc.add(")");
+		produccionSforpDpuntocomaXpuntocomaetc.add("{");
+		produccionSforpDpuntocomaXpuntocomaetc.add("c");
+		produccionSforpDpuntocomaXpuntocomaetc.add("}");
+		produccionSidigualx.add("44");
+		produccionSidigualx.add("id");
+		produccionSidigualx.add("=");
+		produccionSidigualx.add("X");
+		produccionSprintpxp.add("46");
+		produccionSprintpxp.add("print");
+		produccionSprintpxp.add("(");
+		produccionSprintpxp.add("X");
+		produccionSprintpxp.add(")");
+		produccionSpromtpidp.add("47");
+		produccionSpromtpidp.add("prompt");
+		produccionSpromtpidp.add("(");
+		produccionSpromtpidp.add("id");
+		produccionSpromtpidp.add(")");
+		produccionSreturnR.add("45");
+		produccionSreturnR.add("return");
+		produccionSreturnR.add("R");
+		filaS.put("for",produccionSforpDpuntocomaXpuntocomaetc);
+		filaS.put("id",produccionSidigualx);
+		filaS.put("print",produccionSprintpxp);
+		filaS.put("prompt",produccionSpromtpidp);
+		filaS.put("return",produccionSreturnR);
+		tablaTransicion.put("S", filaS);
+		
+		
+		Map<String, ArrayList<String>> filaSS= new HashMap<>();
+		ArrayList<String> produccionSSidigualX = new ArrayList<>();
+		ArrayList<String> produccionSSprintpxp = new ArrayList<>();
+		produccionSSidigualX.add("54");
+		produccionSSidigualX.add("id");
+		produccionSSidigualX.add("=");
+		produccionSSidigualX.add("X");
+		produccionSSprintpxp.add("55");
+		produccionSSprintpxp.add("print");
+		produccionSSprintpxp.add("(");
+		produccionSSprintpxp.add("X");
+		produccionSSprintpxp.add(")");
+		filaSS.put("id",produccionSSidigualX);
+		filaSS.put("print",produccionSSprintpxp);
+		tablaTransicion.put("SS", filaSS);
+		
+		
+		
+		Map<String, ArrayList<String>> filaT= new HashMap<>();
+		ArrayList<String> produccionTbool = new ArrayList<>();
+		ArrayList<String> produccionTint = new ArrayList<>();
+		ArrayList<String> produccionTstring = new ArrayList<>();
+		produccionTint.add("6");
+		produccionTint.add("int");
+		produccionTstring.add("7");
+		produccionTstring.add("string");
+		produccionTbool.add("8");
+		filaT.put("bool",produccionTbool);
+		filaT.put("int",produccionTint);
+		filaT.put("string",produccionTstring);
+		tablaTransicion.put("T", filaT);
+		
+		
+		
+		ArrayList<String> produccionX = new ArrayList<>();
+		Map<String, ArrayList<String>> filaX = new HashMap<>();
+		produccionX.add("29");
+		produccionX.add("E");
+		produccionX.add("XX");
+		filaX.put("!", produccionX);
+		filaX.put("(", produccionX);
+		filaX.put("cte_cadena", produccionX);
+		filaX.put("cte_int", produccionX);
+		filaX.put("cte_logica", produccionX);
+		filaX.put("id", produccionX);
+		tablaTransicion.put("X", filaX);
+		
+		
+		
+		
+		ArrayList<String> produccionXXyy = new ArrayList<>();
+		ArrayList<String> produccionXXm = new ArrayList<>();
+		ArrayList<String> produccionXXmi = new ArrayList<>();
+		ArrayList<String> produccionXXM = new ArrayList<>();
+		ArrayList<String> produccionXXMi = new ArrayList<>();
+		ArrayList<String> produccionXXoo = new ArrayList<>();
+		Map<String, ArrayList<String>> filaXX = new HashMap<>();
+		produccionXXyy.add("35");
+		produccionXXyy.add("&&");
+		produccionXXyy.add("E");
+		filaXX.put("&&", produccionXXyy);
+		produccionXXoo.add("34");
+		produccionXXoo.add("||");
+		produccionXXoo.add("E");
+		filaXX.put("||", produccionXXoo);
+		produccionXXmi.add("33");
+		produccionXXmi.add("<=");
+		produccionXXmi.add("E");
+		filaXX.put("<=", produccionXXmi);
+		produccionXXMi.add("32");
+		produccionXXMi.add(">=");
+		produccionXXMi.add("E");
+		filaXX.put(">=", produccionXXMi);
+		produccionXXM.add("31");
+		produccionXXM.add(">");
+		produccionXXM.add("E");
+		filaXX.put(">", produccionXXM);
+		produccionXXm.add("30");
+		produccionXXm.add("<");
+		produccionXXm.add("E");
+		filaXX.put("<", produccionXXm);
+		tablaTransicion.put("XX", filaXX);
+		
+		
 		ArrayList<String> tokens=new ArrayList<>();
-		tokens.add("a");
-		tokens.add("a");
-		tokens.add("b");
-		tokens.add("c");
+		tokens.add("var");
+		tokens.add("int");
+		tokens.add("id");
+		tokens.add("=");
+		tokens.add("id");
+		tokens.add("+");
+		tokens.add("(");
+		tokens.add("id");
+		tokens.add("-");
+		tokens.add("id");
+		tokens.add(")");
+		tokens.add(";");
 		tokens.add("$");
 		boolean bol=analizar(tokens);
 		System.out.println(bol);
