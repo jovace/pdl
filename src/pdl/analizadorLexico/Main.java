@@ -18,9 +18,9 @@ public class Main {
 		boolean todoOk=true;
 		
 		ArrayList<String> listaPruebas = new ArrayList<>();
-		listaPruebas.add("function suma(){i=i+1;}");
-		listaPruebas.add("function int suma(){i=i+1;}");
-		listaPruebas.add("function bool suma(){i=i+1;}");
+		listaPruebas.add("function suma(){i=i+1; } \n");
+		listaPruebas.add("function int suma(){i=i+1; } \n");
+		listaPruebas.add("function bool suma(){i=i+1;} \n");
 		listaPruebas.add("function string suma(){i=i+1;}");
 		listaPruebas.add("function string suma(int par1, bool par2, string par3){i=i+1;}");
 		listaPruebas.add("for(var int i=0;i<5;i=i+1) {i=i+1;} \t");
