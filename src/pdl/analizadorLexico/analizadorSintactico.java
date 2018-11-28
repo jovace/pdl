@@ -421,14 +421,17 @@ public class analizadorSintactico {
 		produccionSprintpxp.add("(");
 		produccionSprintpxp.add("X");
 		produccionSprintpxp.add(")");
+		produccionSprintpxp.add(";");
 		produccionSpromtpidp.add("47");
 		produccionSpromtpidp.add("prompt");
 		produccionSpromtpidp.add("(");
 		produccionSpromtpidp.add("id");
 		produccionSpromtpidp.add(")");
+		produccionSpromtpidp.add(";");
 		produccionSreturnR.add("45");
 		produccionSreturnR.add("return");
 		produccionSreturnR.add("R");
+		produccionSreturnR.add(";");
 		filaS.put("for",produccionSforpDpuntocomaXpuntocomaetc);
 		filaS.put("id",produccionSidigualx);
 		filaS.put("print",produccionSprintpxp);
