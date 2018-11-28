@@ -154,6 +154,7 @@ public class analizadorSintactico {
 		produccionD.add("T");
 		produccionD.add("id");
 		produccionD.add("I");
+		produccionD.add(";");
 		filaD.put("var", produccionD);
 		tablaTransicion.put("D", filaD);
 		
@@ -529,11 +530,7 @@ public class analizadorSintactico {
 		tokens.add("=");
 		tokens.add("id");
 		tokens.add("+");
-		tokens.add("(");
 		tokens.add("id");
-		tokens.add("-");
-		tokens.add("id");
-		tokens.add(")");
 		tokens.add(";");
 		tokens.add("$");
 		boolean bol=analizar(tokens);
@@ -553,7 +550,7 @@ public class analizadorSintactico {
 		ArrayList<String> codigo=listaTokens;//convertirTokenaTerminales(listaTokens);
 		pila.clear();
 		pila.push("$");
-		pila.push("A");
+		pila.push("J");
 		int puntero=0;
 		
 		while(!pila.peek().equals("$")) {
@@ -570,7 +567,7 @@ public class analizadorSintactico {
 				pila.pop();
 				
 				ArrayList<String> produccion = tablaTransicion.get(X).get(a);
-				for(int i=produccion.size()-1;i>=0;i--) {					
+				for(int i=produccion.size()-1;i>0;i--) {					
 					pila.push(produccion.get(i));
 				}
 			}else {
