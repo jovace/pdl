@@ -27,6 +27,7 @@ public class analizadorSintactico {
 		terminales.add(")");
 		terminales.add("!");
 		terminales.add("bool");
+		terminales.add("string");
 		terminales.add("+");
 		terminales.add("++");
 		terminales.add("-");
@@ -103,7 +104,7 @@ public class analizadorSintactico {
 		produccionAAcomaT.add("id");
 		produccionAAcomaT.add("AA");
 		filaAA.put(",", produccionAAcomaT);
-		tablaTransicion.put("D", filaAA);
+		tablaTransicion.put("AA", filaAA);
 		
 		ArrayList<String> produccionBabrep = new ArrayList<>();
 		ArrayList<String> produccionBctelog = new ArrayList<>();
@@ -610,7 +611,7 @@ public class analizadorSintactico {
 					pila.pop();
 					puntero++;
 				}else {
-					printError(X,a,pila,codigo,puntero,arbol);
+					printError("No se puede consumir caracter",X,a,pila,codigo,puntero,arbol);
 					return false;
 				}
 			}else if(noTerminales.contains(X)) {
@@ -618,7 +619,7 @@ public class analizadorSintactico {
 				
 				ArrayList<String> produccion = tablaTransicion.get(X).get(a);
 				if(produccion==null) {
-					printError(X,a,pila,codigo,puntero,arbol);
+					printError("No existe dicha entrada en tabla sintactica",X,a,pila,codigo,puntero,arbol);
 					return false;
 				}
 				arbol.add(Integer.parseInt(produccion.get(0)));
@@ -626,7 +627,7 @@ public class analizadorSintactico {
 					pila.push(produccion.get(i));
 				}
 			}else {
-				printError(X,a,pila,codigo,puntero,arbol);
+				printError("Simbolo no reconocido",X,a,pila,codigo,puntero,arbol);
 				return false;
 			}
 		}
@@ -635,7 +636,8 @@ public class analizadorSintactico {
 	}
 
 
-	private void printError(String X, String a, Stack<String> pila2, ArrayList<String> codigo, int puntero, ArrayList<Integer> arbol) {
+	private void printError(String lugar, String X, String a, Stack<String> pila2, ArrayList<String> codigo, int puntero, ArrayList<Integer> arbol) {
+		System.out.println(lugar);
 		System.out.println("Cima de pila: "+X.toString());
 		System.out.println("Token a leer: "+a.toString());
 		System.out.println("Pila: "+pila.toString());

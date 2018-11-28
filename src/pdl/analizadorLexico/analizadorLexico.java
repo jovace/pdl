@@ -10,7 +10,7 @@ public class analizadorLexico{
 	public static void main(String[] args){
 		//En esta variable (o como sea que lo hagamos) tendremos los caracteres de codigo de entrada
 		//ACABA SIEMPRE CON EL CARACTER \t, QUE SERIA EL END OF FILE. 
-		String codigo="function sumar(){i=i+1;} \t";
+		String codigo="function int sumar(string fecha){i=j;} \t";
 		//System.out.println(codigo);
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
@@ -214,7 +214,7 @@ public class analizadorLexico{
 					resultado=new Token(0,1);
 				}else if(comp.equals("int")) {
 					resultado=new Token(0,2);
-				}else if(comp.equals("char")) {
+				}else if(comp.equals("string")) {
 					resultado=new Token(0,3);
 				}else if(comp.equals("bool")) {
 					resultado=new Token(0,4);
