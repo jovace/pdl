@@ -8,11 +8,9 @@ public class analizadorLexico{
 	static String cadena="";
 
 	public static void main(String[] args){
-		analizadorSintactico a = new analizadorSintactico();
-		
 		//En esta variable (o como sea que lo hagamos) tendremos los caracteres de codigo de entrada
 		//ACABA SIEMPRE CON EL CARACTER \t, QUE SERIA EL END OF FILE. 
-		String codigo="1+2\t";
+		String codigo="var int jorge = jorge2 + 2 ; \t";
 		//System.out.println(codigo);
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
@@ -32,7 +30,11 @@ public class analizadorLexico{
 
 		//listaTokens contiene la lista de tokens completa, lo que hay que devolver. Se puede llamar a su metodo .toString para 
 		//el fichero de salida que hay que generar.
-		//System.out.println("");
+		
+		
+		analizadorSintactico a = new analizadorSintactico();
+		
+		System.out.println(a.analizar(listaTokens));
 
 	}
 

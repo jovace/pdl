@@ -520,18 +520,66 @@ public class analizadorSintactico {
 		tablaTransicion.put("XX", filaXX);
 		
 		
-		ArrayList<String> tokens=new ArrayList<>();
-		tokens.add("var");
-		tokens.add("int");
-		tokens.add("id");
-		tokens.add("=");
-		tokens.add("id");
-		tokens.add("+");
-		tokens.add("id");
-		tokens.add(";");
-		tokens.add("$");
-		boolean bol=analizar(tokens);
-		System.out.println(bol);
+		
+		
+		tokenaTerminales.put("{0,0}", "function");
+		tokenaTerminales.put("{0,1}", "var");
+		tokenaTerminales.put("{0,2}", "int");
+		tokenaTerminales.put("{0,3}", "string");
+		tokenaTerminales.put("{0,4}", "bool");
+		tokenaTerminales.put("{0,5}", "for");
+		tokenaTerminales.put("{0,6}", "cte_logica");
+		tokenaTerminales.put("{0,7}", "cte_logica");
+		tokenaTerminales.put("{0,8}", "return");
+		tokenaTerminales.put("{0,9}", "print");
+		tokenaTerminales.put("{0,10}", "prompt");
+		
+		tokenaTerminales.put("{1,0}", "+");
+		tokenaTerminales.put("{1,1}", "-");
+		tokenaTerminales.put("{1,2}", "*");
+		tokenaTerminales.put("{1,3}", "/");
+		tokenaTerminales.put("{1,4}", "%");
+		tokenaTerminales.put("{1,5}", "++");
+		tokenaTerminales.put("{1,6}", "--");
+		tokenaTerminales.put("{1,7}", "=");
+		tokenaTerminales.put("{1,8}", "|=");
+		
+		tokenaTerminales.put("{2,0}", "&&");
+		tokenaTerminales.put("{2,1}", "||");
+		tokenaTerminales.put("{2,2}", "==");
+		tokenaTerminales.put("{2,3}", "!");
+		
+		tokenaTerminales.put("{3,0}", "==");
+		tokenaTerminales.put("{3,1}", "!=");
+		tokenaTerminales.put("{3,2}", "<");
+		tokenaTerminales.put("{3,3}", ">");
+		tokenaTerminales.put("{3,4}", "<=");
+		tokenaTerminales.put("{3,5}", ">=");
+		
+		tokenaTerminales.put("{4,0}", "(");
+		tokenaTerminales.put("{4,1}", ")");
+		tokenaTerminales.put("{4,2}", "{");
+		tokenaTerminales.put("{4,3}", "}");
+		tokenaTerminales.put("{4,4}", ";");
+		tokenaTerminales.put("{4,5}", ",");
+		
+		tokenaTerminales.put("{9,-1}", "cte_cadena");
+		
+		tokenaTerminales.put("{10,-1}", "id");
+		
+		
+//		ArrayList<String> tokens=new ArrayList<>();
+//		tokens.add("var");
+//		tokens.add("int");
+//		tokens.add("id");
+//		tokens.add("=");
+//		tokens.add("id");
+//		tokens.add("+");
+//		tokens.add("id");
+//		tokens.add(";");
+//		tokens.add("$");
+//		boolean bol=analizar(tokens);
+//		System.out.println(bol);
 		//Construccion de tabla de transiciones
 		
 	}
@@ -542,9 +590,9 @@ public class analizadorSintactico {
 	 * Lo transformamos en sus correspondientes simbolos terminales.
 	 * Analizamos sintacticamente
 	 */
-	public boolean analizar(/*ArrayList<Token>*/ArrayList<String> listaTokens) {
+	public boolean analizar(ArrayList<Token> listaTokens) {
 		
-		ArrayList<String> codigo=listaTokens;//convertirTokenaTerminales(listaTokens);
+		ArrayList<String> codigo=convertirTokenaTerminales(listaTokens);
 		pila.clear();
 		pila.push("$");
 		pila.push("J");
@@ -580,9 +628,13 @@ public class analizadorSintactico {
 		ArrayList<String> codigo=new ArrayList<>();
 		
 		for(Token token : listaTokens) {
-			codigo.add(tokenaTerminales.get(token.tokenTipo()));
+			String terminal=tokenaTerminales.get(token.tokenTipo());
+			if(terminal==null) {
+				terminal="cte_int";
+			}
+			codigo.add(terminal);
 		}
-		
+		codigo.add("$");
 		return codigo;
 	}
 }

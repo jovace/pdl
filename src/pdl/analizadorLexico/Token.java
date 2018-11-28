@@ -83,6 +83,6 @@ public class Token{
 	}
 	
 	public String tokenTipo() {
-		return "{"+this.type+"; "+this.indice+"}";
+		return "{"+this.type+","+this.indice+"}";
 	}
 }
