@@ -10,7 +10,7 @@ public class analizadorLexico{
 	public static void main(String[] args){
 		//En esta variable (o como sea que lo hagamos) tendremos los caracteres de codigo de entrada
 		//ACABA SIEMPRE CON EL CARACTER \t, QUE SERIA EL END OF FILE. 
-		String codigo="var int jorge = jorge2 + 2 ; \t";
+		String codigo="function sumar(){i=i+1;} \t";
 		//System.out.println(codigo);
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
@@ -166,22 +166,22 @@ public class analizadorLexico{
 				estadoActual=0;
 				break;
 			case "{":
-				resultado=new Token(4,0);
-				cadena="";
-				estadoActual=0;
-				break;
-			case "}":
-				resultado=new Token(4,1);
-				cadena="";
-				estadoActual=0;
-				break;
-			case "(":
 				resultado=new Token(4,2);
 				cadena="";
 				estadoActual=0;
 				break;
-			case ")":
+			case "}":
 				resultado=new Token(4,3);
+				cadena="";
+				estadoActual=0;
+				break;
+			case "(":
+				resultado=new Token(4,0);
+				cadena="";
+				estadoActual=0;
+				break;
+			case ")":
+				resultado=new Token(4,1);
 				cadena="";
 				estadoActual=0;
 				break;

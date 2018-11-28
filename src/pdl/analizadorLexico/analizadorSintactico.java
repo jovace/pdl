@@ -606,6 +606,10 @@ public class analizadorSintactico {
 					pila.pop();
 					puntero++;
 				}else {
+					System.out.println("Cima de pila: "+X.toString());
+					System.out.println("Token a leer: "+a.toString());
+					System.out.println("Pila: "+pila.toString());
+					System.out.println("Archivo leido: \n"+codigo.subList(0, puntero));
 					return false;
 				}
 			}else if(noTerminales.contains(X)) {
@@ -616,6 +620,10 @@ public class analizadorSintactico {
 					pila.push(produccion.get(i));
 				}
 			}else {
+				System.out.println("Cima de pila: "+X.toString());
+				System.out.println("Token a leer: "+a.toString());
+				System.out.println("Pila: "+pila.toString());
+				System.out.println("Archivo leido: \n"+codigo.subList(0, puntero));
 				return false;
 			}
 		}
