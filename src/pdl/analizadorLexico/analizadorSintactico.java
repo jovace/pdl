@@ -9,15 +9,15 @@ import java.util.Stack;
 
 public class analizadorSintactico {
 	Stack<String> pila = new Stack<>();
-	Map<String,Map<String,ArrayList<String>>> tablaTransicion = new HashMap<>();
+	Map<String, Map<String, ArrayList<String>>> tablaTransicion = new HashMap<>();
 	Set<String> terminales = new HashSet<>();
 	Set<String> noTerminales = new HashSet<>();
-	Map<String,String> tokenaTerminales = new HashMap<>();
-	
+	Map<String, String> tokenaTerminales = new HashMap<>();
+
 	public analizadorSintactico() {
-		//Inicializar lista terminales, no terminales y tabla de transicion
-		
-		//iniz terminales
+		// Inicializar lista terminales, no terminales y tabla de transicion
+
+		// iniz terminales
 		terminales.add("var");
 		terminales.add("id");
 		terminales.add("int");
@@ -57,8 +57,8 @@ public class analizadorSintactico {
 		terminales.add("cte_int");
 		terminales.add("cte_cadena");
 		terminales.add("cte_logica");
-		
-		//iniz no terminales
+
+		// iniz no terminales
 		noTerminales.add("J");
 		noTerminales.add("D");
 		noTerminales.add("T");
@@ -78,13 +78,13 @@ public class analizadorSintactico {
 		noTerminales.add("R");
 		noTerminales.add("B");
 		noTerminales.add("SS");
-		
-		//iniz tabla
+
+		// iniz tabla
 		ArrayList<String> produccionAcierrap = new ArrayList<>();
 		ArrayList<String> produccionAbool = new ArrayList<>();
 		Map<String, ArrayList<String>> filaA = new HashMap<>();
 		produccionAcierrap.add("38");
-		filaA.put(")",produccionAcierrap);
+		filaA.put(")", produccionAcierrap);
 		produccionAbool.add("37");
 		produccionAbool.add("T");
 		produccionAbool.add("id");
@@ -93,7 +93,7 @@ public class analizadorSintactico {
 		filaA.put("int", produccionAbool);
 		filaA.put("string", produccionAbool);
 		tablaTransicion.put("A", filaA);
-		
+
 		ArrayList<String> produccionAAcierrap = new ArrayList<>();
 		ArrayList<String> produccionAAcomaT = new ArrayList<>();
 		Map<String, ArrayList<String>> filaAA = new HashMap<>();
@@ -106,7 +106,7 @@ public class analizadorSintactico {
 		produccionAAcomaT.add("AA");
 		filaAA.put(",", produccionAAcomaT);
 		tablaTransicion.put("AA", filaAA);
-		
+
 		ArrayList<String> produccionBabrep = new ArrayList<>();
 		ArrayList<String> produccionBctelog = new ArrayList<>();
 		ArrayList<String> produccionBid = new ArrayList<>();
@@ -123,8 +123,7 @@ public class analizadorSintactico {
 		produccionBid.add("id");
 		filaB.put("id", produccionBid);
 		tablaTransicion.put("B", filaB);
-		
-		
+
 		ArrayList<String> produccionCSC = new ArrayList<>();
 		ArrayList<String> produccionCDC = new ArrayList<>();
 		ArrayList<String> produccionClambda = new ArrayList<>();
@@ -144,8 +143,7 @@ public class analizadorSintactico {
 		produccionClambda.add("43");
 		filaC.put("}", produccionClambda);
 		tablaTransicion.put("C", filaC);
-		
-		
+
 		ArrayList<String> produccionD = new ArrayList<>();
 		Map<String, ArrayList<String>> filaD = new HashMap<>();
 		produccionD.add("4");
@@ -156,8 +154,7 @@ public class analizadorSintactico {
 		produccionD.add(";");
 		filaD.put("var", produccionD);
 		tablaTransicion.put("D", filaD);
-		
-		
+
 		ArrayList<String> produccionE = new ArrayList<>();
 		Map<String, ArrayList<String>> filaE = new HashMap<>();
 		produccionE.add("11");
@@ -170,9 +167,7 @@ public class analizadorSintactico {
 		filaE.put("cte_logica", produccionE);
 		filaE.put("id", produccionE);
 		tablaTransicion.put("E", filaE);
-		
-		
-		
+
 		ArrayList<String> produccionElambda = new ArrayList<>();
 		ArrayList<String> produccionEmod = new ArrayList<>();
 		ArrayList<String> produccionEmult = new ArrayList<>();
@@ -223,8 +218,7 @@ public class analizadorSintactico {
 		produccionEresta.add("EE");
 		filaEE.put("-", produccionEresta);
 		tablaTransicion.put("EE", filaEE);
-		
-		
+
 		ArrayList<String> produccionFfunction = new ArrayList<>();
 		Map<String, ArrayList<String>> filaF = new HashMap<>();
 		produccionFfunction.add("34");
@@ -236,11 +230,10 @@ public class analizadorSintactico {
 		produccionFfunction.add(")");
 		produccionFfunction.add("{");
 		produccionFfunction.add("C");
-		produccionFfunction.add("}");		
-		filaF.put("function",produccionFfunction);
+		produccionFfunction.add("}");
+		filaF.put("function", produccionFfunction);
 		tablaTransicion.put("F", filaF);
-		
-		
+
 		ArrayList<String> produccionGnoB = new ArrayList<>();
 		ArrayList<String> produccionGpXp = new ArrayList<>();
 		ArrayList<String> produccionGctecadena = new ArrayList<>();
@@ -263,69 +256,65 @@ public class analizadorSintactico {
 		produccionGctelogica.add("cte_logica");
 		produccionGidGG.add("13");
 		produccionGidGG.add("id");
-		produccionGidGG.add("GG");		
-		filaG.put("!",produccionGnoB);
-		filaG.put("(",produccionGpXp);
-		filaG.put("cte_cadena",produccionGctecadena);
-		filaG.put("cte_int",produccionGcteint);
-		filaG.put("cte_logica",produccionGctelogica);
-		filaG.put("id",produccionGidGG);		
+		produccionGidGG.add("GG");
+		filaG.put("!", produccionGnoB);
+		filaG.put("(", produccionGpXp);
+		filaG.put("cte_cadena", produccionGctecadena);
+		filaG.put("cte_int", produccionGcteint);
+		filaG.put("cte_logica", produccionGctelogica);
+		filaG.put("id", produccionGidGG);
 		tablaTransicion.put("G", filaG);
-		
-		
+
 		ArrayList<String> produccionGGlambda = new ArrayList<>();
 		ArrayList<String> produccionGGmasmas = new ArrayList<>();
 		ArrayList<String> produccionGGmenosmenos = new ArrayList<>();
 		Map<String, ArrayList<String>> filaGG = new HashMap<>();
-		produccionGGlambda.add("18");		
+		produccionGGlambda.add("18");
 		produccionGGmasmas.add("20");
 		produccionGGmasmas.add("++");
 		produccionGGmenosmenos.add("19");
-		produccionGGmenosmenos.add("--");		
-		filaGG.put("$",produccionGGlambda);
-		filaGG.put("%",produccionGGlambda);
-		filaGG.put("&&",produccionGGlambda);
-		filaGG.put(")",produccionGGlambda);
-		filaGG.put("*",produccionGGlambda);
-		filaGG.put("+",produccionGGlambda);
-		filaGG.put("-",produccionGGlambda);
-		filaGG.put("//",produccionGGlambda);
-		filaGG.put(";",produccionGGlambda);
-		filaGG.put("<",produccionGGlambda);
-		filaGG.put("<=",produccionGGlambda);
-		filaGG.put(">=",produccionGGlambda);
-		filaGG.put(">",produccionGGlambda);
-		filaGG.put("for",produccionGGlambda);
-		filaGG.put("function",produccionGGlambda);
-		filaGG.put("id",produccionGGlambda);
-		filaGG.put("print",produccionGGlambda);
-		filaGG.put("prompt",produccionGGlambda);
-		filaGG.put("return",produccionGGlambda);
-		filaGG.put("var",produccionGGlambda);
-		filaGG.put("||",produccionGGlambda);
-		filaGG.put("}",produccionGGlambda);		
-		filaGG.put("++",produccionGGmasmas);
-		filaGG.put("--",produccionGGmenosmenos);		
+		produccionGGmenosmenos.add("--");
+		filaGG.put("$", produccionGGlambda);
+		filaGG.put("%", produccionGGlambda);
+		filaGG.put("&&", produccionGGlambda);
+		filaGG.put(")", produccionGGlambda);
+		filaGG.put("*", produccionGGlambda);
+		filaGG.put("+", produccionGGlambda);
+		filaGG.put("-", produccionGGlambda);
+		filaGG.put("//", produccionGGlambda);
+		filaGG.put(";", produccionGGlambda);
+		filaGG.put("<", produccionGGlambda);
+		filaGG.put("<=", produccionGGlambda);
+		filaGG.put(">=", produccionGGlambda);
+		filaGG.put(">", produccionGGlambda);
+		filaGG.put("for", produccionGGlambda);
+		filaGG.put("function", produccionGGlambda);
+		filaGG.put("id", produccionGGlambda);
+		filaGG.put("print", produccionGGlambda);
+		filaGG.put("prompt", produccionGGlambda);
+		filaGG.put("return", produccionGGlambda);
+		filaGG.put("var", produccionGGlambda);
+		filaGG.put("||", produccionGGlambda);
+		filaGG.put("}", produccionGGlambda);
+		filaGG.put("++", produccionGGmasmas);
+		filaGG.put("--", produccionGGmenosmenos);
 		tablaTransicion.put("GG", filaGG);
-		
-		
+
 		ArrayList<String> produccionHT = new ArrayList<>();
 		ArrayList<String> produccionHlambda = new ArrayList<>();
 		Map<String, ArrayList<String>> filaH = new HashMap<>();
 		produccionHT.add("35");
-		produccionHT.add("T");		
-		produccionHlambda.add("36");			
-		filaH.put("bool",produccionHT);
-		filaH.put("int",produccionHT);
-		filaH.put("string",produccionHT);		
-		filaH.put("id",produccionHlambda);		
+		produccionHT.add("T");
+		produccionHlambda.add("36");
+		filaH.put("bool", produccionHT);
+		filaH.put("int", produccionHT);
+		filaH.put("string", produccionHT);
+		filaH.put("id", produccionHlambda);
 		tablaTransicion.put("H", filaH);
-		
-		
-		
+
 		ArrayList<String> produccionIlambda = new ArrayList<>();
 		ArrayList<String> produccionIigualE = new ArrayList<>();
-		ArrayList<String> produccionIoigualE = new ArrayList<>();		
+		ArrayList<String> produccionIoigualE = new ArrayList<>();
 		Map<String, ArrayList<String>> filaI = new HashMap<>();
 		produccionIlambda.add("10");
 		produccionIigualE.add("8");
@@ -333,23 +322,21 @@ public class analizadorSintactico {
 		produccionIigualE.add("E");
 		produccionIoigualE.add("9");
 		produccionIoigualE.add("|=");
-		produccionIoigualE.add("E");		
-		filaI.put("$",produccionIlambda);
-		filaI.put(";",produccionIlambda);
-		filaI.put("for",produccionIlambda);
-		filaI.put("function",produccionIlambda);
-		filaI.put("id",produccionIlambda);
-		filaI.put("print",produccionIlambda);
-		filaI.put("prompt",produccionIlambda);
-		filaI.put("return",produccionIlambda);
-		filaI.put("var",produccionIlambda);
-		filaI.put("}",produccionIlambda);		
-		filaI.put("=",produccionIigualE);
-		filaI.put("|=",produccionIoigualE);		
+		produccionIoigualE.add("E");
+		filaI.put("$", produccionIlambda);
+		filaI.put(";", produccionIlambda);
+		filaI.put("for", produccionIlambda);
+		filaI.put("function", produccionIlambda);
+		filaI.put("id", produccionIlambda);
+		filaI.put("print", produccionIlambda);
+		filaI.put("prompt", produccionIlambda);
+		filaI.put("return", produccionIlambda);
+		filaI.put("var", produccionIlambda);
+		filaI.put("}", produccionIlambda);
+		filaI.put("=", produccionIigualE);
+		filaI.put("|=", produccionIoigualE);
 		tablaTransicion.put("I", filaI);
-		
-		
-		
+
 		ArrayList<String> produccionJdol = new ArrayList<>();
 		ArrayList<String> produccionJSJ = new ArrayList<>();
 		ArrayList<String> produccionJFJ = new ArrayList<>();
@@ -375,27 +362,23 @@ public class analizadorSintactico {
 		filaJ.put("function", produccionJFJ);
 		filaJ.put("var", produccionJDJ);
 		tablaTransicion.put("J", filaJ);
-		
-		
-		
-		
+
 		ArrayList<String> produccionRlamba = new ArrayList<>();
 		ArrayList<String> produccionRimplicaX = new ArrayList<>();
-		Map<String, ArrayList<String>> filaR= new HashMap<>();
+		Map<String, ArrayList<String>> filaR = new HashMap<>();
 		produccionRlamba.add("50");
 		produccionRimplicaX.add("49");
 		produccionRimplicaX.add("X");
-		filaR.put("!",produccionRimplicaX);
-		filaR.put("(",produccionRimplicaX);
-		filaR.put(";",produccionRlamba);
-		filaR.put("cte_logica",produccionRimplicaX);
-		filaR.put("cte_cadena",produccionRimplicaX);
-		filaR.put("cte_int",produccionRimplicaX);
-		filaR.put("id",produccionRimplicaX);
+		filaR.put("!", produccionRimplicaX);
+		filaR.put("(", produccionRimplicaX);
+		filaR.put(";", produccionRlamba);
+		filaR.put("cte_logica", produccionRimplicaX);
+		filaR.put("cte_cadena", produccionRimplicaX);
+		filaR.put("cte_int", produccionRimplicaX);
+		filaR.put("id", produccionRimplicaX);
 		tablaTransicion.put("R", filaR);
 
-
-		Map<String, ArrayList<String>> filaS= new HashMap<>();
+		Map<String, ArrayList<String>> filaS = new HashMap<>();
 		ArrayList<String> produccionSforpDpuntocomaXpuntocomaetc = new ArrayList<>();
 		ArrayList<String> produccionSidigualx = new ArrayList<>();
 		ArrayList<String> produccionSprintpxp = new ArrayList<>();
@@ -405,7 +388,7 @@ public class analizadorSintactico {
 		produccionSforpDpuntocomaXpuntocomaetc.add("for");
 		produccionSforpDpuntocomaXpuntocomaetc.add("(");
 		produccionSforpDpuntocomaXpuntocomaetc.add("D");
-		//produccionSforpDpuntocomaXpuntocomaetc.add(";");
+		// produccionSforpDpuntocomaXpuntocomaetc.add(";");
 		produccionSforpDpuntocomaXpuntocomaetc.add("X");
 		produccionSforpDpuntocomaXpuntocomaetc.add(";");
 		produccionSforpDpuntocomaXpuntocomaetc.add("SS");
@@ -434,15 +417,14 @@ public class analizadorSintactico {
 		produccionSreturnR.add("return");
 		produccionSreturnR.add("R");
 		produccionSreturnR.add(";");
-		filaS.put("for",produccionSforpDpuntocomaXpuntocomaetc);
-		filaS.put("id",produccionSidigualx);
-		filaS.put("print",produccionSprintpxp);
-		filaS.put("prompt",produccionSpromtpidp);
-		filaS.put("return",produccionSreturnR);
+		filaS.put("for", produccionSforpDpuntocomaXpuntocomaetc);
+		filaS.put("id", produccionSidigualx);
+		filaS.put("print", produccionSprintpxp);
+		filaS.put("prompt", produccionSpromtpidp);
+		filaS.put("return", produccionSreturnR);
 		tablaTransicion.put("S", filaS);
-		
-		
-		Map<String, ArrayList<String>> filaSS= new HashMap<>();
+
+		Map<String, ArrayList<String>> filaSS = new HashMap<>();
 		ArrayList<String> produccionSSidigualX = new ArrayList<>();
 		ArrayList<String> produccionSSprintpxp = new ArrayList<>();
 		produccionSSidigualX.add("54");
@@ -454,29 +436,25 @@ public class analizadorSintactico {
 		produccionSSprintpxp.add("(");
 		produccionSSprintpxp.add("X");
 		produccionSSprintpxp.add(")");
-		filaSS.put("id",produccionSSidigualX);
-		filaSS.put("print",produccionSSprintpxp);
+		filaSS.put("id", produccionSSidigualX);
+		filaSS.put("print", produccionSSprintpxp);
 		tablaTransicion.put("SS", filaSS);
-		
-		
-		
-		Map<String, ArrayList<String>> filaT= new HashMap<>();
+
+		Map<String, ArrayList<String>> filaT = new HashMap<>();
 		ArrayList<String> produccionTbool = new ArrayList<>();
 		ArrayList<String> produccionTint = new ArrayList<>();
 		ArrayList<String> produccionTstring = new ArrayList<>();
-		produccionTint.add("6");
+		produccionTint.add("5");
 		produccionTint.add("int");
-		produccionTstring.add("7");
+		produccionTstring.add("6");
 		produccionTstring.add("string");
-		produccionTbool.add("8");
+		produccionTbool.add("7");
 		produccionTbool.add("bool");
-		filaT.put("bool",produccionTbool);
-		filaT.put("int",produccionTint);
-		filaT.put("string",produccionTstring);
+		filaT.put("bool", produccionTbool);
+		filaT.put("int", produccionTint);
+		filaT.put("string", produccionTstring);
 		tablaTransicion.put("T", filaT);
-		
-		
-		
+
 		ArrayList<String> produccionX = new ArrayList<>();
 		Map<String, ArrayList<String>> filaX = new HashMap<>();
 		produccionX.add("27");
@@ -489,10 +467,7 @@ public class analizadorSintactico {
 		filaX.put("cte_logica", produccionX);
 		filaX.put("id", produccionX);
 		tablaTransicion.put("X", filaX);
-		
-		
-		
-		
+
 		ArrayList<String> produccionXXyy = new ArrayList<>();
 		ArrayList<String> produccionXXm = new ArrayList<>();
 		ArrayList<String> produccionXXmi = new ArrayList<>();
@@ -526,13 +501,10 @@ public class analizadorSintactico {
 		produccionXXm.add("E");
 		filaXX.put("<", produccionXXm);
 		produccionXXlambda.add("56");
-		filaXX.put(")",produccionXXlambda);
+		filaXX.put(")", produccionXXlambda);
 		filaXX.put(";", produccionXXlambda);
 		tablaTransicion.put("XX", filaXX);
-		
-		
-		
-		
+
 		tokenaTerminales.put("{0,0}", "function");
 		tokenaTerminales.put("{0,1}", "var");
 		tokenaTerminales.put("{0,2}", "int");
@@ -544,7 +516,7 @@ public class analizadorSintactico {
 		tokenaTerminales.put("{0,8}", "return");
 		tokenaTerminales.put("{0,9}", "print");
 		tokenaTerminales.put("{0,10}", "prompt");
-		
+
 		tokenaTerminales.put("{1,0}", "+");
 		tokenaTerminales.put("{1,1}", "-");
 		tokenaTerminales.put("{1,2}", "*");
@@ -554,112 +526,117 @@ public class analizadorSintactico {
 		tokenaTerminales.put("{1,6}", "--");
 		tokenaTerminales.put("{1,7}", "=");
 		tokenaTerminales.put("{1,8}", "|=");
-		
+
 		tokenaTerminales.put("{2,0}", "&&");
 		tokenaTerminales.put("{2,1}", "||");
 		tokenaTerminales.put("{2,2}", "==");
 		tokenaTerminales.put("{2,3}", "!");
-		
+
 		tokenaTerminales.put("{3,0}", "==");
 		tokenaTerminales.put("{3,1}", "!=");
 		tokenaTerminales.put("{3,2}", "<");
 		tokenaTerminales.put("{3,3}", ">");
 		tokenaTerminales.put("{3,4}", "<=");
 		tokenaTerminales.put("{3,5}", ">=");
-		
+
 		tokenaTerminales.put("{4,0}", "(");
 		tokenaTerminales.put("{4,1}", ")");
 		tokenaTerminales.put("{4,2}", "{");
 		tokenaTerminales.put("{4,3}", "}");
 		tokenaTerminales.put("{4,4}", ";");
 		tokenaTerminales.put("{4,5}", ",");
-		
+
 		tokenaTerminales.put("{9,-1}", "cte_cadena");
-		
+
 		tokenaTerminales.put("{10,-1}", "id");
-		
-		
-//		ArrayList<String> tokens=new ArrayList<>();
-//		tokens.add("var");
-//		tokens.add("int");
-//		tokens.add("id");
-//		tokens.add("=");
-//		tokens.add("id");
-//		tokens.add("+");
-//		tokens.add("id");
-//		tokens.add(";");
-//		tokens.add("$");
-//		boolean bol=analizar(tokens);
-//		System.out.println(bol);
-		//Construccion de tabla de transiciones
-		
+
+		// ArrayList<String> tokens=new ArrayList<>();
+		// tokens.add("var");
+		// tokens.add("int");
+		// tokens.add("id");
+		// tokens.add("=");
+		// tokens.add("id");
+		// tokens.add("+");
+		// tokens.add("id");
+		// tokens.add(";");
+		// tokens.add("$");
+		// boolean bol=analizar(tokens);
+		// System.out.println(bol);
+		// Construccion de tabla de transiciones
+
 	}
-	
-	
+
 	/*
-	 * Recibimos lista de tokens de analizadorLexico.
-	 * Lo transformamos en sus correspondientes simbolos terminales.
-	 * Analizamos sintacticamente
+	 * Recibimos lista de tokens de analizadorLexico. Lo transformamos en sus
+	 * correspondientes simbolos terminales. Analizamos sintacticamente
 	 */
 	public boolean analizar(ArrayList<Token> listaTokens) {
 		ArrayList<Integer> arbol = new ArrayList<>();
-		ArrayList<String> codigo=convertirTokenaTerminales(listaTokens);
+		ArrayList<String> codigo = convertirTokenaTerminales(listaTokens);
 		pila.clear();
 		pila.push("$");
 		pila.push("J");
-		int puntero=0;
-		
-		while(!pila.peek().equals("$")) {
-			String X=pila.peek();
-			String a=codigo.get(puntero);
-			if(terminales.contains(X)) {
-				if(X.equals(a)) {
+		int puntero = 0;
+
+		while (!pila.peek().equals("$")) {
+			String X = pila.peek();
+			String a = codigo.get(puntero);
+			if (terminales.contains(X)) {
+				if (X.equals(a)) {
 					pila.pop();
 					puntero++;
-				}else {
-					printError("No se puede consumir caracter",X,a,pila,codigo,puntero,arbol);
+				} else {
+					printError("No se puede consumir caracter", X, a, pila, codigo, puntero, arbol);
 					return false;
 				}
-			}else if(noTerminales.contains(X)) {
+			} else if (noTerminales.contains(X)) {
 				pila.pop();
-				
+
 				ArrayList<String> produccion = tablaTransicion.get(X).get(a);
-				if(produccion==null) {
-					printError("No existe dicha entrada en tabla sintactica",X,a,pila,codigo,puntero,arbol);
+				if (produccion == null) {
+					printError("No existe dicha entrada en tabla sintactica", X, a, pila, codigo, puntero, arbol);
 					return false;
 				}
-				arbol.add(Integer.parseInt(produccion.get(0)));
-				for(int i=produccion.size()-1;i>0;i--) {					
+				arbol.add(Integer.parseInt(produccion.get(0)) + 1);
+				for (int i = produccion.size() - 1; i > 0; i--) {
 					pila.push(produccion.get(i));
 				}
-			}else {
-				printError("Simbolo no reconocido",X,a,pila,codigo,puntero,arbol);
+			} else {
+				printError("Simbolo no reconocido", X, a, pila, codigo, puntero, arbol);
 				return false;
 			}
 		}
-		
+
+		System.out.println(getParseArbol(arbol));
 		return true;
 	}
 
-
-	private void printError(String lugar, String X, String a, Stack<String> pila2, ArrayList<String> codigo, int puntero, ArrayList<Integer> arbol) {
+	private void printError(String lugar, String X, String a, Stack<String> pila2, ArrayList<String> codigo,
+			int puntero, ArrayList<Integer> arbol) {
 		System.out.println(lugar);
-		System.out.println("Cima de pila: "+X.toString());
-		System.out.println("Token a leer: "+a.toString());
-		System.out.println("Pila: "+pila.toString());
-		System.out.println("Archivo leido: \n"+codigo.subList(0, puntero));
-		System.out.println("Arbol: \n"+arbol.toString());
-		System.out.println("Lista tokens: "+codigo.toString());
+		System.out.println("Cima de pila: " + X.toString());
+		System.out.println("Token a leer: " + a.toString());
+		System.out.println("Pila: " + pila.toString());
+		System.out.println("Archivo leido: \n" + codigo.subList(0, puntero));
+		System.out.println("Arbol: \n" + arbol.toString());
+		System.out.println("Lista tokens: " + codigo.toString());
 	}
 
+	private String getParseArbol(ArrayList<Integer> arbol) {
+		String resultado = "Desc ";
+		for (Integer entero : arbol) {
+			resultado = resultado + entero + " ";
+		}
+		return resultado;
+	}
 
 	private ArrayList<String> convertirTokenaTerminales(ArrayList<Token> listaTokens) {
-		ArrayList<String> codigo=new ArrayList<>();
-		
-		for(Token token : listaTokens) {
-			String terminal=tokenaTerminales.get(token.tokenTipo());
-			if(terminal==null) {
-				terminal="cte_int";
+		ArrayList<String> codigo = new ArrayList<>();
+
+		for (Token token : listaTokens) {
+			String terminal = tokenaTerminales.get(token.tokenTipo());
+			if (terminal == null) {
+				terminal = "cte_int";
 			}
 			codigo.add(terminal);
 		}
