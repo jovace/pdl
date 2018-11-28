@@ -606,29 +606,35 @@ public class analizadorSintactico {
 					pila.pop();
 					puntero++;
 				}else {
-					System.out.println("Cima de pila: "+X.toString());
-					System.out.println("Token a leer: "+a.toString());
-					System.out.println("Pila: "+pila.toString());
-					System.out.println("Archivo leido: \n"+codigo.subList(0, puntero));
+					printError(X,a,pila,codigo,puntero);
 					return false;
 				}
 			}else if(noTerminales.contains(X)) {
 				pila.pop();
 				
 				ArrayList<String> produccion = tablaTransicion.get(X).get(a);
+				if(produccion==null) {
+					printError(X,a,pila,codigo,puntero);
+					return false;
+				}
 				for(int i=produccion.size()-1;i>0;i--) {					
 					pila.push(produccion.get(i));
 				}
 			}else {
-				System.out.println("Cima de pila: "+X.toString());
-				System.out.println("Token a leer: "+a.toString());
-				System.out.println("Pila: "+pila.toString());
-				System.out.println("Archivo leido: \n"+codigo.subList(0, puntero));
+				printError(X,a,pila,codigo,puntero);
 				return false;
 			}
 		}
 		
 		return true;
+	}
+
+
+	private void printError(String X, String a, Stack<String> pila2, ArrayList<String> codigo, int puntero) {
+		System.out.println("Cima de pila: "+X.toString());
+		System.out.println("Token a leer: "+a.toString());
+		System.out.println("Pila: "+pila.toString());
+		System.out.println("Archivo leido: \n"+codigo.subList(0, puntero));
 	}
 
 
