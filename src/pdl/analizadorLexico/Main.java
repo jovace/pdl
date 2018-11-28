@@ -8,7 +8,7 @@ public class Main {
 	
 	public static void main(String[] args){
 		lex= new analizadorLexico();
-		lex.analizar("function suma(){i=i+1;} \t");
+		lex.analizar("function suma(){i=i+1; } \t");
 		
 		System.out.println("RESULTADO: "+probarTodo());
 

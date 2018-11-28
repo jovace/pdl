@@ -648,6 +648,7 @@ public class analizadorSintactico {
 		System.out.println("Pila: "+pila.toString());
 		System.out.println("Archivo leido: \n"+codigo.subList(0, puntero));
 		System.out.println("Arbol: \n"+arbol.toString());
+		System.out.println("Lista tokens: "+codigo.toString());
 	}
 
 
