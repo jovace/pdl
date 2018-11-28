@@ -414,7 +414,8 @@ public class analizadorSintactico {
 		produccionSidigualx.add("44");
 		produccionSidigualx.add("id");
 		produccionSidigualx.add("=");
-		produccionSidigualx.add("X");
+		produccionSidigualx.add("E");
+		produccionSidigualx.add(";");
 		produccionSprintpxp.add("46");
 		produccionSprintpxp.add("print");
 		produccionSprintpxp.add("(");
@@ -472,7 +473,7 @@ public class analizadorSintactico {
 		
 		ArrayList<String> produccionX = new ArrayList<>();
 		Map<String, ArrayList<String>> filaX = new HashMap<>();
-		produccionX.add("29");
+		produccionX.add("27");
 		produccionX.add("E");
 		produccionX.add("XX");
 		filaX.put("!", produccionX);
@@ -591,7 +592,7 @@ public class analizadorSintactico {
 	 * Analizamos sintacticamente
 	 */
 	public boolean analizar(ArrayList<Token> listaTokens) {
-		
+		ArrayList<Integer> arbol = new ArrayList<>();
 		ArrayList<String> codigo=convertirTokenaTerminales(listaTokens);
 		pila.clear();
 		pila.push("$");
@@ -606,7 +607,7 @@ public class analizadorSintactico {
 					pila.pop();
 					puntero++;
 				}else {
-					printError(X,a,pila,codigo,puntero);
+					printError(X,a,pila,codigo,puntero,arbol);
 					return false;
 				}
 			}else if(noTerminales.contains(X)) {
@@ -614,14 +615,15 @@ public class analizadorSintactico {
 				
 				ArrayList<String> produccion = tablaTransicion.get(X).get(a);
 				if(produccion==null) {
-					printError(X,a,pila,codigo,puntero);
+					printError(X,a,pila,codigo,puntero,arbol);
 					return false;
 				}
+				arbol.add(Integer.parseInt(produccion.get(0)));
 				for(int i=produccion.size()-1;i>0;i--) {					
 					pila.push(produccion.get(i));
 				}
 			}else {
-				printError(X,a,pila,codigo,puntero);
+				printError(X,a,pila,codigo,puntero,arbol);
 				return false;
 			}
 		}
@@ -630,11 +632,12 @@ public class analizadorSintactico {
 	}
 
 
-	private void printError(String X, String a, Stack<String> pila2, ArrayList<String> codigo, int puntero) {
+	private void printError(String X, String a, Stack<String> pila2, ArrayList<String> codigo, int puntero, ArrayList<Integer> arbol) {
 		System.out.println("Cima de pila: "+X.toString());
 		System.out.println("Token a leer: "+a.toString());
 		System.out.println("Pila: "+pila.toString());
 		System.out.println("Archivo leido: \n"+codigo.subList(0, puntero));
+		System.out.println("Arbol: \n"+arbol.toString());
 	}
 
 
