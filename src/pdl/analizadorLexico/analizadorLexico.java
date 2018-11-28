@@ -226,7 +226,7 @@ public class analizadorLexico{
 					resultado=new Token(0,7);
 				}else if(comp.equals("return")) {
 					resultado=new Token(0,8);
-				}else if(comp.equals("write")) {
+				}else if(comp.equals("print")) {
 					resultado=new Token(0,9);
 				}else if(comp.equals("prompt")) {
 					resultado=new Token(0,10);
@@ -329,7 +329,7 @@ public class analizadorLexico{
 					estadoActual=0;
 					break;
 				default:
-					resultado=new Token(1,3);
+					resultado=new Token(2,3);
 					resultado.setConsumeCaracter(false);
 					cadena="";
 					estadoActual=0;

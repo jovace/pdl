@@ -527,6 +527,7 @@ public class analizadorSintactico {
 		filaXX.put("<", produccionXXm);
 		produccionXXlambda.add("56");
 		filaXX.put(")",produccionXXlambda);
+		filaXX.put(";", produccionXXlambda);
 		tablaTransicion.put("XX", filaXX);
 		
 		

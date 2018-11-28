@@ -7,8 +7,8 @@ public class Main {
 	static analizadorLexico lex;
 	
 	public static void main(String[] args){
-		lex= new analizadorLexico();
-		lex.analizar("function suma(){i=i+1; } \t");
+//		lex= new analizadorLexico();
+//		lex.analizar("for(var int i=0;!(i<j);i=i+1) {i=i+1;} \t");
 		
 		System.out.println("RESULTADO: "+probarTodo());
 
@@ -20,10 +20,29 @@ public class Main {
 		ArrayList<String> listaPruebas = new ArrayList<>();
 		listaPruebas.add("function suma(){i=i+1; } \n");
 		listaPruebas.add("function int suma(){i=i+1; } \n");
+		listaPruebas.add("function int suma(){i=i+1;return;} \n");
+		listaPruebas.add("function int suma(){i=i+1;return i;} \n");
+		listaPruebas.add("function int suma(){i=i+1;return i+1;} \n");
+		//listaPruebas.add("function int suma(){i=i+1;return i--;} \n");
 		listaPruebas.add("function bool suma(){i=i+1;} \n");
-		listaPruebas.add("function string suma(){i=i+1;}");
-		listaPruebas.add("function string suma(int par1, bool par2, string par3){i=i+1;}");
+		listaPruebas.add("function string suma(){i=i+1;} \n");
+		listaPruebas.add("function string suma(int par1, bool par2, string par3){i=i+1;} \n");
 		listaPruebas.add("for(var int i=0;i<5;i=i+1) {i=i+1;} \t");
+		//listaPruebas.add("for(var int i=0;!(i<j);i=i+1) {i=i+1;} \t");
+		listaPruebas.add("for(var int i=0;i<j;i=i+1) {i=i+1;j=i+k;} \t");
+		//listaPruebas.add("for(var int i=0;true;i=i+1) {i=i+1;j=i+k;} \t");
+		listaPruebas.add("print(i); \t");
+		listaPruebas.add("prompt(i); \t");
+		listaPruebas.add("var bool x=(i&&j); \n");
+		//listaPruebas.add("var bool x=(i||j); \n");
+		listaPruebas.add("var bool x|=n; \n");
+		listaPruebas.add("var bool x|=(n&&i); \n");
+		listaPruebas.add("var bool x|=!j; \n");
+		listaPruebas.add("var bool x|=(n<i); \n");
+		listaPruebas.add("var bool x|=(n>i); \n");
+		listaPruebas.add("var bool x|=(n<=i); \n");
+		listaPruebas.add("var bool x|=(n>=i); \n");
+		//listaPruebas.add("var int x=0; \n x++; \n");
 		
 		for(String test : listaPruebas) {
 			lex= new analizadorLexico();
