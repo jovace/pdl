@@ -468,6 +468,7 @@ public class analizadorSintactico {
 		produccionTstring.add("7");
 		produccionTstring.add("string");
 		produccionTbool.add("8");
+		produccionTbool.add("bool");
 		filaT.put("bool",produccionTbool);
 		filaT.put("int",produccionTint);
 		filaT.put("string",produccionTstring);
