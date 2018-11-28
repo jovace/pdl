@@ -6,12 +6,8 @@ import java.util.HashMap;
 public class analizadorLexico{
 	static int estadoActual=0;
 	static String cadena="";
-
-	public static void main(String[] args){
-		//En esta variable (o como sea que lo hagamos) tendremos los caracteres de codigo de entrada
-		//ACABA SIEMPRE CON EL CARACTER \t, QUE SERIA EL END OF FILE. 
-		String codigo="function int sumar(string fecha, int hora,bool tipo){i=j;} \t";
-		//System.out.println(codigo);
+	
+	public boolean analizar(String codigo) {
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
 		int i=0;
@@ -34,8 +30,7 @@ public class analizadorLexico{
 		
 		analizadorSintactico a = new analizadorSintactico();
 		
-		System.out.println(a.analizar(listaTokens));
-
+		return a.analizar(listaTokens);
 	}
 
 	private static Token nextChar(char c) {

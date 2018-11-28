@@ -77,6 +77,7 @@ public class analizadorSintactico {
 		noTerminales.add("S");
 		noTerminales.add("R");
 		noTerminales.add("B");
+		noTerminales.add("SS");
 		
 		//iniz tabla
 		ArrayList<String> produccionAcierrap = new ArrayList<>();
@@ -404,13 +405,13 @@ public class analizadorSintactico {
 		produccionSforpDpuntocomaXpuntocomaetc.add("for");
 		produccionSforpDpuntocomaXpuntocomaetc.add("(");
 		produccionSforpDpuntocomaXpuntocomaetc.add("D");
-		produccionSforpDpuntocomaXpuntocomaetc.add(";");
+		//produccionSforpDpuntocomaXpuntocomaetc.add(";");
 		produccionSforpDpuntocomaXpuntocomaetc.add("X");
 		produccionSforpDpuntocomaXpuntocomaetc.add(";");
 		produccionSforpDpuntocomaXpuntocomaetc.add("SS");
 		produccionSforpDpuntocomaXpuntocomaetc.add(")");
 		produccionSforpDpuntocomaXpuntocomaetc.add("{");
-		produccionSforpDpuntocomaXpuntocomaetc.add("c");
+		produccionSforpDpuntocomaXpuntocomaetc.add("C");
 		produccionSforpDpuntocomaXpuntocomaetc.add("}");
 		produccionSidigualx.add("44");
 		produccionSidigualx.add("id");
@@ -498,6 +499,7 @@ public class analizadorSintactico {
 		ArrayList<String> produccionXXM = new ArrayList<>();
 		ArrayList<String> produccionXXMi = new ArrayList<>();
 		ArrayList<String> produccionXXoo = new ArrayList<>();
+		ArrayList<String> produccionXXlambda = new ArrayList<>();
 		Map<String, ArrayList<String>> filaXX = new HashMap<>();
 		produccionXXyy.add("35");
 		produccionXXyy.add("&&");
@@ -523,6 +525,8 @@ public class analizadorSintactico {
 		produccionXXm.add("<");
 		produccionXXm.add("E");
 		filaXX.put("<", produccionXXm);
+		produccionXXlambda.add("56");
+		filaXX.put(")",produccionXXlambda);
 		tablaTransicion.put("XX", filaXX);
 		
 		
