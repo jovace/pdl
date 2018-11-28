@@ -8,7 +8,7 @@ J -> D J
 J -> F J
 J -> S J
 J -> $
-D -> var T id I
+D -> var T id I ;
 T -> int
 T -> string
 T -> bool
@@ -64,4 +64,3 @@ SS -> print ( X )
 
 
 } 
-//// Comentario de final de fichero

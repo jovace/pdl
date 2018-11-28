@@ -13,7 +13,7 @@ public class analizadorLexico{
 		//En esta variable (o como sea que lo hagamos) tendremos los caracteres de codigo de entrada
 		//ACABA SIEMPRE CON EL CARACTER \t, QUE SERIA EL END OF FILE. 
 		String codigo="1+2\t";
-		System.out.println(codigo);
+		//System.out.println(codigo);
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
 		int i=0;
@@ -24,7 +24,6 @@ public class analizadorLexico{
 			if(resultado.getType()>-1) {
 				//Tenemos un token completo, lo anadimos a la lista de tokens
 				listaTokens.add(resultado);
-				System.out.println(resultado.toString());
 			}
 			if(resultado.consumeCaracter()) {
 				i++;

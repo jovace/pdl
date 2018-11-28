@@ -13,9 +13,6 @@ public class analizadorSintactico {
 	Set<String> terminales = new HashSet<>();
 	Set<String> noTerminales = new HashSet<>();
 	Map<String,String> tokenaTerminales = new HashMap<>();
-	//tipo,indice -> cadena
-	//8,9        -> sumasuma 
-	//Map<Character,Token> terminalesAToken = new HashMap<>();
 	
 	public analizadorSintactico() {
 		//Inicializar lista terminales, no terminales y tabla de transicion
