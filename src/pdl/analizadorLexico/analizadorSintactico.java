@@ -602,7 +602,7 @@ public class analizadorSintactico {
 					pila.pop();
 					puntero++;
 				} else {
-					printError("No se puede consumir caracter", X, a, pila, codigo, puntero, arbol);
+					printError("No se puede consumir caracter", X, a, pila, codigo, puntero, arbol, listaTokens);
 					return false;
 				}
 			} else if (noTerminales.contains(X)) {
@@ -610,7 +610,7 @@ public class analizadorSintactico {
 
 				ArrayList<String> produccion = tablaTransicion.get(X).get(a);
 				if (produccion == null) {
-					printError("No existe dicha entrada en tabla sintactica", X, a, pila, codigo, puntero, arbol);
+					printError("No existe dicha entrada en tabla sintactica", X, a, pila, codigo, puntero, arbol, listaTokens);
 					return false;
 				}
 				arbol.add(Integer.parseInt(produccion.get(0)) + 1);
@@ -618,24 +618,25 @@ public class analizadorSintactico {
 					pila.push(produccion.get(i));
 				}
 			} else {
-				printError("Simbolo no reconocido", X, a, pila, codigo, puntero, arbol);
+				printError("Simbolo no reconocido", X, a, pila, codigo, puntero, arbol, listaTokens);
 				return false;
 			}
 		}
 
-		System.out.println(getParseArbol(arbol));
+		System.out.println(getParseArbol(arbol) +"\n \n");
 		return true;
 	}
 
 	private void printError(String lugar, String X, String a, Stack<String> pila2, ArrayList<String> codigo,
-			int puntero, ArrayList<Integer> arbol) {
-		System.out.println(lugar);
-		System.out.println("Cima de pila: " + X.toString());
-		System.out.println("Token a leer: " + a.toString());
-		System.out.println("Pila: " + pila.toString());
-		System.out.println("Archivo leido: \n" + codigo.subList(0, puntero));
-		System.out.println("Arbol: \n" + arbol.toString());
-		System.out.println("Lista tokens: " + codigo.toString());
+			int puntero, ArrayList<Integer> arbol, ArrayList<Token> listaToken) {
+		//System.err.println(lugar);
+		//System.err.println("Cima de pila: " + X.toString());
+		//System.err.println("Token a leer: " + a.toString());
+		//System.err.println("Pila: " + pila.toString());
+		//System.err.println("Archivo leido: \n" + codigo.subList(0, puntero));
+		//System.err.println("Arbol: \n" + arbol.toString());
+		//System.err.println("Lista tokens: " + codigo.toString());
+		System.out.println("Error "+listaToken.get(puntero).getPosicion()+"\n \n");
 	}
 
 	private String getParseArbol(ArrayList<Integer> arbol) {

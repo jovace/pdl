@@ -1,11 +1,13 @@
 package pdl.analizadorLexico;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class analizadorLexico{
-	static int estadoActual=0;
-	static String cadena="";
+	int estadoActual=0;
+	int lineaActual=1;
+	int caracterActual=1;
+	int caracterInicioToken=0;
+	String cadena="";
 	
 	public boolean analizar(String codigo) {
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
@@ -18,9 +20,11 @@ public class analizadorLexico{
 			if(resultado.getCompleto()) {
 				//Tenemos un token completo, lo anadimos a la lista de tokens
 				listaTokens.add(resultado);
+				resultado.setPosicion(lineaActual, caracterInicioToken);
 			}
 			if(resultado.consumeCaracter()) {
 				i++;
+				caracterActual++;
 			}
 		}
 
@@ -33,7 +37,7 @@ public class analizadorLexico{
 		return a.analizar(listaTokens);
 	}
 
-	private static Token nextChar(char c) {
+	private Token nextChar(char c) {
 		//Token(0,1)
 		//Salvo que se genere un token diferente (un token completo o incompleto que no consume)
 		//devolveremos un Token incompleto que consume caracter
@@ -42,16 +46,21 @@ public class analizadorLexico{
 
 		//Dependiendo del estado en el que se encuentre el automata
 		if(estadoActual==0) {
+			caracterInicioToken=caracterActual;
 			switch(c) {
 			case '\t':
+				caracterActual++;
 				cadena="";
 				estadoActual=0;
 				break;
 			case '\n':
+				lineaActual++;
+				caracterActual=1;
 				cadena="";
 				estadoActual=0;
 				break;
 			case ' ':
+				caracterActual++;
 				cadena="";
 				estadoActual=0;
 				break;

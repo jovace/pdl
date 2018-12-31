@@ -57,9 +57,8 @@ public class Main {
 			if(test.equals("\n \n \n Cadenas con errores sintacticos \n \n")) {
 				System.out.println(test);
 			}else {
-				System.out.print(test+": ");
+				System.out.print(test+"-> ");
 				if(!lex.analizar(test)) {
-					System.out.println("Error en prueba: \n"+test+"\n \n \n");
 					todoOk=false;
 				}
 			}

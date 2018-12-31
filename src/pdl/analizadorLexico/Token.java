@@ -5,6 +5,7 @@ public class Token{
 	private String type;
 	private boolean consumeCaracter;
 	private String lexema;
+	private int linea,caracter;
 	
 	//entero type nos da informacion del token
 	//si >0, es la tabla en la que se encuentra el token
@@ -84,4 +85,21 @@ public class Token{
 	}
 	
 	public boolean getCompleto() {return this.completo;}
+	
+	public void setPosicion(int linea, int caracter) {
+		this.linea=linea;
+		this.caracter=caracter;
+	}
+	
+	public int getLinea() {
+		return this.linea;
+	}
+	
+	public int getCaracter() {
+		return this.caracter;
+	}
+	
+	public String getPosicion() {
+		return "@"+this.getLinea()+";"+this.getCaracter();
+	}
 }
