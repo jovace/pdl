@@ -2,8 +2,7 @@ package pdl.analizadorLexico;
 
 public class Token{
 	private boolean completo;
-	private int type;
-	private int indice;
+	private String type;
 	private boolean consumeCaracter;
 	private String lexema;
 	
@@ -18,48 +17,42 @@ public class Token{
 	//Metodo para crear un token incompleto
 	public Token(boolean consumeCaracter){
 		this.completo=false;
-		this.type=-1;
-		this.indice=-1;
+		this.type="";
 		this.consumeCaracter=consumeCaracter;
 		this.lexema="";
 	}
 
 	//Constructor para crear token completo
-	public Token(int type, int indice){
-		//Devuelve el tipo y el indice en la tabla (si corresponde, sino -1) del token
+	public Token(String type){
 		this.completo=true;
 		this.type=type;
-		this.indice=indice;
 		this.consumeCaracter=true;
 		this.lexema="";
 	}
 	
 	public Token(int numero) {
 		this.completo=true;
-		this.type=11;
-		this.indice=numero;
+		this.type="cte_int";
 		this.consumeCaracter=true;
-		this.lexema="";
+		this.lexema=String.valueOf(numero);
 	}
 	
 	public Token(String identificador, boolean esIdentificador) {
 		if(esIdentificador) {
-			this.completo=true;
-			this.type=10;
-			this.indice=-1;
-			this.consumeCaracter=true;
+			if(identificador.equals("true") || identificador.equals("false")) {
+				this.type="cte_logica";
+			}else {
+				this.type="id";
+			}
 			this.lexema=identificador;
+			this.completo=true;
+			this.consumeCaracter=true;
 		}else {
 			this.completo=true;
-			this.type=9;
-			this.indice=-1;
+			this.type="cte_cadena";
 			this.consumeCaracter=true;
 			this.lexema=identificador;
 		}
-	}
-	
-	public int getType() {
-		return this.type;
 	}
 	
 	public boolean consumeCaracter(){
@@ -71,7 +64,7 @@ public class Token{
 	}
 	
 	public int getNumero() {
-		return this.indice;
+		return Integer.valueOf(this.lexema);
 	}
 	
 	public String getLexema() {
@@ -79,10 +72,16 @@ public class Token{
 	}
 	
 	public String toString() {
-		return "{"+this.type+"; "+this.indice+"; "+this.lexema+"}";
+		return "{"+this.type+"; "+this.lexema+"}";
 	}
 	
 	public String tokenTipo() {
-		return "{"+this.type+","+this.indice+"}";
+		return "{"+this.type+"}";
 	}
+	
+	public String getTipo() {
+		return this.type;
+	}
+	
+	public boolean getCompleto() {return this.completo;}
 }

@@ -18,42 +18,42 @@ public class analizadorSintactico {
 		// Inicializar lista terminales, no terminales y tabla de transicion
 
 		// iniz terminales
-		terminales.add("var");
-		terminales.add("id");
-		terminales.add("int");
+		terminales.add("var");//
+		terminales.add("id");//
+		terminales.add("int");//
 		terminales.add("$");
-		terminales.add("=");
-		terminales.add("(");
-		terminales.add(")");
-		terminales.add("!");
-		terminales.add("bool");
-		terminales.add("string");
-		terminales.add("+");
+		terminales.add("=");//
+		terminales.add("(");//
+		terminales.add(")");//
+		terminales.add("!");//
+		terminales.add("bool");//
+		terminales.add("string");//
+		terminales.add("+");//
 		terminales.add("++");
-		terminales.add("-");
+		terminales.add("-");//
 		terminales.add("--");
-		terminales.add(">");
-		terminales.add("<");
-		terminales.add("<=");
-		terminales.add(">=");
-		terminales.add("{");
-		terminales.add("}");
-		terminales.add("function");
-		terminales.add("return");
-		terminales.add(";");
-		terminales.add(",");
-		terminales.add("*");
-		terminales.add("|=");
-		terminales.add("/");
-		terminales.add("%");
-		terminales.add("&&");
-		terminales.add("||");
-		terminales.add("print");
-		terminales.add("prompt");
-		terminales.add("false");
-		terminales.add("true");
-		terminales.add("for");
-		terminales.add("char");
+		terminales.add(">");//
+		terminales.add("<");//
+		terminales.add("<=");//
+		terminales.add(">=");//
+		terminales.add("{");//
+		terminales.add("}");//
+		terminales.add("function");//
+		terminales.add("return");//
+		terminales.add(";");//
+		terminales.add(",");//
+		terminales.add("*");//
+		terminales.add("|=");//
+		terminales.add("/");//
+		terminales.add("%");//
+		terminales.add("&&");//
+		terminales.add("||");//
+		terminales.add("print");//
+		terminales.add("prompt");//
+		terminales.add("false");//
+		terminales.add("true");//
+		terminales.add("for");//
+		terminales.add("char");//
 		terminales.add("cte_int");
 		terminales.add("cte_cadena");
 		terminales.add("cte_logica");
@@ -78,6 +78,7 @@ public class analizadorSintactico {
 		noTerminales.add("R");
 		noTerminales.add("B");
 		noTerminales.add("SS");
+		noTerminales.add("M");
 
 		// iniz tabla
 		ArrayList<String> produccionAcierrap = new ArrayList<>();
@@ -397,9 +398,10 @@ public class analizadorSintactico {
 		produccionSforpDpuntocomaXpuntocomaetc.add("C");
 		produccionSforpDpuntocomaXpuntocomaetc.add("}");
 		produccionSidigualx.add("44");
-		produccionSidigualx.add("id");
-		produccionSidigualx.add("=");
-		produccionSidigualx.add("E");
+		produccionSidigualx.add("SS");
+		//produccionSidigualx.add("id");
+		//produccionSidigualx.add("=");
+		//produccionSidigualx.add("E");
 		produccionSidigualx.add(";");
 		produccionSprintpxp.add("46");
 		produccionSprintpxp.add("print");
@@ -425,18 +427,17 @@ public class analizadorSintactico {
 		tablaTransicion.put("S", filaS);
 
 		Map<String, ArrayList<String>> filaSS = new HashMap<>();
-		ArrayList<String> produccionSSidigualX = new ArrayList<>();
+		ArrayList<String> produccionSSidModificador = new ArrayList<>();
 		ArrayList<String> produccionSSprintpxp = new ArrayList<>();
-		produccionSSidigualX.add("54");
-		produccionSSidigualX.add("id");
-		produccionSSidigualX.add("=");
-		produccionSSidigualX.add("X");
+		produccionSSidModificador.add("54");
+		produccionSSidModificador.add("id");
+		produccionSSidModificador.add("M");
 		produccionSSprintpxp.add("55");
 		produccionSSprintpxp.add("print");
 		produccionSSprintpxp.add("(");
 		produccionSSprintpxp.add("X");
 		produccionSSprintpxp.add(")");
-		filaSS.put("id", produccionSSidigualX);
+		filaSS.put("id", produccionSSidModificador);
 		filaSS.put("print", produccionSSprintpxp);
 		tablaTransicion.put("SS", filaSS);
 
@@ -454,6 +455,21 @@ public class analizadorSintactico {
 		filaT.put("int", produccionTint);
 		filaT.put("string", produccionTstring);
 		tablaTransicion.put("T", filaT);
+		
+		Map<String, ArrayList<String>> filaM = new HashMap<>();
+		ArrayList<String> produccionMmasmas = new ArrayList<>();
+		ArrayList<String> produccionMmenmen = new ArrayList<>();
+		ArrayList<String> produccionMigual = new ArrayList<>();
+		produccionMmasmas.add("57");
+		produccionMmasmas.add("++");
+		produccionMmenmen.add("58");
+		produccionMmenmen.add("--");
+		produccionMigual.add("59");
+		produccionMigual.add("I");
+		filaM.put("++", produccionMmasmas);
+		filaM.put("--", produccionMmenmen);
+		filaM.put("=", produccionMigual);
+		tablaTransicion.put("M", filaM);
 
 		ArrayList<String> produccionX = new ArrayList<>();
 		Map<String, ArrayList<String>> filaX = new HashMap<>();
@@ -632,15 +648,23 @@ public class analizadorSintactico {
 
 	private ArrayList<String> convertirTokenaTerminales(ArrayList<Token> listaTokens) {
 		ArrayList<String> codigo = new ArrayList<>();
-
-		for (Token token : listaTokens) {
-			String terminal = tokenaTerminales.get(token.tokenTipo());
-			if (terminal == null) {
-				terminal = "cte_int";
-			}
-			codigo.add(terminal);
+		
+		for(Token token : listaTokens) {
+			codigo.add(token.getTipo());
 		}
 		codigo.add("$");
 		return codigo;
+		
+		//		ArrayList<String> codigo = new ArrayList<>();
+//
+//		for (Token token : listaTokens) {
+//			String terminal = tokenaTerminales.get(token.tokenTipo());
+//			if (terminal == null) {
+//				terminal = "cte_int";
+//			}
+//			codigo.add(terminal);
+//		}
+//		codigo.add("$");
+//		return codigo;
 	}
 }

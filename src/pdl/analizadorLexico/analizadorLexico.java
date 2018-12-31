@@ -15,7 +15,7 @@ public class analizadorLexico{
 			char c=codigo.charAt(i);
 
 			Token resultado=nextChar(c);
-			if(resultado.getType()>-1) {
+			if(resultado.getCompleto()) {
 				//Tenemos un token completo, lo anadimos a la lista de tokens
 				listaTokens.add(resultado);
 			}
@@ -141,52 +141,70 @@ public class analizadorLexico{
 		}else if(estadoActual==1) {
 			switch(cadena) {
 			case "+":
-				resultado=new Token(1,0);
-				cadena="";
-				estadoActual=0;
+				switch(c) {
+					case '+':
+						resultado=new Token("++");
+						cadena="";
+						estadoActual=0;
+						break;
+					default:
+						resultado=new Token("+");
+						cadena="";
+						estadoActual=0;
+						break;
+				}
 				break;
 			case "-":
-				resultado=new Token(1,1);
-				cadena="";
-				estadoActual=0;
+				switch(c) {
+				case '-':
+					resultado=new Token("--");
+					cadena="";
+					estadoActual=0;
+					break;
+				default:
+					resultado=new Token("-");
+					cadena="";
+					estadoActual=0;
+					break;
+			}
 				break;
 			case "*":
-				resultado=new Token(1,2);
+				resultado=new Token("*");
 				cadena="";
 				estadoActual=0;
 				break;
 			case "%":
-				resultado=new Token(1,4);
+				resultado=new Token("%");
 				cadena="";
 				estadoActual=0;
 				break;
 			case "{":
-				resultado=new Token(4,2);
+				resultado=new Token("{");
 				cadena="";
 				estadoActual=0;
 				break;
 			case "}":
-				resultado=new Token(4,3);
+				resultado=new Token("}");
 				cadena="";
 				estadoActual=0;
 				break;
 			case "(":
-				resultado=new Token(4,0);
+				resultado=new Token("(");
 				cadena="";
 				estadoActual=0;
 				break;
 			case ")":
-				resultado=new Token(4,1);
+				resultado=new Token(")");
 				cadena="";
 				estadoActual=0;
 				break;
 			case ";":
-				resultado=new Token(4,4);
+				resultado=new Token(";");
 				cadena="";
 				estadoActual=0;
 				break;
 			case ",":
-				resultado=new Token(4,5);
+				resultado=new Token(",");
 				cadena="";
 				estadoActual=0;
 				break;
@@ -197,7 +215,7 @@ public class analizadorLexico{
 				break;
 			}
 
-			resultado.setConsumeCaracter(false);
+			resultado.setConsumeCaracter(c=='+' || c=='-');
 		}else if(estadoActual==2){
 			if(Character.isDigit(c)) {
 				cadena+=c;
@@ -209,30 +227,33 @@ public class analizadorLexico{
 				
 				String comp=cadena.toLowerCase();
 				if(comp.equals("function")) {
-					resultado=new Token(0,0);
+					resultado=new Token("function");
 				}else if(comp.equals("var")) {
-					resultado=new Token(0,1);
+					resultado=new Token("var");
 				}else if(comp.equals("int")) {
-					resultado=new Token(0,2);
+					resultado=new Token("int");
 				}else if(comp.equals("string")) {
-					resultado=new Token(0,3);
+					resultado=new Token("string");
 				}else if(comp.equals("bool")) {
-					resultado=new Token(0,4);
+					resultado=new Token("bool");
 				}else if(comp.equals("for")) {
-					resultado=new Token(0,5);
+					resultado=new Token("for");
 				}else if(comp.equals("true")) {
-					resultado=new Token(0,6);
+					resultado=new Token(comp,true);
 				}else if(comp.equals("false")) {
-					resultado=new Token(0,7);
+					resultado=new Token(comp,true);
 				}else if(comp.equals("return")) {
-					resultado=new Token(0,8);
+					resultado=new Token("return");
 				}else if(comp.equals("print")) {
-					resultado=new Token(0,9);
+					resultado=new Token("print");
 				}else if(comp.equals("prompt")) {
-					resultado=new Token(0,10);
+					resultado=new Token("prompt");
+				}else if(comp.equals("char")){
+					resultado=new Token("char");
 				}else {
 					resultado=new Token(cadena, true);
 				}
+				
 				resultado.setConsumeCaracter(false);
 				cadena="";
 				estadoActual=0;
@@ -242,7 +263,7 @@ public class analizadorLexico{
 		}else if(estadoActual==4){
 			switch(c){
 				case '&':
-					resultado=new Token(2,0);
+					resultado=new Token("&&");
 					cadena="";
 					estadoActual=0;
 					break;
@@ -252,12 +273,12 @@ public class analizadorLexico{
 		}else if(estadoActual==6){
 			switch(c) {
 				case '|':
-					resultado=new Token(2,1);
+					resultado=new Token("||");
 					cadena="";
 					estadoActual=0;
 					break;
 				case '=':
-					resultado=new Token(1,8);
+					resultado=new Token("|=");
 					cadena="";
 					estadoActual=0;
 					break;
@@ -267,6 +288,7 @@ public class analizadorLexico{
 	}else if(estadoActual==8) {
 		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==9) {
+		//TODO Solo es valido numeros enteros? Reales valen?
 		if(Character.isDigit(c)) {
 			cadena+=c;
 			estadoActual=9;
@@ -310,40 +332,31 @@ public class analizadorLexico{
 			//hago switch c para ver si lo que viene es un = o no
 			switch(c) {
 				case '=':
-					resultado=new Token(3,0);
+					//resultado=new Token(3,0);
 					cadena="";
 					estadoActual=0;
 					break;
 				default:
-					resultado=new Token(1,7);
+					resultado=new Token("=");
 					resultado.setConsumeCaracter(false);
 					cadena="";
 					estadoActual=0;
 					break;			
 			}
 		}else if(cadena.equals("!")){
-			switch(c) {
-				case '=':
-					resultado=new Token(3,2);
-					cadena="";
-					estadoActual=0;
-					break;
-				default:
-					resultado=new Token(2,3);
-					resultado.setConsumeCaracter(false);
-					cadena="";
-					estadoActual=0;
-					break;
-			}
+			resultado=new Token("!");
+			resultado.setConsumeCaracter(false);
+			cadena="";
+			estadoActual=0;
 		}else if(cadena.equals("<")){
 			switch(c) {
 				case '=':
-					resultado=new Token(3,4);
+					resultado=new Token("<=");
 					cadena="";
 					estadoActual=0;
 					break;
 				default:
-					resultado=new Token(3,2);
+					resultado=new Token("<");
 					resultado.setConsumeCaracter(false);
 					cadena="";
 					estadoActual=0;
@@ -352,12 +365,12 @@ public class analizadorLexico{
 		}else if(cadena.equals(">")) {
 			switch(c) {
 				case '=':
-					resultado=new Token(3,5);
+					resultado=new Token(">=");
 					cadena="";
 					estadoActual=0;
 					break;
 				default:
-					resultado=new Token(3,3);
+					resultado=new Token(">");
 					resultado.setConsumeCaracter(false);
 					cadena="";
 					estadoActual=0;
@@ -379,7 +392,7 @@ public class analizadorLexico{
 				estadoActual=19;
 				break;
 			default:
-				resultado=new Token(1,3);
+				resultado=new Token("/");
 				resultado.setConsumeCaracter(false);
 				cadena="";
 				estadoActual=0;
