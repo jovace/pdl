@@ -5,20 +5,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AnalizadorSemantico {
-	private String arbolSintactico;
+	private ArrayList<Integer> arbolSintactico;
 	private ArrayList<Token> listaTokens;
 	
 	
-	public AnalizadorSemantico (String arbolSintactico, ArrayList<Token> listaTokens) {
+	public AnalizadorSemantico (ArrayList<Integer> arbolSintactico, ArrayList<Token> listaTokens) {
 		this.arbolSintactico=arbolSintactico;
 		this.listaTokens=listaTokens;
 	}
 	
 	public void analizar() {
 		//Construir arbol semantico
+		Nodo J = new Nodo();
+		
+		Nodo nodoActual=J;
+		
+		for(Integer prod : this.arbolSintactico) {
+			if(prod==1) {
+				nodoActual.setProdN(1);
+				nodoActual.addHijo("var");
+				nodoActual.addHijo("T");
+				nodoActual.addHijo("id");
+				nodoActual.addHijo("I");
+				nodoActual.addNoTerm("T");
+				nodoActual.addNoTerm("I");
+			}else if(prod==2) {
+				nodoActual.setProdN(prod);
+				nodoActual.addHijo("int");
+			}
+		}
 		
 		//Calcular propiedades recursivamente
-		nodoPadre.calcularProps();
+		J.calcularProps();
 		
 		//Recorrer arbol con recursividad
 		
@@ -76,9 +94,9 @@ class Nodo{
 		}else if(prodN==5) {
 			setProp("valor",(Integer) this.hijos.get("E").getProp("valor"));
 		}else if(prodN==6) {
-			setProp("valor",((Token) this.hijos.get("cte_int").getProp("token")).getInt());
+			setProp("valor",((Token) this.hijos.get("cte_int").getProp("token")).getNumero());
 		}else if(prodN==7) {
-			setProp("valor",((Token) this.hijos.get("cte_int").getProp("token")).getDouble());
+			setProp("valor",((Token) this.hijos.get("cte_int").getProp("token")).getNumero());
 		}
 	}
 }
