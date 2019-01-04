@@ -12,7 +12,16 @@ public class Main {
 //		lex= new analizadorLexico();
 //		lex.analizar("for(var int i=0;!(i<j);i=i+1) {i=i+1;} \t");
 		
-		System.out.println("RESULTADO: "+probarTodo());
+		//System.out.println("RESULTADO: "+probarTodo());
+		
+		
+		
+		TablaSimbolos ts = new TablaSimbolos("main");
+		Simbolo s=new Simbolo("cte_int","1",null);
+		ts.addSimbolo("varS", s);
+		ts.addScope("suma");
+		System.out.println();
+		
 
 	}
 	
