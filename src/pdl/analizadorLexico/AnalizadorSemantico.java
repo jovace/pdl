@@ -31,8 +31,26 @@ public class AnalizadorSemantico {
 				nodoActual.addNoTerm("I");
 			}else if(prod==2) {
 				nodoActual.setProdN(prod);
-				nodoActual.addHijo("int");
+			}else if(prod==3) {
+				nodoActual.setProdN(prod);
+			}else if(prod==4) {
+				nodoActual.setProdN(prod);
+			}else if(prod==5) {
+				nodoActual.setProdN(prod);
+				nodoActual.addHijo("E");
+				nodoActual.addNoTerm("E");
+			}else if(prod==6) {
+				nodoActual.setProdN(prod);
+				Nodo cte_int=new Nodo();
+				cte_int.setProp("token",null);
+				nodoActual.addHijo("cte_int");
 			}
+				
+				
+				
+				
+			
+			
 		}
 		
 		//Calcular propiedades recursivamente
@@ -76,7 +94,7 @@ class Nodo{
 		}
 	}
 	
-	private void setProp(String nombre, Object valor) {
+	public void setProp(String nombre, Object valor) {
 		this.props.put(nombre, valor);
 	}
 	
