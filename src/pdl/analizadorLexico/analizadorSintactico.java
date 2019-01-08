@@ -593,12 +593,23 @@ public class analizadorSintactico {
 		pila.push("$");
 		pila.push("J");
 		int puntero = 0;
+		
+		Nodo nodoActual= new Nodo("ROOT",-1, null);
+		nodoActual.addHijo("J",new Nodo("J",-1, nodoActual));
+		Arbol asem = new Arbol(nodoActual);
 
 		while (!pila.peek().equals("$")) {
 			String X = pila.peek();
 			String a = codigo.get(puntero);
 			if (terminales.contains(X)) {
 				if (X.equals(a)) {
+					Nodo hijo;
+					while(nodoActual.getHijo(X)==null) {
+						nodoActual=nodoActual.getPadre();
+					}
+					hijo=nodoActual.getHijo(X);
+					hijo.setToken(listaTokens.get(puntero));
+					
 					pila.pop();
 					puntero++;
 				} else {
@@ -613,16 +624,36 @@ public class analizadorSintactico {
 					printError("No existe dicha entrada en tabla sintactica", X, a, pila, codigo, puntero, arbol, listaTokens);
 					return false;
 				}
+				
 				arbol.add(Integer.parseInt(produccion.get(0)) + 1);
 				for (int i = produccion.size() - 1; i > 0; i--) {
 					pila.push(produccion.get(i));
 				}
+				
+				Nodo hijo;
+				if(nodoActual.getHijo(X)!=null) {
+					hijo=nodoActual.getHijo(X);
+				}else {
+					nodoActual=nodoActual.getPadre();
+					hijo=nodoActual.getHijo(X);
+				}
+				hijo.setProdN(Integer.parseInt(produccion.get(0))+1);
+				for(int i=1;i<produccion.size();i++) {
+					hijo.addHijo(produccion.get(i), new Nodo(produccion.get(i), hijo));
+				}
+				if(produccion.size()>1) {
+					nodoActual=hijo;
+				}
+				
 			} else {
 				printError("Simbolo no reconocido", X, a, pila, codigo, puntero, arbol, listaTokens);
 				return false;
 			}
+			
+			asem.printPostorden();
+			System.out.println();
 		}
-
+		asem.printPostorden();
 		System.out.println(getParseArbol(arbol) +"\n \n");
 		return true;
 	}

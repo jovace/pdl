@@ -60,6 +60,7 @@ B -> cte_logica
 B -> id
 SS -> id = X
 SS -> print ( X )
+XX -> lambda
 
 
 
