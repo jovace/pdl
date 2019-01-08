@@ -10,7 +10,7 @@ public class Nodo {
 	private HashMap<String,Nodo> hijos  = new HashMap<>();
 	private ArrayList<Nodo> hijosL = new ArrayList<>();
 	private Map<String,Object> props = new HashMap<>();
-	private int prodN;
+	private int prodN=-1;
 	private Nodo padre;
 	
 	public Nodo(String id, int prodN, Nodo padre) {
@@ -109,6 +109,13 @@ public class Nodo {
 		return listaNodosPostorden;
 	}
 	
+	public void setProp(String nombre, Object valor) {
+		this.props.put(nombre, valor);
+	}
+	
+	public Object getProp(String nombre) {
+		return this.props.get(nombre);
+	}
 	
 }
 

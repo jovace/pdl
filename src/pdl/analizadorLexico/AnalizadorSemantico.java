@@ -43,10 +43,46 @@ public class AnalizadorSemantico {
 	private String calcularCodigo(Nodo nodo) {
 		String codigo="";
 		switch(nodo.getProdN()) {
-		case 0:
-			codigo="print(1);";
+		case 1:
 			break;
 		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5: //D -> var T id I ;
+			nodo.setProp("tipo", nodo.getHijo("T").getProp("tipo"));
+			nodo.setProp("valor", nodo.getHijo("I").getProp("valor"));
+			System.out.println("init variable tipo: "+nodo.getProp("tipo") + " y valor: "+nodo.getProp("valor"));
+			break;
+		case 6: //T -> int
+			nodo.setProp("tipo", "int");
+			break;
+		case 7: //T -> string
+			nodo.setProp("tipo", "string");
+			break;
+		case 8: //T -> bool
+			nodo.setProp("tipo", "bool");
+			break;
+		case 9: //I -> = E 
+			nodo.setProp("valor", nodo.getHijo("E").getProp("valor"));
+			break;
+		case 10: //I -> |= E
+			break;
+		case 11: //I ->lambda
+			break;
+		case 12: //E -> G EE
+			nodo.setProp("valor", nodo.getHijo("G").getProp("valor"));
+			break;
+		case 13: //G -> ( X )
+			break;
+		case 14:
+			break;
+		case 15:
+			break;
+		case 16: //G -> cte_int
+			nodo.setProp("valor", nodo.getHijo("cte_int").getToken().getNumero());
 			break;
 		default:
 			break;

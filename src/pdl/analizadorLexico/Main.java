@@ -9,8 +9,10 @@ public class Main {
 	static analizadorLexico lex;
 	
 	public static void main(String[] args){
+		//analizadorSintactico as = new analizadorSintactico();
+		//as.getProducciones();
 		lex= new analizadorLexico();
-		lex.analizar("function suma(){i=i+1; } \n");
+		lex.analizar("var int i = 9 ; \n");
 		
 		//System.out.println("RESULTADO: "+probarTodo());
 		

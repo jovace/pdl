@@ -698,4 +698,24 @@ public class analizadorSintactico {
 //		codigo.add("$");
 //		return codigo;
 	}
+	
+	public void getProducciones() {
+		Map<Integer, ArrayList<String>> producciones = new HashMap<>();
+		
+		for(String fila : this.tablaTransicion.keySet()) {
+			for(String columna : this.tablaTransicion.get(fila).keySet()) {
+				ArrayList<String> prod = this.tablaTransicion.get(fila).get(columna);
+				ArrayList<String> prod2 = new ArrayList<>();
+				prod2.add((Integer.parseInt(prod.get(0))+1)+"");
+				prod2.add(fila);
+				prod2.add("->");
+				prod2.addAll(prod);
+				producciones.put(Integer.parseInt(prod.get(0)), prod2);
+			}
+		}
+		
+		for(int i=0;i<producciones.keySet().size();i++) {
+			System.out.println(producciones.get(i));
+		}
+	}
 }
