@@ -9,18 +9,18 @@ public class Main {
 	static analizadorLexico lex;
 	
 	public static void main(String[] args){
-//		lex= new analizadorLexico();
-//		lex.analizar("for(var int i=0;!(i<j);i=i+1) {i=i+1;} \t");
+		lex= new analizadorLexico();
+		lex.analizar("function suma(){i=i+1; } \n");
 		
 		//System.out.println("RESULTADO: "+probarTodo());
 		
 		
 		
-		TablaSimbolos ts = new TablaSimbolos("main");
-		Simbolo s=new Simbolo("cte_int","1",null);
-		ts.addSimbolo("varS", s);
-		ts.addScope("suma");
-		System.out.println();
+//		TablaSimbolos ts = new TablaSimbolos("main");
+//		Simbolo s=new Simbolo("cte_int","1",null);
+//		ts.addSimbolo("varS", s);
+//		ts.addScope("suma");
+//		System.out.println();
 		
 
 	}

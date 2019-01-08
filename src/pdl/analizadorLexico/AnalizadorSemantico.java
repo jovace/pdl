@@ -1,65 +1,59 @@
-//package pdl.analizadorLexico;
-//
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//public class AnalizadorSemantico {
-//	private ArrayList<Integer> arbolSintactico;
-//	private ArrayList<Token> listaTokens;
-//	
-//	
-//	public AnalizadorSemantico (ArrayList<Integer> arbolSintactico, ArrayList<Token> listaTokens) {
-//		this.arbolSintactico=arbolSintactico;
-//		this.listaTokens=listaTokens;
-//	}
-//	
-//	public void analizar() {
-//		//Construir arbol semantico
-//		Nodo J = new Nodo();
-//		
-//		Nodo nodoActual=J;
-//		
-//		for(Integer prod : this.arbolSintactico) {
-//			if(prod==1) {
-//				nodoActual.setProdN(1);
-//				nodoActual.addHijo("var");
-//				nodoActual.addHijo("T");
-//				nodoActual.addHijo("id");
-//				nodoActual.addHijo("I");
-//				nodoActual.addNoTerm("T");
-//				nodoActual.addNoTerm("I");
-//			}else if(prod==2) {
-//				nodoActual.setProdN(prod);
-//			}else if(prod==3) {
-//				nodoActual.setProdN(prod);
-//			}else if(prod==4) {
-//				nodoActual.setProdN(prod);
-//			}else if(prod==5) {
-//				nodoActual.setProdN(prod);
-//				nodoActual.addHijo("E");
-//				nodoActual.addNoTerm("E");
-//			}else if(prod==6) {
-//				nodoActual.setProdN(prod);
-//				Nodo cte_int=new Nodo();
-//				cte_int.setProp("token",null);
-//				nodoActual.addHijo("cte_int");
-//			}
-//				
-//				
-//				
-//				
-//			
-//			
-//		}
-//		
-//		//Calcular propiedades recursivamente
-//		J.calcularProps();
-//		
-//		//Recorrer arbol con recursividad
-//		
-//	}
-//}
-//
-//
-//
+package pdl.analizadorLexico;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class AnalizadorSemantico {
+	private ArrayList<Integer> arbolSintactico;
+	private ArrayList<Token> listaTokens;
+	private TablaSimbolos tsMain = new TablaSimbolos("main");
+	
+	
+	public AnalizadorSemantico (ArrayList<Integer> arbolSintactico, ArrayList<Token> listaTokens) {
+		this.arbolSintactico=arbolSintactico;
+		this.listaTokens=listaTokens;
+	}
+	
+	public AnalizadorSemantico() {
+		
+	}
+	
+	public boolean analizar(Arbol asin) {
+		String codigoFinal="";
+		//Construir arbol semantico	-> DONE	
+		
+		//Calcular propiedades recursivamente
+		ArrayList<Nodo> listaNodosPostorden = asin.getNodosPostorden();
+		for(Nodo nodo : listaNodosPostorden) {
+			String codigo = calcularCodigo(nodo);
+			codigoFinal+=codigo;
+		}
+			
+		
+		//asin.calcularCodigo();
+		
+		//Recorrer arbol con recursividad
+		
+		
+		System.out.println(codigoFinal);
+		return true;
+	}
+
+	private String calcularCodigo(Nodo nodo) {
+		String codigo="";
+		switch(nodo.getProdN()) {
+		case 0:
+			codigo="print(1);";
+			break;
+		case 2:
+			break;
+		default:
+			break;
+		}
+		return codigo;
+	}
+}
+
+
+

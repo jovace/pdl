@@ -99,6 +99,15 @@ public class Nodo {
 	public void setPadre(Nodo padre) {
 		this.padre=padre;
 	}
+
+	public ArrayList<Nodo> getNodosPostOrden(ArrayList<Nodo> listaNodosPostorden) {
+		for(Nodo n : hijosL) {
+			n.getNodosPostOrden(listaNodosPostorden);
+		}		
+		listaNodosPostorden.add(this);
+		
+		return listaNodosPostorden;
+	}
 	
 	
 }

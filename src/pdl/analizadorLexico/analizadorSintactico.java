@@ -649,13 +649,12 @@ public class analizadorSintactico {
 				printError("Simbolo no reconocido", X, a, pila, codigo, puntero, arbol, listaTokens);
 				return false;
 			}
-			
-			asem.printPostorden();
-			System.out.println();
 		}
 		asem.printPostorden();
+		System.out.println();
 		System.out.println(getParseArbol(arbol) +"\n \n");
-		return true;
+		AnalizadorSemantico as = new AnalizadorSemantico();
+		return as.analizar(asem);
 	}
 
 	private void printError(String lugar, String X, String a, Stack<String> pila2, ArrayList<String> codigo,

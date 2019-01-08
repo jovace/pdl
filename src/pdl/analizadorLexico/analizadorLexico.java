@@ -33,7 +33,6 @@ public class analizadorLexico{
 		
 		
 		analizadorSintactico a = new analizadorSintactico();
-		
 		return a.analizar(listaTokens);
 	}
 
