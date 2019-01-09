@@ -21,7 +21,7 @@ public class AnalizadorSemantico {
 	
 	public boolean analizar(Arbol asin) {
 		String codigoFinal="";
-		//Construir arbol semantico	-> DONE	
+		//Construir arbol semantico	-> DONE	 
 		
 		//Calcular propiedades recursivamente
 		ArrayList<Nodo> listaNodosPostorden = asin.getNodosPostorden();
