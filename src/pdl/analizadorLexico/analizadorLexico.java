@@ -112,7 +112,7 @@ public class analizadorLexico{
 				estadoActual=6;
 				break;
 			case '"':
-				cadena+=""; //TODO
+				cadena+="";
 				estadoActual=11;
 				break;				
 			case '=':
@@ -296,7 +296,6 @@ public class analizadorLexico{
 	}else if(estadoActual==8) {
 		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==9) {
-		//TODO Solo es valido numeros enteros? Reales valen?
 		if(Character.isDigit(c)) {
 			cadena+=c;
 			estadoActual=9;

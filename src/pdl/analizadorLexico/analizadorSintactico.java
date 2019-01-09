@@ -650,9 +650,6 @@ public class analizadorSintactico {
 				return false;
 			}
 		}
-		asem.printPostorden();
-		System.out.println();
-		System.out.println(getParseArbol(arbol) +"\n \n");
 		AnalizadorSemantico as = new AnalizadorSemantico();
 		return as.analizar(asem);
 	}
@@ -714,7 +711,7 @@ public class analizadorSintactico {
 			}
 		}
 		
-		for(int i=0;i<producciones.keySet().size();i++) {
+		for(Integer i : producciones.keySet()) {
 			System.out.println(producciones.get(i));
 		}
 	}
