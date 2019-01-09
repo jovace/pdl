@@ -9,10 +9,10 @@ public class Main {
 	static analizadorLexico lex;
 	
 	public static void main(String[] args){
-		analizadorSintactico as = new analizadorSintactico();
-		as.getProducciones();
-//		lex= new analizadorLexico();
-//		lex.analizar("i=i+1 ; \n");
+//		analizadorSintactico as = new analizadorSintactico();
+//		as.getProducciones();
+		lex= new analizadorLexico();
+		lex.analizar("var string i = \"jorge\" ; var int j = i--; \n");
 		
 		//System.out.println("RESULTADO: "+probarTodo());
 		

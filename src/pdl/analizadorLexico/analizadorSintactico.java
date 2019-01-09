@@ -631,12 +631,11 @@ public class analizadorSintactico {
 				}
 				
 				Nodo hijo;
-				if(nodoActual.getHijo(X)!=null) {
-					hijo=nodoActual.getHijo(X);
-				}else {
+				while(nodoActual.getHijo(X)==null) {
 					nodoActual=nodoActual.getPadre();
-					hijo=nodoActual.getHijo(X);
 				}
+				hijo=nodoActual.getHijo(X);
+				
 				hijo.setProdN(Integer.parseInt(produccion.get(0))+1);
 				for(int i=1;i<produccion.size();i++) {
 					hijo.addHijo(produccion.get(i), new Nodo(produccion.get(i), hijo));

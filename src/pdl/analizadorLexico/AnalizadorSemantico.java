@@ -3,11 +3,14 @@ package pdl.analizadorLexico;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.SynchronousQueue;
 
 public class AnalizadorSemantico {
 	private ArrayList<Integer> arbolSintactico;
 	private ArrayList<Token> listaTokens;
 	private TablaSimbolos tsMain = new TablaSimbolos("main",null);
+	private TablaSimbolos tsActiva = tsMain;
+	private boolean hayError=false;
 	
 	
 	public AnalizadorSemantico (ArrayList<Integer> arbolSintactico, ArrayList<Token> listaTokens) {
@@ -21,7 +24,7 @@ public class AnalizadorSemantico {
 	
 	public boolean analizar(Arbol asin) {
 		String codigoFinal="";
-		//Construir arbol semantico	-> DONE	 
+		//Construir arbol semantico	-> DONE 	 
 		
 		//Calcular propiedades recursivamente
 		ArrayList<Nodo> listaNodosPostorden = asin.getNodosPostorden();
@@ -48,19 +51,24 @@ public class AnalizadorSemantico {
 		} else if (prodN == 2) { // J -> F J
 		} else if (prodN == 3) { // J -> S J
 		} else if (prodN == 4) { // J -> $
-			System.out.println("\n \n \nPrograma termino con estado 0");
-			System.out.println(tsMain.toString());
+			if(!hayError) {
+				System.out.println("\n \n \nPrograma termino con estado 0");
+				System.out.println(tsMain.toString());
+			}else {
+				System.out.println("Errores en tiempo de ejecucion. Tabla de simbolos no mostrada.");
+			}
 		} else if (prodN == 5) { // D -> var T id I ;
 			nodo.setProp("tipo", nodo.getHijo("T").getProp("tipo"));
 			nodo.setProp("valor", nodo.getHijo("I").getProp("valor"));
 			nodo.setProp("id", nodo.getHijo("id").getToken().getLexema());
-			if (tsMain.existeSimbolo((String) nodo.getProp("id"), true)) {
-				System.out.println("Error, variable ya definida en linea " + nodo.getHijo("id").getToken().getLinea());
+			if (tsActiva.existeSimbolo((String) nodo.getProp("id"), true)) {
+				System.out.println("Error en linea " + nodo.getHijo("id").getToken().getLinea() +". Variable "+nodo.getProp("id").toString()+" ya definida.");
+				hayError=true;
 			} else {
 				// TODO Comprobacion tipo coincide, o sino conversion explicita
-				tsMain.addSimbolo((String) nodo.getProp("id"), new Simbolo((String) nodo.getProp("tipo"),
-						(String) nodo.getProp("id"), nodo.getProp("valor"), tsMain));
-				System.out.println("Variable inicializada en tabla de simbolos " + tsMain.scope);
+				tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo((String) nodo.getProp("tipo"),
+						(String) nodo.getProp("id"), nodo.getProp("valor"), tsActiva));
+				System.out.println("Variable inicializada en tabla de simbolos " + tsActiva.scope);
 			}
 		} else if (prodN == 6) { // T -> int
 			nodo.setProp("tipo", "int");
@@ -152,13 +160,69 @@ public class AnalizadorSemantico {
 				break;
 			}
 		} else if (prodN == 13) { // G -> ( X )
-		} else if (prodN == 14) {
-		} else if (prodN == 15) {
+			nodo.setProp("valor", nodo.getHijo("X").getProp("valor"));
+			nodo.setProp("tipo", nodo.getHijo("X").getProp("tipo"));
+		} else if (prodN == 14) { //G -> id GG
+			Nodo GG = nodo.getHijo("GG");
+			Nodo id = nodo.getHijo("id");
+			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
+				System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no definida.");
+				hayError=true;
+			}else{
+				String tipo;
+				Object valor;
+				switch(GG.getProdN()) {
+					case 19: //GG -> lambda
+						tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
+						valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+						nodo.setProp("tipo", tipo);
+						nodo.setProp("valor", valor);
+						break;
+					case 20: //GG -> --
+						tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
+						valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+						if(tipo.equals("int")) {
+							nodo.setProp("tipo", tipo);
+							nodo.setProp("valor", ((Integer)valor)-1);
+						}else {
+							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
+							nodo.setProp("tipo", tipo);
+							nodo.setProp("valor", valor);
+						}
+						break;
+					case 21: //GG -> ++
+						tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
+						valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+						if(tipo.equals("int")) {
+							nodo.setProp("tipo", tipo);
+							nodo.setProp("valor", ((Integer)valor)+1);
+						}else {
+							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
+							nodo.setProp("tipo", tipo);
+							nodo.setProp("valor", valor);
+						}
+						break;
+				}
+			}
+		} else if (prodN == 15) { //G -> ! B
+			Nodo B = nodo.getHijo("B");
+			//Comprobar que el valor de B es de tipo Bool
+			if(!B.getProp("tipo").equals("bool")) {
+				System.out.println("Error, se espera un valor booleano. Se encontro "+B.getProp("tipo").toString());
+			}
+			if(B.getProp("valor").equals(true)) {
+				nodo.setProp("valor", !((Boolean)B.getProp("valor")));
+			}else if(B.getProp("valor").equals(false)) {
+				nodo.setProp("valor", !((Boolean)B.getProp("valor")));
+			}else {
+				System.out.println("Error, se esperaba un valor booleano. Se encontro "+B.getProp("valor").toString());
+			}
+			nodo.setProp("tipo", B.getProp("tipo"));			
 		} else if (prodN == 16) { // G -> cte_int
 			nodo.setProp("valor", nodo.getHijo("cte_int").getToken().getNumero());
 			nodo.setProp("tipo", "int");
 		} else if (prodN == 17) { // G -> cte_cadena
-			nodo.setProp("valor", nodo.getHijo("cte_cadena").getToken().getNumero());
+			nodo.setProp("valor", nodo.getHijo("cte_cadena").getToken().getLexema());
 			nodo.setProp("tipo", "string");
 		} else if (prodN == 18) { // G -> cte_logica
 			nodo.setProp("valor", Boolean.parseBoolean(nodo.getHijo("cte_logica").getToken().getLexema()));
@@ -555,6 +619,9 @@ public class AnalizadorSemantico {
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			}
+		}else if(prodN==53) {
+			nodo.setProp("valor", Boolean.parseBoolean(nodo.getHijo("cte_logica").getToken().getLexema()));
+			nodo.setProp("tipo", "bool");
 		}else {
 			//TODO prodN fuera de rango
 		}
