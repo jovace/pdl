@@ -66,8 +66,11 @@ public class AnalizadorSemantico {
 				hayError=true;
 			} else {
 				// TODO Comprobacion tipo coincide, o sino conversion explicita
-				tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo((String) nodo.getProp("tipo"),
-						(String) nodo.getProp("id"), nodo.getProp("valor"), tsActiva));
+				tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo(
+						(String) nodo.getProp("tipo"),
+						(String) nodo.getProp("id"), 
+						nodo.getProp("valor"),
+						tsActiva));
 				System.out.println("Variable inicializada en tabla de simbolos " + tsActiva.scope);
 			}
 		} else if (prodN == 6) { // T -> int
@@ -197,7 +200,7 @@ public class AnalizadorSemantico {
 							nodo.setProp("tipo", tipo);
 							nodo.setProp("valor", ((Integer)valor)+1);
 						}else {
-							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
+							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador ++ restringido a variables de tipo int.");
 							nodo.setProp("tipo", tipo);
 							nodo.setProp("valor", valor);
 						}
@@ -619,9 +622,158 @@ public class AnalizadorSemantico {
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			}
-		}else if(prodN==53) {
+		}else if(prodN==28) { //X-> E XX
+			Nodo E = nodo.getHijo("E");
+			Nodo XX = nodo.getHijo("XX");
+
+
+			if (!XX.hasProp("valor")) {
+				nodo.setProp("tipo", E.getProp("tipo"));
+				nodo.setProp("valor", E.getProp("valor"));
+			}else if(E.getProp("tipo").equals("int") && E.getProp("tipo").equals(XX.getProp("tipo"))) {
+				nodo.setProp("tipo", "bool");
+				if(XX.getProp("operacion").equals("menor")) {
+					Boolean res = new Boolean((Integer)E.getProp("valor")<(Integer)XX.getProp("valor"));
+					nodo.setProp("valor",res);
+				}if(XX.getProp("operacion").equals("mayor")) {
+					Boolean res = new Boolean((Integer)E.getProp("valor")>(Integer)XX.getProp("valor"));
+					nodo.setProp("valor",res);
+				}if(XX.getProp("operacion").equals("mayorIgual")) {
+					Boolean res = new Boolean((Integer)E.getProp("valor")>=(Integer)XX.getProp("valor"));
+					nodo.setProp("valor",res);
+
+				}if(XX.getProp("operacion").equals("menorIgual")) {
+					Boolean res = new Boolean((Integer)E.getProp("valor")<=(Integer)XX.getProp("valor"));
+					nodo.setProp("valor",res);
+
+				}
+			}else {
+				System.out.println("Error. Tipos no coinciden.");
+				hayError=true;
+			}
+		}else if(prodN==31) {//XX-> < E
+			Nodo E = nodo.getHijo("E");
+			nodo.setProp("tipo", E.getProp("tipo"));
+			nodo.setProp("valor", E.getProp("valor"));
+			nodo.setProp("operacion", "menor");				
+
+		}else if(prodN==32) {//XX-> > E
+			Nodo E = nodo.getHijo("E");
+			nodo.setProp("tipo", E.getProp("tipo"));
+			nodo.setProp("valor", E.getProp("valor"));
+			nodo.setProp("operacion", "mayor");				
+		}else if(prodN==33) {//XX-> >= E
+			Nodo E = nodo.getHijo("E");
+			nodo.setProp("tipo", E.getProp("tipo"));
+			nodo.setProp("valor", E.getProp("valor"));
+			nodo.setProp("operacion", "mayorIgual");	
+		}else if(prodN==34) {//XX-> <= E
+			Nodo E = nodo.getHijo("E");
+			nodo.setProp("tipo", E.getProp("tipo"));
+			nodo.setProp("valor", E.getProp("valor"));
+			nodo.setProp("operacion", "menorIgual");				
+
+		}else if (prodN == 35) { // F-> function,H, id,(,A,),{,C,}
+			Nodo H = nodo.getHijo("H");
+			Nodo A = nodo.getHijo("A");
+			Nodo C = nodo.getHijo("C");
+
+		    if(!C.hasProp("tipoRetorno") && H.getProp("tipoRetorno").equals("void")){
+		        nodo.setProp("tipoRetorno",H.getProp("tipoRetorno"));
+		    }else if(H.getProp("tipoRetorno").equals(C.getProp("tipoRetorno"))) {
+		    	nodo.setProp("tipoRetorno",H.getProp("tipoRetorno"));
+		    }else{
+		        System.out.println("Error. Tipo de retorno de la funcion ("
+		                            + (String) H.getProp("tipoRetorno") + ") no coincide con tipo retornado (" + (String) C.getProp("tipoRetorno") +").");
+		        hayError=true;
+		    }
+		    nodo.setProp("id", nodo.getHijo("id").getToken().getLexema());
+		    
+		    if(!tsActiva.existeSimbolo((String)nodo.getProp("id"), true)) {
+		    	//Si funcion no existe en tsActual, la inicializamos
+		    	tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo("function",(String)nodo.getProp("id"),"",tsActiva));
+		    	tsActiva.addScope((String) nodo.getProp("id"));
+		    }else {
+		    	System.out.println("Error, funcion ya esta declara en este ambito.");
+		    }
+		}else if (prodN == 36) { // H-> T
+			Nodo T = nodo.getHijo("T");
+			nodo.setProp("tipoRetorno",T.getProp("tipo"));
+		}else if (prodN == 37) { // H-> void
+			nodo.setProp("tipoRetorno", "void");
+		}else if (prodN == 43) { //C -> S C
+		    Nodo C = nodo.getHijo("C");
+		    Nodo S = nodo.getHijo("S");
+		    
+		    if(S.hasProp("tipoRetorno")) {
+		    	nodo.setProp("tipoRetorno",S.getProp("tipoRetorno"));
+		    } 
+		}else if (prodN == 46) { //S -> return R ;
+		    Nodo R = nodo.getHijo("R");
+		    nodo.setProp("tipoRetorno",R.getProp("tipo"));
+		}else if (prodN == 50) { //R -> X
+		    Nodo X = nodo.getHijo("X");
+		    nodo.setProp("tipo",X.getProp("tipo")); //TODO Complementar tipo en funcion de X
+		}else if (prodN == 51) { //R -> lambda
+			nodo.setProp("tipo", "void");
+		}else if (prodN == 53) { //B -> cte_logica
 			nodo.setProp("valor", Boolean.parseBoolean(nodo.getHijo("cte_logica").getToken().getLexema()));
 			nodo.setProp("tipo", "bool");
+		}else if (prodN==55){
+			Nodo M = nodo.getHijo("M");
+			Nodo id = nodo.getHijo("id");
+			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
+				System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no definida.");
+				hayError=true;
+			}else{
+				String tipo;
+				Object valor=null;
+				switch(M.getProdN()) {
+					case 60: //M -> I
+						tipo = (String)M.getProp("tipo");
+						if(!tipo.equals("void")) {
+							valor = M.getProp("valor");
+							tsActiva.getSimbolo(id.getToken().getLexema()).setValor(valor);
+							nodo.setProp("valor", valor);
+						}
+						nodo.setProp("tipo", tipo);
+						break;
+					case 59: //M -> --
+						tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
+						valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+						if(tipo.equals("int")) {
+							nodo.setProp("tipo", tipo);
+							nodo.setProp("valor", ((Integer)valor)-1);
+						}else {
+							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
+							nodo.setProp("tipo", tipo);
+							nodo.setProp("valor", valor);
+						}
+						tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
+						break;
+					case 58: //M -> ++
+						tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
+						valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+						if(tipo.equals("int")) {
+							nodo.setProp("tipo", tipo);
+							nodo.setProp("valor", ((Integer)valor)+1);
+						}else {
+							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador ++ restringido a variables de tipo int.");
+							nodo.setProp("tipo", tipo);
+							nodo.setProp("valor", valor);
+						}
+						tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
+						break;
+				}
+			}
+		}else if(prodN==60){
+			Nodo I = nodo.getHijo("I");
+			if(I.getProdN()!=11) {
+				nodo.setProp("tipo",I.getProp("tipo"));
+				nodo.setProp("valor", I.getProp("valor"));
+			}else {
+				nodo.setProp("tipo", "void");
+			}
 		}else {
 			//TODO prodN fuera de rango
 		}

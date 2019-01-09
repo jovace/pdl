@@ -681,18 +681,6 @@ public class analizadorSintactico {
 		}
 		codigo.add("$");
 		return codigo;
-		
-		//		ArrayList<String> codigo = new ArrayList<>();
-//
-//		for (Token token : listaTokens) {
-//			String terminal = tokenaTerminales.get(token.tokenTipo());
-//			if (terminal == null) {
-//				terminal = "cte_int";
-//			}
-//			codigo.add(terminal);
-//		}
-//		codigo.add("$");
-//		return codigo;
 	}
 	
 	public void getProducciones() {

@@ -12,7 +12,7 @@ public class Main {
 //		analizadorSintactico as = new analizadorSintactico();
 //		as.getProducciones();
 		lex= new analizadorLexico();
-		lex.analizar("var string i = \"jorge\" ; var int j = i--; \n");
+		lex.analizar("var bool t = ((1==2)); \n");
 		
 		//System.out.println("RESULTADO: "+probarTodo());
 		
