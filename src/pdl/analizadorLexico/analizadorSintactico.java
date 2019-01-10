@@ -23,6 +23,7 @@ public class analizadorSintactico {
 		terminales.add("int");//
 		terminales.add("$");
 		terminales.add("=");//
+		terminales.add("==");//
 		terminales.add("(");//
 		terminales.add(")");//
 		terminales.add("!");//
@@ -185,6 +186,7 @@ public class analizadorSintactico {
 		filaEE.put("<=", produccionElambda);
 		filaEE.put(">", produccionElambda);
 		filaEE.put(">=", produccionElambda);
+		filaEE.put("==", produccionElambda);
 		filaEE.put("for", produccionElambda);
 		filaEE.put("function", produccionElambda);
 		filaEE.put("id", produccionElambda);
@@ -288,6 +290,7 @@ public class analizadorSintactico {
 		filaGG.put("<=", produccionGGlambda);
 		filaGG.put(">=", produccionGGlambda);
 		filaGG.put(">", produccionGGlambda);
+		filaGG.put("==", produccionGGlambda);
 		filaGG.put("for", produccionGGlambda);
 		filaGG.put("function", produccionGGlambda);
 		filaGG.put("id", produccionGGlambda);
@@ -486,6 +489,7 @@ public class analizadorSintactico {
 
 		ArrayList<String> produccionXXyy = new ArrayList<>();
 		ArrayList<String> produccionXXm = new ArrayList<>();
+		ArrayList<String> produccionXXi = new ArrayList<>();
 		ArrayList<String> produccionXXmi = new ArrayList<>();
 		ArrayList<String> produccionXXM = new ArrayList<>();
 		ArrayList<String> produccionXXMi = new ArrayList<>();
@@ -516,6 +520,11 @@ public class analizadorSintactico {
 		produccionXXm.add("<");
 		produccionXXm.add("E");
 		filaXX.put("<", produccionXXm);
+		produccionXXi.add("28");
+		produccionXXi.add("==");
+		//produccionXXm.add("=");
+		produccionXXi.add("E");
+		filaXX.put("==", produccionXXi);
 		produccionXXlambda.add("56");
 		filaXX.put(")", produccionXXlambda);
 		filaXX.put(";", produccionXXlambda);
@@ -655,13 +664,13 @@ public class analizadorSintactico {
 
 	private void printError(String lugar, String X, String a, Stack<String> pila2, ArrayList<String> codigo,
 			int puntero, ArrayList<Integer> arbol, ArrayList<Token> listaToken) {
-//		System.err.println(lugar);
-//		System.err.println("Cima de pila: " + X.toString());
-//		System.err.println("Token a leer: " + a.toString());
-//		System.err.println("Pila: " + pila.toString());
-//		System.err.println("Archivo leido: \n" + codigo.subList(0, puntero));
-//		System.err.println("Arbol: \n" + arbol.toString());
-//		System.err.println("Lista tokens: " + codigo.toString());
+		System.err.println(lugar);
+		System.err.println("Cima de pila: " + X.toString());
+		System.err.println("Token a leer: " + a.toString());
+		System.err.println("Pila: " + pila.toString());
+		System.err.println("Archivo leido: \n" + codigo.subList(0, puntero));
+		System.err.println("Arbol: \n" + arbol.toString());
+		System.err.println("Lista tokens: " + codigo.toString());
 		System.out.println("Error "+listaToken.get(puntero).getPosicion()+"\n \n");
 	}
 

@@ -644,28 +644,34 @@ public class AnalizadorSemantico {
 				if(XX.getProp("operacion").equals("menor")) {
 					Boolean res = new Boolean((Integer)E.getProp("valor")<(Integer)XX.getProp("valor"));
 					nodo.setProp("valor",res);
-				}if(XX.getProp("operacion").equals("mayor")) {
+				}else if(XX.getProp("operacion").equals("mayor")) {
 					Boolean res = new Boolean((Integer)E.getProp("valor")>(Integer)XX.getProp("valor"));
 					nodo.setProp("valor",res);
-				}if(XX.getProp("operacion").equals("mayorIgual")) {
+				}else if(XX.getProp("operacion").equals("mayorIgual")) {
 					Boolean res = new Boolean((Integer)E.getProp("valor")>=(Integer)XX.getProp("valor"));
 					nodo.setProp("valor",res);
 
-				}if(XX.getProp("operacion").equals("menorIgual")) {
+				}else if(XX.getProp("operacion").equals("menorIgual")) {
 					Boolean res = new Boolean((Integer)E.getProp("valor")<=(Integer)XX.getProp("valor"));
 					nodo.setProp("valor",res);
-
+				}else if(XX.getProp("operacion").equals("igualigual")) {
+					Boolean res = new Boolean(((Integer)E.getProp("valor")).equals((Integer)XX.getProp("valor")));
+					nodo.setProp("valor",res);
 				}
 			}else {
 				System.out.println("Error. Tipos no coinciden.");
 				hayError=true;
 			}
+		}else if(prodN==29) {//XX-> == E
+			Nodo E = nodo.getHijo("E");
+			nodo.setProp("tipo", E.getProp("tipo"));
+			nodo.setProp("valor", E.getProp("valor"));
+			nodo.setProp("operacion", "igualigual");
 		}else if(prodN==31) {//XX-> < E
 			Nodo E = nodo.getHijo("E");
 			nodo.setProp("tipo", E.getProp("tipo"));
 			nodo.setProp("valor", E.getProp("valor"));
-			nodo.setProp("operacion", "menor");				
-
+			nodo.setProp("operacion", "menor");		
 		}else if(prodN==32) {//XX-> > E
 			Nodo E = nodo.getHijo("E");
 			nodo.setProp("tipo", E.getProp("tipo"));
@@ -680,8 +686,7 @@ public class AnalizadorSemantico {
 			Nodo E = nodo.getHijo("E");
 			nodo.setProp("tipo", E.getProp("tipo"));
 			nodo.setProp("valor", E.getProp("valor"));
-			nodo.setProp("operacion", "menorIgual");				
-
+			nodo.setProp("operacion", "menorIgual");
 		}else if (prodN == 35) { // F-> function,H, id,(,A,),{,C,}
 			Nodo H = nodo.getHijo("H");
 			Nodo A = nodo.getHijo("A");
@@ -730,6 +735,12 @@ public class AnalizadorSemantico {
 		    nodo.setProp("tipo",X.getProp("tipo"));
 		}else if (prodN == 51) { //R -> lambda
 			nodo.setProp("tipo", "void");
+		}else if (prodN == 52) { //B -> ( X )
+		    Nodo X = nodo.getHijo("X");
+		    if (X.getProp("tipo").equals("bool")) {
+		        nodo.setProp("tipo", X.getProp("tipo"));
+		        nodo.setProp("valor", (Boolean)X.getProp("valor"));
+		    }
 		}else if (prodN == 53) { //B -> cte_logica
 			nodo.setProp("valor", Boolean.parseBoolean(nodo.getHijo("cte_logica").getToken().getLexema()));
 			nodo.setProp("tipo", "bool");

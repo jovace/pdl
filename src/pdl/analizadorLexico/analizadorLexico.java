@@ -339,7 +339,7 @@ public class analizadorLexico{
 			//hago switch c para ver si lo que viene es un = o no
 			switch(c) {
 				case '=':
-					//resultado=new Token(3,0);
+					resultado=new Token("==");
 					cadena="";
 					estadoActual=0;
 					break;
