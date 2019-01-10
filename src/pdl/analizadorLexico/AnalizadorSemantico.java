@@ -31,6 +31,10 @@ public class AnalizadorSemantico {
 		for(Nodo nodo : listaNodosPostorden) {
 			String codigo = calcularCodigo(nodo);
 			codigoFinal+=codigo;
+			if(hayError) {
+				System.out.println("Errores en tiempo de ejecucion. Tabla de simbolos no mostrada.");
+				break;
+			}
 		}
 			
 		
@@ -58,20 +62,25 @@ public class AnalizadorSemantico {
 				System.out.println("Errores en tiempo de ejecucion. Tabla de simbolos no mostrada.");
 			}
 		} else if (prodN == 5) { // D -> var T id I ;
-			nodo.setProp("tipo", nodo.getHijo("T").getProp("tipo"));
-			nodo.setProp("valor", nodo.getHijo("I").getProp("valor"));
-			nodo.setProp("id", nodo.getHijo("id").getToken().getLexema());
-			if (tsActiva.existeSimbolo((String) nodo.getProp("id"), true)) {
-				System.out.println("Error en linea " + nodo.getHijo("id").getToken().getLinea() +". Variable "+nodo.getProp("id").toString()+" ya definida.");
+			Nodo T = nodo.getHijo("T");
+			Nodo I = nodo.getHijo("I");
+			if(!T.getProp("tipo").equals(I.getProp("tipo"))) {
+				System.out.println("Error en linea " + nodo.getHijo("id").getToken().getLinea() +". Valor no es del tipo especificado.");
 				hayError=true;
-			} else {
-				// TODO Comprobacion tipo coincide, o sino conversion explicita
-				tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo(
-						(String) nodo.getProp("tipo"),
-						(String) nodo.getProp("id"), 
-						nodo.getProp("valor"),
-						tsActiva));
-				System.out.println("Variable inicializada en tabla de simbolos " + tsActiva.scope);
+			}else {
+				nodo.setProp("tipo", nodo.getHijo("T").getProp("tipo"));
+				nodo.setProp("valor", nodo.getHijo("I").getProp("valor"));
+				nodo.setProp("id", nodo.getHijo("id").getToken().getLexema());
+				if (tsActiva.existeSimbolo((String) nodo.getProp("id"), true)) {
+					System.out.println("Error en linea " + nodo.getHijo("id").getToken().getLinea() +". Variable "+nodo.getProp("id").toString()+" ya definida.");
+					hayError=true;
+				} else {
+					tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo(
+							(String) nodo.getProp("tipo"),
+							(String) nodo.getProp("id"), 
+							nodo.getProp("valor"),
+							tsActiva));
+				}
 			}
 		} else if (prodN == 6) { // T -> int
 			nodo.setProp("tipo", "int");
@@ -711,14 +720,34 @@ public class AnalizadorSemantico {
 		}else if (prodN == 46) { //S -> return R ;
 		    Nodo R = nodo.getHijo("R");
 		    nodo.setProp("tipoRetorno",R.getProp("tipo"));
+		}else if (prodN == 47) { //S -> print ( X ) ;
+		    Nodo X = nodo.getHijo("X");
+		    nodo.setProp("tipo", X.getProp("tipo"));
+		    nodo.setProp("valor", X.getProp("valor"));
+		    System.out.println(nodo.getProp("valor").toString());
 		}else if (prodN == 50) { //R -> X
 		    Nodo X = nodo.getHijo("X");
-		    nodo.setProp("tipo",X.getProp("tipo")); //TODO Complementar tipo en funcion de X
+		    nodo.setProp("tipo",X.getProp("tipo"));
 		}else if (prodN == 51) { //R -> lambda
 			nodo.setProp("tipo", "void");
 		}else if (prodN == 53) { //B -> cte_logica
 			nodo.setProp("valor", Boolean.parseBoolean(nodo.getHijo("cte_logica").getToken().getLexema()));
 			nodo.setProp("tipo", "bool");
+		}else if (prodN == 54) { //B -> id
+			Nodo id = nodo.getHijo("id");
+			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
+				System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no definida.");
+				hayError=true;
+			}else{
+				Simbolo var = tsActiva.getSimbolo(id.getToken().getLexema());
+				if(!var.getTipo().equals("bool")) {
+					System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no es de tipo bool.");
+					hayError=true;
+				}else {
+					nodo.setProp("tipo",var.getTipo());
+					nodo.setProp("valor",(Boolean)var.getValor());
+				}
+			}
 		}else if (prodN==55){
 			Nodo M = nodo.getHijo("M");
 			Nodo id = nodo.getHijo("id");
@@ -766,6 +795,11 @@ public class AnalizadorSemantico {
 						break;
 				}
 			}
+		}else if (prodN == 56) { //S -> print ( X )
+		    Nodo X = nodo.getHijo("X");
+		    nodo.setProp("tipo", X.getProp("tipo"));
+		    nodo.setProp("valor", X.getProp("valor"));
+		    System.out.println(nodo.getProp("valor").toString());
 		}else if(prodN==60){
 			Nodo I = nodo.getHijo("I");
 			if(I.getProdN()!=11) {

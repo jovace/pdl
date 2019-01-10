@@ -655,13 +655,13 @@ public class analizadorSintactico {
 
 	private void printError(String lugar, String X, String a, Stack<String> pila2, ArrayList<String> codigo,
 			int puntero, ArrayList<Integer> arbol, ArrayList<Token> listaToken) {
-		//System.err.println(lugar);
-		//System.err.println("Cima de pila: " + X.toString());
-		//System.err.println("Token a leer: " + a.toString());
-		//System.err.println("Pila: " + pila.toString());
-		//System.err.println("Archivo leido: \n" + codigo.subList(0, puntero));
-		//System.err.println("Arbol: \n" + arbol.toString());
-		//System.err.println("Lista tokens: " + codigo.toString());
+//		System.err.println(lugar);
+//		System.err.println("Cima de pila: " + X.toString());
+//		System.err.println("Token a leer: " + a.toString());
+//		System.err.println("Pila: " + pila.toString());
+//		System.err.println("Archivo leido: \n" + codigo.subList(0, puntero));
+//		System.err.println("Arbol: \n" + arbol.toString());
+//		System.err.println("Lista tokens: " + codigo.toString());
 		System.out.println("Error "+listaToken.get(puntero).getPosicion()+"\n \n");
 	}
 
