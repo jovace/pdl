@@ -541,11 +541,11 @@ public class analizadorSintactico {
 		ArrayList<String> produccionXXoo = new ArrayList<>();
 		ArrayList<String> produccionXXlambda = new ArrayList<>();
 		Map<String, ArrayList<String>> filaXX = new HashMap<>();
-		produccionXXyy.add("35");
+		produccionXXyy.add("61");
 		produccionXXyy.add("&&");
 		produccionXXyy.add("E");
 		filaXX.put("&&", produccionXXyy);
-		produccionXXoo.add("34");
+		produccionXXoo.add("29");
 		produccionXXoo.add("||");
 		produccionXXoo.add("E");
 		filaXX.put("||", produccionXXoo);

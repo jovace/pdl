@@ -11,10 +11,10 @@ public class Main {
 	public static void main(String[] args){
 //		analizadorSintactico as = new analizadorSintactico();
 //		as.getProducciones();
-//		lex= new analizadorLexico();
-//		lex.analizar("suma(); \n");
+		lex= new analizadorLexico();
+		lex.analizar("suma((true||false)); \n");
 		
-		System.out.println("RESULTADO: "+probarTodo());
+//		System.out.println("RESULTADO: "+probarTodo());
 		
 		
 		
