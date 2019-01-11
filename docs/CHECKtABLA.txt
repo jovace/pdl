@@ -1,0 +1,158 @@
+FILA: AA --
+     ):                             [40]
+     ,:                             [39, ,, T, id, AA]
+
+FILA: EE --
+     &&:                            [23]
+	 ||: 
+     ==:                            [23]
+     <=:                            [23]
+     %:                             [26, %, G, EE]
+     ):                             [23]
+     *:                             [24, *, G, EE]
+     +:                             [21, +, G, EE]
+     -:                             [22, -, G, EE]
+     /:                             [25, /, G, EE]
+     ;:                             [23]
+	 ,: 
+     <:                             [23]
+     >:                             [23]
+     >=:                            [23]
+
+FILA: GG --
+     &&:                            [18]-
+     ||:                            [18]
+     <=:                            [18]
+     //:                            [18]
+     ==:                            [18]
+     ++:                            [20, ++]-
+     --:                            [19, --]
+	 (: 
+     %:                             [18]-
+     ):                             [18]-
+     *:                             [18]-
+     +:                             [18]-
+     -:                             [18]
+     ;:                             [18]
+	 ,: 
+     <:                             [18]
+     >:                             [18]
+     >=:                            [18]
+
+FILA: SS --
+     print:                         [55, print, (, X, )]
+     id:                            [54, id, M]
+
+FILA: XX --
+     &&:                            [35, &&, E]-
+     ||:                            [34, ||, E]-
+     ==:                            [28, ==, E]-
+     <=:                            [33, <=, E]-
+     ):                             [56]-
+     ;:                             [56]-
+     <:                             [30, <, E]-
+     >:                             [31, >, E]-
+     >=:                            [32, >=, E]-
+
+FILA: A --
+     bool:                          [37, T, id, AA]
+     string:                        [37, T, id, AA]
+     ):                             [38]
+     int:                           [37, T, id, AA]
+
+FILA: B --
+     (:                             [51, (, X, )]
+     cte_logica:                    [52, cte_logica]
+     id:                            [53, id]
+
+FILA: C --
+     print:                         [42, S, C]-
+	 (: 
+     var:                           [41, D, C]-
+     for:                           [42, S, C]-
+     id:                            [42, S, C]-
+     prompt:                        [42, S, C]-
+     }:                             [43]-
+     return:                        [42, S, C]-
+
+FILA: D --
+     var:                           [4, var, T, id, I, ;]
+
+FILA: E --
+     !:                             [11, G, EE]
+     cte_int:                       [11, G, EE]
+     (:                             [11, G, EE]
+     cte_cadena:                    [11, G, EE]
+     cte_logica:                    [11, G, EE]
+     id:                            [11, G, EE]
+
+FILA: F --
+     function:                      [34, function, H, id, (, A, ), {, C, }]
+
+FILA: G 
+     !:                             [14, !, B] -
+     cte_int:                       [15, cte_int]-
+     (:                             [12, (, X, )] -
+     cte_cadena:                    [16, cte_cadena]-
+     cte_logica:                    [17, cte_logica]-
+     id:                            [13, id, GG]-
+
+FILA: H --
+     bool:                          [35, T]
+     string:                        [35, T]
+     id:                            [36]
+     int:                           [35, T]
+
+FILA: I --
+     |=:                            [9, |=, E]-
+     ;:                             [10]-
+	 ): TODO
+     =:                             [8, =, E]-
+
+FILA: J --
+     print:                         [2, S, J]-
+     $:                             [3, $]-
+	 (: TODO
+     var:                           [0, D, J]-
+     function:                      [1, F, J]-
+     for:                           [2, S, J]-
+     id:                            [2, S, J]-
+     prompt:                        [2, S, J]-
+     return:                        [2, S, J]-
+
+FILA: M --
+     ++:                            [57, ++]-
+     --:                            [58, --]-
+     =:                             [59, I]-
+	 |=: TODO
+	 ): TODO
+	 ;: TODO
+
+FILA: R --
+     !:                             [49, X]-
+     cte_int:                       [49, X]-
+     (:                             [49, X]-
+     cte_cadena:                    [49, X]-
+     cte_logica:                    [49, X]-
+     ;:                             [50]-
+     id:                            [49, X]-
+
+FILA: S --
+     print:                         [46, print, (, X, ), ;]-
+     for:                           [48, for, (, D, X, ;, SS, ), {, C, }] -
+     id: TODO
+     prompt:                        [47, prompt, (, id, ), ;]-
+     return:                        [45, return, R, ;]-
+
+FILA: T --
+     bool:                          [7, bool]
+     string:                        [6, string]
+     int:                           [5, int]
+
+FILA: X --
+     !:                             [27, E, XX]-
+     cte_int:                       [27, E, XX]
+     (:                             [27, E, XX]-
+     cte_cadena:                    [27, E, XX]
+     cte_logica:                    [27, E, XX]
+     id:                            [27, E, XX]

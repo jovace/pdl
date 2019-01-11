@@ -11,10 +11,10 @@ public class Main {
 	public static void main(String[] args){
 //		analizadorSintactico as = new analizadorSintactico();
 //		as.getProducciones();
-		lex= new analizadorLexico();
-		lex.analizar("var bool t = (1 == 2); var bool j = !t; \n");
+//		lex= new analizadorLexico();
+//		lex.analizar("suma(); \n");
 		
-		//System.out.println("RESULTADO: "+probarTodo());
+		System.out.println("RESULTADO: "+probarTodo());
 		
 		
 		
@@ -47,7 +47,7 @@ public class Main {
 		listaPruebas.add("print(i); \t");
 		listaPruebas.add("prompt(i); \t");
 		listaPruebas.add("var bool x=(i&&j); \n");
-		//listaPruebas.add("var bool x=(i||j); \n"); //No entra en nuestras asignaciones
+		listaPruebas.add("var bool x=(i||j); \n"); //No entra en nuestras asignaciones
 		listaPruebas.add("var bool x|=n; \n");
 		listaPruebas.add("var bool x|=(n&&i); \n");
 		listaPruebas.add("var bool x|=!j; \n");
@@ -57,6 +57,16 @@ public class Main {
 		listaPruebas.add("var bool x|=(n>=i); \n");
 		listaPruebas.add("var int x=0; \n x++; \n");
 		listaPruebas.add("for(var int i=0;i<10;i=i+1){i=i+1;} \n");
+		listaPruebas.add("suma(); \n");
+		listaPruebas.add("suma(1); \n");
+		listaPruebas.add("suma(1,2,3,4); \n");
+		listaPruebas.add("suma(true); \n");
+		listaPruebas.add("suma(\"jorge\"); \n");
+		listaPruebas.add("suma(\"jorge\",2,false); \n");
+		listaPruebas.add("suma(\"jorge\",resta(2)); \n");
+		listaPruebas.add("suma(id++); \n");
+		listaPruebas.add("suma((id+2),!true); \n");
+		
 		
 		listaPruebas.add("\n \n \n Cadenas con errores sintacticos \n \n");
 		listaPruebas.add("function suma(){i=i+1} \n");

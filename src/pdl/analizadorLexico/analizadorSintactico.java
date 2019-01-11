@@ -80,6 +80,10 @@ public class analizadorSintactico {
 		noTerminales.add("B");
 		noTerminales.add("SS");
 		noTerminales.add("M");
+		noTerminales.add("L");
+		noTerminales.add("AR");
+		noTerminales.add("RR");
+		noTerminales.add("RRR");
 
 		// iniz tabla
 		ArrayList<String> produccionAcierrap = new ArrayList<>();
@@ -108,6 +112,22 @@ public class analizadorSintactico {
 		produccionAAcomaT.add("AA");
 		filaAA.put(",", produccionAAcomaT);
 		tablaTransicion.put("AA", filaAA);
+		
+		ArrayList<String> produccionARlambda = new ArrayList<>();
+		ArrayList<String> produccionARERR = new ArrayList<>();
+		Map<String, ArrayList<String>> filaAR = new HashMap<>();
+		produccionARlambda.add("65");
+		produccionARERR.add("64");
+		produccionARERR.add("E");
+		produccionARERR.add("RR");
+		filaAR.put(")", produccionARlambda);
+		filaAR.put("!", produccionARERR);
+		filaAR.put("(", produccionARERR);
+		filaAR.put("cte_int", produccionARERR);
+		filaAR.put("cte_logica", produccionARERR);
+		filaAR.put("cte_cadena", produccionARERR);
+		filaAR.put("id", produccionARERR);
+		tablaTransicion.put("AR", filaAR);
 
 		ArrayList<String> produccionBabrep = new ArrayList<>();
 		ArrayList<String> produccionBctelog = new ArrayList<>();
@@ -138,6 +158,7 @@ public class analizadorSintactico {
 		filaC.put("print", produccionCSC);
 		filaC.put("prompt", produccionCSC);
 		filaC.put("return", produccionCSC);
+		filaC.put("(",  produccionCSC);
 		produccionCDC.add("41");
 		produccionCDC.add("D");
 		produccionCDC.add("C");
@@ -178,23 +199,16 @@ public class analizadorSintactico {
 		ArrayList<String> produccionEresta = new ArrayList<>();
 		Map<String, ArrayList<String>> filaEE = new HashMap<>();
 		produccionElambda.add("23");
-		filaEE.put("$", produccionElambda);
 		filaEE.put("&&", produccionElambda);
 		filaEE.put(")", produccionElambda);
 		filaEE.put(";", produccionElambda);
+		filaEE.put(",", produccionElambda);
+		filaEE.put("||", produccionElambda);
 		filaEE.put("<", produccionElambda);
 		filaEE.put("<=", produccionElambda);
 		filaEE.put(">", produccionElambda);
 		filaEE.put(">=", produccionElambda);
 		filaEE.put("==", produccionElambda);
-		filaEE.put("for", produccionElambda);
-		filaEE.put("function", produccionElambda);
-		filaEE.put("id", produccionElambda);
-		filaEE.put("print", produccionElambda);
-		filaEE.put("prompt", produccionElambda);
-		filaEE.put("return", produccionElambda);
-		filaEE.put("var", produccionElambda);
-		filaEE.put("}", produccionElambda);
 		produccionEmod.add("26");
 		produccionEmod.add("%");
 		produccionEmod.add("G");
@@ -269,6 +283,7 @@ public class analizadorSintactico {
 		tablaTransicion.put("G", filaG);
 
 		ArrayList<String> produccionGGlambda = new ArrayList<>();
+		ArrayList<String> produccionGGL = new ArrayList<>();
 		ArrayList<String> produccionGGmasmas = new ArrayList<>();
 		ArrayList<String> produccionGGmenosmenos = new ArrayList<>();
 		Map<String, ArrayList<String>> filaGG = new HashMap<>();
@@ -277,7 +292,8 @@ public class analizadorSintactico {
 		produccionGGmasmas.add("++");
 		produccionGGmenosmenos.add("19");
 		produccionGGmenosmenos.add("--");
-		filaGG.put("$", produccionGGlambda);
+		produccionGGL.add("60");
+		produccionGGL.add("L");
 		filaGG.put("%", produccionGGlambda);
 		filaGG.put("&&", produccionGGlambda);
 		filaGG.put(")", produccionGGlambda);
@@ -286,22 +302,16 @@ public class analizadorSintactico {
 		filaGG.put("-", produccionGGlambda);
 		filaGG.put("//", produccionGGlambda);
 		filaGG.put(";", produccionGGlambda);
+		filaGG.put(",", produccionGGlambda);
 		filaGG.put("<", produccionGGlambda);
 		filaGG.put("<=", produccionGGlambda);
 		filaGG.put(">=", produccionGGlambda);
 		filaGG.put(">", produccionGGlambda);
 		filaGG.put("==", produccionGGlambda);
-		filaGG.put("for", produccionGGlambda);
-		filaGG.put("function", produccionGGlambda);
-		filaGG.put("id", produccionGGlambda);
-		filaGG.put("print", produccionGGlambda);
-		filaGG.put("prompt", produccionGGlambda);
-		filaGG.put("return", produccionGGlambda);
-		filaGG.put("var", produccionGGlambda);
 		filaGG.put("||", produccionGGlambda);
-		filaGG.put("}", produccionGGlambda);
 		filaGG.put("++", produccionGGmasmas);
 		filaGG.put("--", produccionGGmenosmenos);
+		filaGG.put("(", produccionGGL);
 		tablaTransicion.put("GG", filaGG);
 
 		ArrayList<String> produccionHT = new ArrayList<>();
@@ -327,16 +337,8 @@ public class analizadorSintactico {
 		produccionIoigualE.add("9");
 		produccionIoigualE.add("|=");
 		produccionIoigualE.add("E");
-		filaI.put("$", produccionIlambda);
 		filaI.put(";", produccionIlambda);
-		filaI.put("for", produccionIlambda);
-		filaI.put("function", produccionIlambda);
-		filaI.put("id", produccionIlambda);
-		filaI.put("print", produccionIlambda);
-		filaI.put("prompt", produccionIlambda);
-		filaI.put("return", produccionIlambda);
-		filaI.put("var", produccionIlambda);
-		filaI.put("}", produccionIlambda);
+		filaI.put(")", produccionIlambda);
 		filaI.put("=", produccionIigualE);
 		filaI.put("|=", produccionIoigualE);
 		tablaTransicion.put("I", filaI);
@@ -363,9 +365,19 @@ public class analizadorSintactico {
 		filaJ.put("print", produccionJSJ);
 		filaJ.put("prompt", produccionJSJ);
 		filaJ.put("return", produccionJSJ);
+		filaJ.put("(", produccionJSJ);
 		filaJ.put("function", produccionJFJ);
 		filaJ.put("var", produccionJDJ);
 		tablaTransicion.put("J", filaJ);
+		
+		ArrayList<String> produccionLAR = new ArrayList<>();
+		Map<String, ArrayList<String>> filaL = new HashMap<>();
+		produccionLAR.add("63");
+		produccionLAR.add("(");
+		produccionLAR.add("AR");
+		produccionLAR.add(")");
+		filaL.put("(", produccionLAR);
+		tablaTransicion.put("L", filaL);
 
 		ArrayList<String> produccionRlamba = new ArrayList<>();
 		ArrayList<String> produccionRimplicaX = new ArrayList<>();
@@ -381,18 +393,42 @@ public class analizadorSintactico {
 		filaR.put("cte_int", produccionRimplicaX);
 		filaR.put("id", produccionRimplicaX);
 		tablaTransicion.put("R", filaR);
+		
+		ArrayList<String> produccionRRlambda = new ArrayList<>();
+		ArrayList<String> produccionRRcomaAR = new ArrayList<>();
+		Map<String, ArrayList<String>> filaRR = new HashMap<>();
+		produccionRRlambda.add("67");
+		produccionRRcomaAR.add("66");
+		produccionRRcomaAR.add(",");
+		produccionRRcomaAR.add("RRR");
+		filaRR.put(",", produccionRRcomaAR);
+		filaRR.put(")", produccionRRlambda);
+		tablaTransicion.put("RR", filaRR);
+		
+		ArrayList<String> produccionRRRERR = new ArrayList<>();
+		Map<String, ArrayList<String>> filaRRR= new HashMap<>();
+		produccionRRRERR.add("69");
+		produccionRRRERR.add("E");
+		produccionRRRERR.add("RR");
+		filaRRR.put("!", produccionRRRERR);
+		filaRRR.put("(", produccionRRRERR);
+		filaRRR.put("cte_int", produccionRRRERR);
+		filaRRR.put("cte_string", produccionRRRERR);
+		filaRRR.put("cte_logica", produccionRRRERR);
+		filaRRR.put("id", produccionRRRERR);
+		tablaTransicion.put("RRR", filaRRR);
 
 		Map<String, ArrayList<String>> filaS = new HashMap<>();
 		ArrayList<String> produccionSforpDpuntocomaXpuntocomaetc = new ArrayList<>();
-		ArrayList<String> produccionSidigualx = new ArrayList<>();
+		ArrayList<String> produccionSidM = new ArrayList<>();
 		ArrayList<String> produccionSprintpxp = new ArrayList<>();
 		ArrayList<String> produccionSpromtpidp = new ArrayList<>();
 		ArrayList<String> produccionSreturnR = new ArrayList<>();
+		ArrayList<String> produccionSLpuntocoma = new ArrayList<>();
 		produccionSforpDpuntocomaXpuntocomaetc.add("48");
 		produccionSforpDpuntocomaXpuntocomaetc.add("for");
 		produccionSforpDpuntocomaXpuntocomaetc.add("(");
 		produccionSforpDpuntocomaXpuntocomaetc.add("D");
-		// produccionSforpDpuntocomaXpuntocomaetc.add(";");
 		produccionSforpDpuntocomaXpuntocomaetc.add("X");
 		produccionSforpDpuntocomaXpuntocomaetc.add(";");
 		produccionSforpDpuntocomaXpuntocomaetc.add("SS");
@@ -400,12 +436,6 @@ public class analizadorSintactico {
 		produccionSforpDpuntocomaXpuntocomaetc.add("{");
 		produccionSforpDpuntocomaXpuntocomaetc.add("C");
 		produccionSforpDpuntocomaXpuntocomaetc.add("}");
-		produccionSidigualx.add("44");
-		produccionSidigualx.add("SS");
-		//produccionSidigualx.add("id");
-		//produccionSidigualx.add("=");
-		//produccionSidigualx.add("E");
-		produccionSidigualx.add(";");
 		produccionSprintpxp.add("46");
 		produccionSprintpxp.add("print");
 		produccionSprintpxp.add("(");
@@ -422,8 +452,16 @@ public class analizadorSintactico {
 		produccionSreturnR.add("return");
 		produccionSreturnR.add("R");
 		produccionSreturnR.add(";");
+		produccionSLpuntocoma.add("62");
+		produccionSLpuntocoma.add("L");
+		produccionSLpuntocoma.add(";");
+		produccionSidM.add("44");
+		produccionSidM.add("id");
+		produccionSidM.add("M");
+		produccionSidM.add(";");
 		filaS.put("for", produccionSforpDpuntocomaXpuntocomaetc);
-		filaS.put("id", produccionSidigualx);
+		filaS.put("id", produccionSidM);
+		filaS.put("(", produccionSLpuntocoma);
 		filaS.put("print", produccionSprintpxp);
 		filaS.put("prompt", produccionSpromtpidp);
 		filaS.put("return", produccionSreturnR);
@@ -463,15 +501,22 @@ public class analizadorSintactico {
 		ArrayList<String> produccionMmasmas = new ArrayList<>();
 		ArrayList<String> produccionMmenmen = new ArrayList<>();
 		ArrayList<String> produccionMigual = new ArrayList<>();
+		ArrayList<String> produccionML = new ArrayList<>();
 		produccionMmasmas.add("57");
 		produccionMmasmas.add("++");
 		produccionMmenmen.add("58");
 		produccionMmenmen.add("--");
 		produccionMigual.add("59");
 		produccionMigual.add("I");
+		produccionML.add("68");
+		produccionML.add("L");
 		filaM.put("++", produccionMmasmas);
 		filaM.put("--", produccionMmenmen);
 		filaM.put("=", produccionMigual);
+		filaM.put(")", produccionMigual);
+		filaM.put(";", produccionMigual);
+		filaM.put("|=", produccionMigual);
+		filaM.put("(", produccionML);
 		tablaTransicion.put("M", filaM);
 
 		ArrayList<String> produccionX = new ArrayList<>();
@@ -522,7 +567,6 @@ public class analizadorSintactico {
 		filaXX.put("<", produccionXXm);
 		produccionXXi.add("28");
 		produccionXXi.add("==");
-		//produccionXXm.add("=");
 		produccionXXi.add("E");
 		filaXX.put("==", produccionXXi);
 		produccionXXlambda.add("56");
@@ -709,6 +753,19 @@ public class analizadorSintactico {
 		
 		for(Integer i : producciones.keySet()) {
 			System.out.println(producciones.get(i));
+		}
+	}
+	
+	public void getTabla() {
+		for(String fila : this.tablaTransicion.keySet()) {
+			System.out.println("FILA: "+fila);
+			for(String columna : this.tablaTransicion.get(fila).keySet()) {
+				System.out.print("     "+columna+":");
+				for(int i=columna.length();i<30;i++) {System.out.print(" ");}
+				ArrayList<String> prod = this.tablaTransicion.get(fila).get(columna);
+				System.out.println(prod.toString());
+			}
+			System.out.println();
 		}
 	}
 }

@@ -2,24 +2,26 @@
 <HTML>
 <HEAD>
   <META http-equiv="Content-Type" content="text/html; charset=windows-1252">
-  <TITLE>Tabla sintáctica para nuevo</TITLE>
+  <TITLE>Tabla sintáctica para pdlgramatica.ll1</TITLE>
   <STYLE type="text/css">
     DIV.tabla { text-align: center; font-size: 12pt; font-family: Arial }
     H2.titulo { text-align: center; font-family: Arial }
     TABLE { text-align: center; }
     TH { background: silver; }
+	.cabecera {position:sticky; top:0px;}
+	TH TD {width:50px;}
   </STYLE>
 </HEAD>
 
 <BODY style="font-family: Arial">
 
   <P><BR></P>
-  <H2 class=titulo>Tabla sintáctica para nuevo</H2>
+  <H2 class=titulo>Tabla sintáctica para pdlgramatica.ll1</H2>
   <P><BR></P>
 
   <DIV class = tabla>
     <TABLE border="1" cellpadding="5" width="90%">
-      <TR>
+      <TR class="cabecera">
         <TD>
         <TH>!</TH>
         <TH>$</TH>
@@ -38,6 +40,7 @@
         <TH>&lt;</TH>
         <TH>&lt;=</TH>
         <TH>=</TH>
+        <TH>==</TH>
         <TH>&gt;</TH>
         <TH>&gt;=</TH>
         <TH>bool</TH>
@@ -70,6 +73,7 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>A &rarr; lambda</TD>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -147,6 +151,51 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
+        <TD>--</TD>
+      </TR>
+      <TR>
+        <TH>AR</TH>
+        <TD>AR &rarr; E RR</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>AR &rarr; E RR</TD>
+        <TD>AR &rarr; lambda</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>AR &rarr; E RR</TD>
+        <TD>AR &rarr; E RR</TD>
+        <TD>AR &rarr; E RR</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>AR &rarr; E RR</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
       </TR>
       <TR>
         <TH>B</TH>
@@ -155,6 +204,7 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>B &rarr; ( X )</TD>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -197,6 +247,7 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
+        <TD>C &rarr; S C</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -270,7 +321,8 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
-        <TD>D &rarr; var T id I</TD>
+        <TD>--</TD>
+        <TD>D &rarr; var T id I ;</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -284,6 +336,7 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>E &rarr; G EE</TD>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -323,7 +376,7 @@
       <TR>
         <TH>EE</TH>
         <TD>--</TD>
-        <TD>EE &rarr; lambda</TD>
+        <TD>--</TD>
         <TD>EE &rarr; % G EE</TD>
         <TD>EE &rarr; lambda</TD>
         <TD>--</TD>
@@ -331,7 +384,7 @@
         <TD>EE &rarr; * G EE</TD>
         <TD>EE &rarr; + G EE</TD>
         <TD>--</TD>
-        <TD>--</TD>
+        <TD>EE &rarr; lambda</TD>
         <TD>EE &rarr; - G EE</TD>
         <TD>--</TD>
         <TD>EE &rarr; // G EE</TD>
@@ -341,6 +394,19 @@
         <TD>--</TD>
         <TD>EE &rarr; lambda</TD>
         <TD>EE &rarr; lambda</TD>
+        <TD>EE &rarr; lambda</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -348,23 +414,12 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>EE &rarr; lambda</TD>
-        <TD>EE &rarr; lambda</TD>
-        <TD>EE &rarr; lambda</TD>
         <TD>--</TD>
-        <TD>EE &rarr; lambda</TD>
-        <TD>EE &rarr; lambda</TD>
-        <TD>EE &rarr; lambda</TD>
-        <TD>--</TD>
-        <TD>--</TD>
-        <TD>EE &rarr; lambda</TD>
-        <TD>--</TD>
-        <TD>--</TD>
-        <TD>EE &rarr; lambda</TD>
-        <TD>EE &rarr; lambda</TD>
         <TD>--</TD>
       </TR>
       <TR>
         <TH>F</TH>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -429,6 +484,7 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
+        <TD>--</TD>
         <TD>G &rarr; cte_cadena</TD>
         <TD>G &rarr; cte_int</TD>
         <TD>G &rarr; cte_logica</TD>
@@ -452,15 +508,15 @@
       <TR>
         <TH>GG</TH>
         <TD>--</TD>
-        <TD>GG &rarr; lambda</TD>
-        <TD>GG &rarr; lambda</TD>
-        <TD>GG &rarr; lambda</TD>
         <TD>--</TD>
+        <TD>GG &rarr; lambda</TD>
+        <TD>GG &rarr; lambda</TD>
+        <TD>GG &rarr; L</TD>
         <TD>GG &rarr; lambda</TD>
         <TD>GG &rarr; lambda</TD>
         <TD>GG &rarr; lambda</TD>
         <TD>GG &rarr; ++</TD>
-        <TD>--</TD>
+        <TD>GG &rarr; lambda</TD>
         <TD>GG &rarr; lambda</TD>
         <TD>GG &rarr; --</TD>
         <TD>GG &rarr; lambda</TD>
@@ -470,6 +526,19 @@
         <TD>--</TD>
         <TD>GG &rarr; lambda</TD>
         <TD>GG &rarr; lambda</TD>
+        <TD>GG &rarr; lambda</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -477,23 +546,12 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>GG &rarr; lambda</TD>
-        <TD>GG &rarr; lambda</TD>
-        <TD>GG &rarr; lambda</TD>
         <TD>--</TD>
-        <TD>GG &rarr; lambda</TD>
-        <TD>GG &rarr; lambda</TD>
-        <TD>GG &rarr; lambda</TD>
-        <TD>--</TD>
-        <TD>--</TD>
-        <TD>GG &rarr; lambda</TD>
-        <TD>--</TD>
-        <TD>--</TD>
-        <TD>GG &rarr; lambda</TD>
-        <TD>GG &rarr; lambda</TD>
         <TD>--</TD>
       </TR>
       <TR>
         <TH>H</TH>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -538,11 +596,11 @@
       <TR>
         <TH>I</TH>
         <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
         <TD>I &rarr; lambda</TD>
-        <TD>--</TD>
-        <TD>--</TD>
-        <TD>--</TD>
-        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -562,20 +620,21 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
-        <TD>I &rarr; lambda</TD>
-        <TD>I &rarr; lambda</TD>
-        <TD>I &rarr; lambda</TD>
-        <TD>--</TD>
-        <TD>I &rarr; lambda</TD>
-        <TD>I &rarr; lambda</TD>
-        <TD>I &rarr; lambda</TD>
         <TD>--</TD>
         <TD>--</TD>
-        <TD>I &rarr; lambda</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>I &rarr; |= E</TD>
         <TD>--</TD>
-        <TD>I &rarr; lambda</TD>
+        <TD>--</TD>
         <TD>--</TD>
       </TR>
       <TR>
@@ -584,6 +643,7 @@
         <TD>J &rarr; $</TD>
         <TD>--</TD>
         <TD>--</TD>
+        <TD>J &rarr; S J</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -622,6 +682,94 @@
         <TD>--</TD>
       </TR>
       <TR>
+        <TH>L</TH>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>L &rarr; ( AR )</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+      </TR>
+      <TR>
+        <TH>M</TH>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>M &rarr; I</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>M &rarr; ++</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>M &rarr; --</TD>
+        <TD>--</TD>
+        <TD>M &rarr; I</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>M &rarr; I</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>M &rarr; I</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+      </TR>
+      <TR>
         <TH>R</TH>
         <TD>R &rarr; X</TD>
         <TD>--</TD>
@@ -637,6 +785,7 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>R &rarr; lambda</TD>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -665,11 +814,56 @@
         <TD>--</TD>
       </TR>
       <TR>
+        <TH>RR</TH>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>RR &rarr; , AR</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+        <TD>--</TD>
+      </TR>
+      <TR>
         <TH>S</TH>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
+        <TD>S &rarr; L ;</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -693,7 +887,7 @@
         <TD>--</TD>
         <TD>S &rarr; for ( D ; X ; SS ) { C }</TD>
         <TD>--</TD>
-        <TD>S &rarr; id = X ;</TD>
+        <TD>S &rarr; id M ;</TD>
         <TD>--</TD>
         <TD>S &rarr; print ( X ) ;</TD>
         <TD>S &rarr; prompt ( id ) ;</TD>
@@ -736,7 +930,8 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
-        <TD>SS &rarr; id = X</TD>
+        <TD>--</TD>
+        <TD>SS &rarr; id M</TD>
         <TD>--</TD>
         <TD>SS &rarr; print ( X )</TD>
         <TD>--</TD>
@@ -752,6 +947,7 @@
       </TR>
       <TR>
         <TH>T</TH>
+        <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -816,6 +1012,7 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
+        <TD>--</TD>
         <TD>X &rarr; E XX</TD>
         <TD>X &rarr; E XX</TD>
         <TD>X &rarr; E XX</TD>
@@ -843,6 +1040,7 @@
         <TD>--</TD>
         <TD>XX &rarr; &amp;&amp; E</TD>
         <TD>--</TD>
+        <TD>XX &rarr; lambda</TD>
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
@@ -850,11 +1048,11 @@
         <TD>--</TD>
         <TD>--</TD>
         <TD>--</TD>
-        <TD>--</TD>
-        <TD>--</TD>
+        <TD>XX &rarr; lambda</TD>
         <TD>XX &rarr; &lt; E</TD>
         <TD>XX &rarr; &lt;= E</TD>
         <TD>--</TD>
+        <TD>XX &rarr; == E</TD>
         <TD>XX &rarr; &gt; E</TD>
         <TD>XX &rarr; &gt;= E</TD>
         <TD>--</TD>
