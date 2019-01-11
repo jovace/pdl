@@ -37,8 +37,8 @@ XX -> > E
 XX -> >= E
 XX -> <= E
 XX -> == E
-XX -> || E
-XX -> && E
+
+
 F -> function H id ( A ) { C }
 H -> T
 H -> lambda
@@ -74,6 +74,8 @@ AR -> lambda
 RR -> , RRR
 RR -> lambda
 RRR -> E RR
+EE -> || G EE
+EE -> && G EE
 
 
 } 

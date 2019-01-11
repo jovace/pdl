@@ -6,6 +6,7 @@ public class Simbolo {
 	private Object valor;
 	private TablaSimbolos tabla;
 	private TablaSimbolos tablaPadre;
+	private String nodoFuncion;
 	
 	public Simbolo(String tipo, String lexema, Object valor, TablaSimbolos tablaPadre) {
 		this.tipo=tipo;
@@ -17,6 +18,19 @@ public class Simbolo {
 		}else {
 			tabla=null;
 		}
+	}
+	
+	public Simbolo(String tipo, String lexema, Object valor, TablaSimbolos tablaPadre, String nodoFuncion) {
+		this.tipo=tipo;
+		this.lexema=lexema;
+		this.valor=valor;
+		this.tablaPadre=tablaPadre;
+		if(tipo.equals("function")) {
+			this.tabla=new TablaSimbolos(lexema, tablaPadre);
+		}else {
+			tabla=null;
+		}
+		this.nodoFuncion=nodoFuncion;
 	}
 	
 	public String getTipo() {
@@ -42,5 +56,13 @@ public class Simbolo {
 	
 	public void setValor(Object valor) {
 		this.valor=valor;
+	}
+
+	public String getNodoFuncion() {
+		return nodoFuncion;
+	}
+
+	public void setNodoFuncion(String nodoFuncion) {
+		this.nodoFuncion = nodoFuncion;
 	}
 }

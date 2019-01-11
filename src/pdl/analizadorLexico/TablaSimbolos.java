@@ -43,6 +43,10 @@ public class TablaSimbolos {
 		}
 	}
 	
+	public TablaSimbolos getTablaPadre() {
+		return this.tablaPadre;
+	}
+	
 	public String toString() {
 		String res="";
 		

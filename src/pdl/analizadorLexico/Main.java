@@ -10,9 +10,11 @@ public class Main {
 	
 	public static void main(String[] args){
 //		analizadorSintactico as = new analizadorSintactico();
-//		as.getProducciones();
+//		as.getTabla();
 		lex= new analizadorLexico();
-		lex.analizar("suma((true||false)); \n");
+		lex.analizar("function int suma(){return 1;} suma(); \n");
+
+//		lex.analizar("var bool i = (false || false)&&true; \n");	REVISAR
 		
 //		System.out.println("RESULTADO: "+probarTodo());
 		

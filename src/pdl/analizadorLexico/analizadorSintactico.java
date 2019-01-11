@@ -197,13 +197,23 @@ public class analizadorSintactico {
 		ArrayList<String> produccionEdiv = new ArrayList<>();
 		ArrayList<String> produccionEsum = new ArrayList<>();
 		ArrayList<String> produccionEresta = new ArrayList<>();
+		ArrayList<String> produccionEEyy = new ArrayList<>();
+		ArrayList<String> produccionEEoo = new ArrayList<>();
 		Map<String, ArrayList<String>> filaEE = new HashMap<>();
 		produccionElambda.add("23");
-		filaEE.put("&&", produccionElambda);
+		produccionEEyy.add("61");
+		produccionEEyy.add("&&");
+		produccionEEyy.add("G");
+		produccionEEyy.add("EE");
+		filaEE.put("&&", produccionEEyy);
+		produccionEEoo.add("29");
+		produccionEEoo.add("||");
+		produccionEEoo.add("G");
+		produccionEEoo.add("EE");
+		filaEE.put("||", produccionEEoo);
 		filaEE.put(")", produccionElambda);
 		filaEE.put(";", produccionElambda);
 		filaEE.put(",", produccionElambda);
-		filaEE.put("||", produccionElambda);
 		filaEE.put("<", produccionElambda);
 		filaEE.put("<=", produccionElambda);
 		filaEE.put(">", produccionElambda);
@@ -413,7 +423,7 @@ public class analizadorSintactico {
 		filaRRR.put("!", produccionRRRERR);
 		filaRRR.put("(", produccionRRRERR);
 		filaRRR.put("cte_int", produccionRRRERR);
-		filaRRR.put("cte_string", produccionRRRERR);
+		filaRRR.put("cte_cadena", produccionRRRERR);
 		filaRRR.put("cte_logica", produccionRRRERR);
 		filaRRR.put("id", produccionRRRERR);
 		tablaTransicion.put("RRR", filaRRR);
@@ -541,14 +551,6 @@ public class analizadorSintactico {
 		ArrayList<String> produccionXXoo = new ArrayList<>();
 		ArrayList<String> produccionXXlambda = new ArrayList<>();
 		Map<String, ArrayList<String>> filaXX = new HashMap<>();
-		produccionXXyy.add("61");
-		produccionXXyy.add("&&");
-		produccionXXyy.add("E");
-		filaXX.put("&&", produccionXXyy);
-		produccionXXoo.add("29");
-		produccionXXoo.add("||");
-		produccionXXoo.add("E");
-		filaXX.put("||", produccionXXoo);
 		produccionXXmi.add("33");
 		produccionXXmi.add("<=");
 		produccionXXmi.add("E");
@@ -703,6 +705,7 @@ public class analizadorSintactico {
 			}
 		}
 		AnalizadorSemantico as = new AnalizadorSemantico();
+		asem.printPostorden();
 		return as.analizar(asem);
 	}
 
