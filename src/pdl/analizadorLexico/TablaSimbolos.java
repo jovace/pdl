@@ -26,6 +26,15 @@ public class TablaSimbolos {
 		this.tabla.put(id, simbolo);
 	}
 	
+	public boolean removeSimbolo(String id) {
+		if(this.tabla.containsKey(id)) {
+			this.tabla.remove(id);
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public TablaSimbolos addScope(String nombreScope) {
 		this.tabla.put(nombreScope, new Simbolo("function",nombreScope,"",this));
 		return this.tabla.get(nombreScope).getTabla();

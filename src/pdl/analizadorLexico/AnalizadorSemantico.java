@@ -284,6 +284,7 @@ public class AnalizadorSemantico {
 										}
 									}
 									nodo.setProp("valor", tsActiva.getSimbolo("$$return$$").getValor());
+									tsActiva.removeSimbolo("$$return$$");
 								}else {
 									//ERROR, algo petó
 									hayError=true;
@@ -794,6 +795,10 @@ public class AnalizadorSemantico {
 		    }else {
 		    	System.out.println("Error, funcion ya esta declara en este ambito.");
 		    }
+		    
+		    if(tsActiva.getTablaPadre()!=null) {
+		    	tsActiva=tsActiva.getTablaPadre();
+		    }
 		}else if (prodN == 36) { // H-> T
 			Nodo T = nodo.getHijo("T");
 			nodo.setProp("tipoRetorno",T.getProp("tipo"));
@@ -810,8 +815,23 @@ public class AnalizadorSemantico {
 			Map<Integer,Nodo> argsDef=(Map<Integer, Nodo>) AA.getProp("argsDef");
 			argsDef.put(argsDef.size(), nodo);
 			nodo.setProp("argsDef", argsDef);
+			
+			String idFuncion=nodo.getPadre().getHijo("id").getToken().getLexema();
+			TablaSimbolos tsDefFunc=new TablaSimbolos("$$"+idFuncion+"$$",tsActiva);
+			for(int i=0;i<argsDef.size();i++) {
+				tsDefFunc.addSimbolo(argsDef.get(i).getProp("id").toString(), new Simbolo(argsDef.get(i).getProp("tipo").toString(),argsDef.get(i).getProp("id").toString(),0,tsDefFunc));
+			}
+			if(tsDefFunc.getTablaPadre()==tsActiva) {
+				tsActiva=tsDefFunc;
+			}
 		}else if(prodN==39) {// A -> lambda
 			nodo.setProp("argsDef", new HashMap<Integer,Nodo>());
+			
+			String idFuncion=nodo.getPadre().getHijo("id").getToken().getLexema();
+			TablaSimbolos tsDefFunc=new TablaSimbolos("$$"+idFuncion+"$$",tsActiva);
+			if(tsDefFunc.getTablaPadre()==tsActiva) {
+				tsActiva=tsDefFunc;
+			}
 		}else if(prodN==40) {// AA -> , T id AA
 			Nodo T = nodo.getHijo("T");
 			Nodo id = nodo.getHijo("id");
@@ -927,6 +947,7 @@ public class AnalizadorSemantico {
 										}
 									}
 									nodo.setProp("valor", tsActiva.getSimbolo("$$return$$").getValor());
+									tsActiva.removeSimbolo("$$return$$");
 								}else {
 									//ERROR, algo petó
 									hayError=true;
