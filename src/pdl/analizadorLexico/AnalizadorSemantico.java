@@ -248,15 +248,15 @@ public class AnalizadorSemantico {
 					case 61: //GG -> L
 						Map<Integer,Nodo> args = (Map<Integer, Nodo>) GG.getProp("args");
 						if(GG.hasProp("function") && (Boolean)GG.getProp("function")) {
-							Nodo definicionFuncion=(Nodo) listaNodosPostorden.get(Integer.parseInt(tsActiva.getSimbolo(id.getToken().getLexema()).getNodoFuncion()));
-							Map<String,String> argumentosDef = (Map<String, String>) definicionFuncion.getProp("argsDef");
+							Nodo definicionFuncion=(Nodo) tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+							Map<Integer,Nodo> argumentosDef = (Map<Integer, Nodo>) definicionFuncion.getProp("argsDef");
 							if(argumentosDef.size()!=args.size()) {
 								//ERROR, numero de argumentos no coincide
 								hayError=true;
 							}else{
 								boolean tipoArgumentoError=false;
 								for(int i=0;i<argumentosDef.size() && !tipoArgumentoError;i++) {
-									if(!argumentosDef.get(i).equals(args.get(i).getProp("tipo"))) {
+									if(!argumentosDef.get(i).getProp("tipo").equals(args.get(i).getProp("tipo"))) {
 										tipoArgumentoError=true;
 										//ERROR, el tipo del parametro i no coicide con la definicion
 									}
@@ -269,7 +269,7 @@ public class AnalizadorSemantico {
 									//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
 									TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva);
 									for(int i=0;i<argumentosDef.size();i++) {
-										tsFuncion.addSimbolo(argumentosDef.get(i), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i),args.get(i).getProp("valor"),tsFuncion));
+										tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
 									}
 									if(tsFuncion.getTablaPadre()==tsActiva) {
 										tsActiva=tsFuncion;
@@ -283,6 +283,7 @@ public class AnalizadorSemantico {
 											break;
 										}
 									}
+									nodo.setProp("valor", tsActiva.getSimbolo("$$return$$").getValor());
 								}else {
 									//ERROR, algo petó
 									hayError=true;
@@ -772,6 +773,9 @@ public class AnalizadorSemantico {
 			Nodo H = nodo.getHijo("H");
 			Nodo A = nodo.getHijo("A");
 			Nodo C = nodo.getHijo("C");
+			
+			
+			nodo.setProp("argsDef",A.getProp("argsDef"));
 
 		    if(!C.hasProp("tipoRetorno") && H.getProp("tipoRetorno").equals("void")){
 		        nodo.setProp("tipoRetorno",H.getProp("tipoRetorno"));
@@ -786,8 +790,7 @@ public class AnalizadorSemantico {
 		    
 		    if(!tsActiva.existeSimbolo((String)nodo.getProp("id"), true)) {
 		    	//Si funcion no existe en tsActual, la inicializamos
-		    	tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo("function"+((Integer)nodoN).toString(),(String)nodo.getProp("id"),(Integer)nodoN,tsActiva));
-		    	tsActiva.addScope((String) nodo.getProp("id"));
+		    	tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo("function",(String)nodo.getProp("id"),nodo,tsActiva));
 		    }else {
 		    	System.out.println("Error, funcion ya esta declara en este ambito.");
 		    }
@@ -796,6 +799,32 @@ public class AnalizadorSemantico {
 			nodo.setProp("tipoRetorno",T.getProp("tipo"));
 		}else if (prodN == 37) { // H-> void
 			nodo.setProp("tipoRetorno", "void");
+		}else if(prodN==38) {// A -> T id AA
+			Nodo T = nodo.getHijo("T");
+			Nodo id = nodo.getHijo("id");
+			Nodo AA = nodo.getHijo("AA");
+			
+			nodo.setProp("tipo", T.getProp("tipo"));
+			nodo.setProp("id", id.getToken().getLexema());
+			
+			Map<Integer,Nodo> argsDef=(Map<Integer, Nodo>) AA.getProp("argsDef");
+			argsDef.put(argsDef.size(), nodo);
+			nodo.setProp("argsDef", argsDef);
+		}else if(prodN==39) {// A -> lambda
+			nodo.setProp("argsDef", new HashMap<Integer,Nodo>());
+		}else if(prodN==40) {// AA -> , T id AA
+			Nodo T = nodo.getHijo("T");
+			Nodo id = nodo.getHijo("id");
+			Nodo AA = nodo.getHijo("AA");
+			
+			nodo.setProp("tipo", T.getProp("tipo"));
+			nodo.setProp("id", id.getToken().getLexema());
+			
+			Map<Integer,Nodo> argsDef=(Map<Integer, Nodo>) AA.getProp("argsDef");
+			argsDef.put(argsDef.size(), nodo);
+			nodo.setProp("argsDef", argsDef);
+		}else if(prodN==41) {// AA -> lambda
+			nodo.setProp("argsDef", new HashMap<Integer,Nodo>());
 		}else if (prodN == 43) { //C -> S C
 		    Nodo C = nodo.getHijo("C");
 		    Nodo S = nodo.getHijo("S");
@@ -862,15 +891,15 @@ public class AnalizadorSemantico {
 						Nodo GG=nodo.getHijo("M");
 						Map<Integer,Nodo> args = (Map<Integer, Nodo>) GG.getProp("args");
 						if(GG.hasProp("function") && (Boolean)GG.getProp("function")) {
-							Nodo definicionFuncion=(Nodo) listaNodosPostorden.get(Integer.parseInt(tsActiva.getSimbolo(id.getToken().getLexema()).getNodoFuncion()));
-							Map<String,String> argumentosDef = (Map<String, String>) definicionFuncion.getProp("argsDef");
+							Nodo definicionFuncion=(Nodo) tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+							Map<Integer,Nodo> argumentosDef = (Map<Integer, Nodo>) definicionFuncion.getProp("argsDef");
 							if(argumentosDef.size()!=args.size()) {
 								//ERROR, numero de argumentos no coincide
 								hayError=true;
 							}else{
 								boolean tipoArgumentoError=false;
 								for(int i=0;i<argumentosDef.size() && !tipoArgumentoError;i++) {
-									if(!argumentosDef.get(i).equals(args.get(i).getProp("tipo"))) {
+									if(!argumentosDef.get(i).getProp("tipo").equals(args.get(i).getProp("tipo"))) {
 										tipoArgumentoError=true;
 										//ERROR, el tipo del parametro i no coicide con la definicion
 									}
@@ -883,7 +912,7 @@ public class AnalizadorSemantico {
 									//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
 									TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva);
 									for(int i=0;i<argumentosDef.size();i++) {
-										tsFuncion.addSimbolo(argumentosDef.get(i), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i),args.get(i).getProp("valor"),tsFuncion));
+										tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
 									}
 									if(tsFuncion.getTablaPadre()==tsActiva) {
 										tsActiva=tsFuncion;
@@ -897,6 +926,7 @@ public class AnalizadorSemantico {
 											break;
 										}
 									}
+									nodo.setProp("valor", tsActiva.getSimbolo("$$return$$").getValor());
 								}else {
 									//ERROR, algo petó
 									hayError=true;
@@ -915,7 +945,7 @@ public class AnalizadorSemantico {
 		    //TODO Como saco el retorno del scope que toca.
 		    if(tsActiva.getTablaPadre()!=null) {
 		    	TablaSimbolos tablaPadre = tsActiva.getTablaPadre();
-		    	tablaPadre.addSimbolo("$$return$$", new Simbolo(nodo.getProp("tipo").toString(),"$$return$$",nodo.getProp("valor"),tablaPadre));
+		    	tablaPadre.addSimbolo("$$return$$", new Simbolo(nodo.getProp("tipoRetorno").toString(),"$$return$$",nodo.getProp("valor"),tablaPadre));
 		    	tsActiva=tablaPadre;
 		    	codigo="return";
 		    }
@@ -927,6 +957,7 @@ public class AnalizadorSemantico {
 		}else if (prodN == 50) { //R -> X
 		    Nodo X = nodo.getHijo("X");
 		    nodo.setProp("tipo",X.getProp("tipo"));
+		    nodo.setProp("valor", X.getProp("valor"));
 		}else if (prodN == 51) { //R -> lambda
 			nodo.setProp("tipo", "void");
 		}else if (prodN == 52) { //B -> ( X )

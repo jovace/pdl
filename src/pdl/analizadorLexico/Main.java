@@ -12,7 +12,7 @@ public class Main {
 //		analizadorSintactico as = new analizadorSintactico();
 //		as.getTabla();
 		lex= new analizadorLexico();
-		lex.analizar("function int suma(){return 1;} suma(); \n");
+		lex.analizar("function int suma(int a){return a;} print(suma(4)); \n");
 
 //		lex.analizar("var bool i = (false || false)&&true; \n");	REVISAR
 		

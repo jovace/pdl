@@ -705,7 +705,6 @@ public class analizadorSintactico {
 			}
 		}
 		AnalizadorSemantico as = new AnalizadorSemantico();
-		asem.printPostorden();
 		return as.analizar(asem);
 	}
 
