@@ -57,6 +57,7 @@ public class AnalizadorSemantico {
 	private String calcularCodigo(int nodoN,ArrayList<Nodo> listaNodosPostorden) {
 		Nodo nodo=listaNodosPostorden.get(nodoN);
 		String codigo="";
+		if(tsActiva.existeSimbolo("$$iniciaFor$$", true)&&nodo.getId().equals("C")){tsActiva.removeSimbolo("$$iniciaFor$$");return "";}
 		//TODO transformar todo a ifs
 		int prodN = nodo.getProdN();
 		if (prodN == 1) { // J -> D J
@@ -72,6 +73,14 @@ public class AnalizadorSemantico {
 		} else if (prodN == 5) { // D -> var T id I ;
 			Nodo T = nodo.getHijo("T");
 			Nodo I = nodo.getHijo("I");
+			
+			if(nodo.getPadre().getProdN()==49) {
+				TablaSimbolos tsFor = new TablaSimbolos("tablaFor",tsActiva);
+				tsActiva=tsFor;
+				tsActiva.addSimbolo("$$iniciaFor$$", null);
+			}
+	
+			
 			if(!T.getProp("tipo").equals(I.getProp("tipo"))) {
 				System.out.println("Error en linea " + nodo.getHijo("id").getToken().getLinea() +". Valor no es del tipo especificado.");
 				hayError=true;
@@ -208,6 +217,8 @@ public class AnalizadorSemantico {
 		} else if (prodN == 14) { //G -> id GG
 			Nodo GG = nodo.getHijo("GG");
 			Nodo id = nodo.getHijo("id");
+			
+			
 			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
 				System.out.println("Error en linea "+id.getToken().getLinea()+". Variable o funcion "+id.getToken().getLexema()+" no definida.");
 				hayError=true;
@@ -712,7 +723,7 @@ public class AnalizadorSemantico {
 		}else if(prodN==28) { //X-> E XX
 			Nodo E = nodo.getHijo("E");
 			Nodo XX = nodo.getHijo("XX");
-
+			
 
 			if (!XX.hasProp("valor")) {
 				nodo.setProp("tipo", E.getProp("tipo"));
@@ -845,13 +856,25 @@ public class AnalizadorSemantico {
 			nodo.setProp("argsDef", argsDef);
 		}else if(prodN==41) {// AA -> lambda
 			nodo.setProp("argsDef", new HashMap<Integer,Nodo>());
+		}else if(prodN==42) {// C -> D C
+			if(tsActiva.existeSimbolo("$$iniciaFor$$", true)) {
+				tsActiva.removeSimbolo("$$iniciaFor$$");
+			}
 		}else if (prodN == 43) { //C -> S C
-		    Nodo C = nodo.getHijo("C");
-		    Nodo S = nodo.getHijo("S");
-		    
-		    if(S.hasProp("tipoRetorno")) {
-		    	nodo.setProp("tipoRetorno",S.getProp("tipoRetorno"));
-		    } 
+			if(!tsActiva.existeSimbolo("$$iniciaFor$$", true)) {
+			    Nodo C = nodo.getHijo("C");
+			    Nodo S = nodo.getHijo("S");
+			    
+			    if(S.hasProp("tipoRetorno")) {
+			    	nodo.setProp("tipoRetorno",S.getProp("tipoRetorno"));
+			    } 
+			}else {
+				tsActiva.removeSimbolo("$$iniciaFor$$");
+			}
+		}else if(prodN==44) {// C -> D C
+			if(tsActiva.existeSimbolo("$$iniciaFor$$", true)) {
+				tsActiva.removeSimbolo("$$iniciaFor$$");
+			}
 		}else if (prodN == 45) { //S -> id M ;
 		    Nodo id = nodo.getHijo("id");
 		    Nodo M = nodo.getHijo("M");
@@ -975,6 +998,41 @@ public class AnalizadorSemantico {
 		    nodo.setProp("tipo", X.getProp("tipo"));
 		    nodo.setProp("valor", X.getProp("valor"));
 		    System.out.println(nodo.getProp("valor").toString());
+		}else if (prodN == 48) { //S -> prompt ( id ) ;
+		    //TODO prompt
+		}else if (prodN == 49) { //S -> for ( D X ; SS ) { C }
+		    Nodo D = nodo.getHijo("D");
+		    Nodo X = nodo.getHijo("X");
+		    Nodo SS = nodo.getHijo("SS");
+		    Nodo C = nodo.getHijo("C");
+		    
+		    Arbol afor = new Arbol(C);
+	    	ArrayList<Nodo> listaNodosAFor = afor.getNodosPostorden();
+	    	
+	    	Arbol apostfor = new Arbol(SS);
+	    	ArrayList<Nodo> listaNodosPostFor = apostfor.getNodosPostorden();
+		    
+		    while((Boolean) X.getProp("valor")) {
+		    	TablaSimbolos tsInnerFor = new TablaSimbolos("innerFor",tsActiva);
+		    	tsActiva=tsInnerFor;
+		    	for(int i=0;i<listaNodosAFor.size();i++) {
+		    		calcularCodigo(i,listaNodosAFor);
+		    	}
+		    	tsActiva=tsActiva.getTablaPadre();
+		    	
+		    	
+		    	for(int i=0;i<listaNodosPostFor.size();i++) {
+		    		calcularCodigo(i,listaNodosPostFor);
+		    	}
+		    	
+		    	Arbol acondfor = new Arbol(X);
+		    	ArrayList<Nodo> listaacondfor = acondfor.getNodosPostorden();
+		    	for(int i=0;i<listaacondfor.size();i++) {
+		    		calcularCodigo(i,listaacondfor);
+		    	}
+		    	
+		    }
+		    tsActiva=tsActiva.getTablaPadre();
 		}else if (prodN == 50) { //R -> X
 		    Nodo X = nodo.getHijo("X");
 		    nodo.setProp("tipo",X.getProp("tipo"));
@@ -1006,67 +1064,134 @@ public class AnalizadorSemantico {
 				}
 			}
 		}else if (prodN==55){ //SS -> id M
-			Nodo M = nodo.getHijo("M");
-			Nodo id = nodo.getHijo("id");
-			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
-				System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no definida.");
-				hayError=true;
-			}else{
-				String tipo;
-				Object valor=null;
-				switch(M.getProdN()) {
-					case 60: //M -> I
-						tipo = (String)M.getProp("tipo");
-						if(!tipo.equals("void")) {
-							if(M.hasProp("operacion") && M.getProp("operacion").equals("|=")) {
-								Simbolo s = tsActiva.getSimbolo(id.getToken().getLexema());
-								if(!s.getTipo().equals("bool")) {
-									System.out.println("Error, se esperaba tipo bool. Encontrado " + (String) s.getTipo()+ ".");
-									hayError=true;
+			if(!tsActiva.existeSimbolo("$$iniciaFor$$", true)){
+				Nodo M = nodo.getHijo("M");
+				Nodo id = nodo.getHijo("id");
+				if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
+					System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no definida.");
+					hayError=true;
+				}else{
+					String tipo;
+					Object valor=null;
+					switch(M.getProdN()) {
+						case 60: //M -> I
+							tipo = (String)M.getProp("tipo");
+							if(!tipo.equals("void")) {
+								if(M.hasProp("operacion") && M.getProp("operacion").equals("|=")) {
+									Simbolo s = tsActiva.getSimbolo(id.getToken().getLexema());
+									if(!s.getTipo().equals("bool")) {
+										System.out.println("Error, se esperaba tipo bool. Encontrado " + (String) s.getTipo()+ ".");
+										hayError=true;
+									}else {
+										valor = ((Boolean)s.getValor())||((Boolean)M.getProp("valor"));
+									}
 								}else {
-									valor = ((Boolean)s.getValor())||((Boolean)M.getProp("valor"));
+									valor = M.getProp("valor");
 								}
-							}else {
-								valor = M.getProp("valor");
+								tsActiva.getSimbolo(id.getToken().getLexema()).setValor(valor);
+								nodo.setProp("valor", valor);
 							}
-							tsActiva.getSimbolo(id.getToken().getLexema()).setValor(valor);
-							nodo.setProp("valor", valor);
-						}
-						nodo.setProp("tipo", tipo);
-						break;
-					case 59: //M -> --
-						tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
-						valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
-						if(tipo.equals("int")) {
 							nodo.setProp("tipo", tipo);
-							nodo.setProp("valor", ((Integer)valor)-1);
-						}else {
-							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
-							nodo.setProp("tipo", tipo);
-							nodo.setProp("valor", valor);
-						}
-						tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
-						break;
-					case 58: //M -> ++
-						tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
-						valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
-						if(tipo.equals("int")) {
-							nodo.setProp("tipo", tipo);
-							nodo.setProp("valor", ((Integer)valor)+1);
-						}else {
-							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador ++ restringido a variables de tipo int.");
-							nodo.setProp("tipo", tipo);
-							nodo.setProp("valor", valor);
-						}
-						tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
-						break;
+							break;
+						case 59: //M -> --
+							tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
+							valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+							if(tipo.equals("int")) {
+								nodo.setProp("tipo", tipo);
+								nodo.setProp("valor", ((Integer)valor)-1);
+							}else {
+								System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
+								nodo.setProp("tipo", tipo);
+								nodo.setProp("valor", valor);
+							}
+							tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
+							break;
+						case 58: //M -> ++
+							tipo = tsActiva.getSimbolo(id.getToken().getLexema()).getTipo();
+							valor = tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+							if(tipo.equals("int")) {
+								nodo.setProp("tipo", tipo);
+								nodo.setProp("valor", ((Integer)valor)+1);
+							}else {
+								System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador ++ restringido a variables de tipo int.");
+								nodo.setProp("tipo", tipo);
+								nodo.setProp("valor", valor);
+							}
+							tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
+							break;
+						case 69: // M -> L
+							Nodo GG = nodo.getHijo("L");
+							
+							Map<Integer,Nodo> args = (Map<Integer, Nodo>) GG.getProp("args");
+							if(GG.hasProp("function") && (Boolean)GG.getProp("function")) {
+								Nodo definicionFuncion=(Nodo) tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+								Map<Integer,Nodo> argumentosDef = (Map<Integer, Nodo>) definicionFuncion.getProp("argsDef");
+								if(argumentosDef.size()!=args.size()) {
+									//ERROR, numero de argumentos no coincide
+									hayError=true;
+								}else{
+									boolean tipoArgumentoError=false;
+									for(int i=0;i<argumentosDef.size() && !tipoArgumentoError;i++) {
+										if(!argumentosDef.get(i).getProp("tipo").equals(args.get(i).getProp("tipo"))) {
+											tipoArgumentoError=true;
+											//ERROR, el tipo del parametro i no coicide con la definicion
+										}
+									}
+									if(!tipoArgumentoError) {
+										//Argumentos correctos
+										//Tipo de nodo G sera tipo de retorno de la funcion
+										nodo.setProp("tipo",definicionFuncion.getProp("tipoRetorno"));
+										
+										//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
+										TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva);
+										for(int i=0;i<argumentosDef.size();i++) {
+											tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
+										}
+										if(tsFuncion.getTablaPadre()==tsActiva) {
+											tsActiva=tsFuncion;
+										}
+										
+										Arbol afunc = new Arbol(definicionFuncion.getHijo("C"));
+										ArrayList<Nodo> listaNodosFuncPostorden = afunc.getNodosPostorden();
+										for(int i=0;i<listaNodosFuncPostorden.size();i++) {
+											String codigoFunc = calcularCodigo(i,listaNodosFuncPostorden);
+											if(codigoFunc.equals("return")) {
+												break;
+											}
+										}
+										nodo.setProp("valor", tsActiva.getSimbolo("$$return$$").getValor());
+										tsActiva.removeSimbolo("$$return$$");
+									}else {
+										//ERROR, algo petó
+										hayError=true;
+									}
+								}
+							}
+							break;
+					}
 				}
+			}else { //Deshacer el comando en SS
+				Nodo M = nodo.getHijo("M");
+				Nodo id = nodo.getHijo("id");
+				
+//				tsActiva.removeSimbolo("$$iniciaFor$$");
+//				Integer valor=(Integer) tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
+//				
+//				if(M.getProdN()==58) { //M -> ++
+//					tsActiva.getSimbolo(id.getToken().getLexema()).setValor(valor--);
+//				}else if(M.getProdN()==59) { //M -> --
+//					tsActiva.getSimbolo(id.getToken().getLexema()).setValor(valor++);
+//				}
 			}
 		}else if (prodN == 56) { //S -> print ( X )
-		    Nodo X = nodo.getHijo("X");
-		    nodo.setProp("tipo", X.getProp("tipo"));
-		    nodo.setProp("valor", X.getProp("valor"));
-		    System.out.println(nodo.getProp("valor").toString());
+			if(!tsActiva.existeSimbolo("$$iniciaFor$$", true)) {
+			    Nodo X = nodo.getHijo("X");
+			    nodo.setProp("tipo", X.getProp("tipo"));
+			    nodo.setProp("valor", X.getProp("valor"));
+			    System.out.println(nodo.getProp("valor").toString());
+			}else {
+//				tsActiva.removeSimbolo("$$iniciaFor$$");
+			}
 		}else if(prodN==60){
 			Nodo I = nodo.getHijo("I");
 			if(I.getProdN()!=11) {
