@@ -210,6 +210,20 @@ public class AnalizadorSemantico {
 					System.out.println("Error, se esperaban valores de tipo bool.");
 					hayError=true;
 				}
+			case 62:
+				if(G.getProp("tipo").equals("bool") && G.getProp("tipo").equals(EE.getProp("tipo"))){
+					nodo.setProp("tipo", "bool");
+					if(EE.getProp("operacion").equals("oo")) {
+						Boolean res = new Boolean(((Boolean)G.getProp("valor"))||((Boolean)EE.getProp("valor")));
+						nodo.setProp("valor",res);
+					}else if(EE.getProp("operacion").equals("yy")) {
+						Boolean res = new Boolean(((Boolean)G.getProp("valor"))&&((Boolean)EE.getProp("valor")));
+						nodo.setProp("valor",res);
+					}
+				}else {
+					System.out.println("Error, se esperaban valores de tipo bool.");
+					hayError=true;
+				}
 			}
 		} else if (prodN == 13) { // G -> ( X )
 			nodo.setProp("valor", nodo.getHijo("X").getProp("valor"));

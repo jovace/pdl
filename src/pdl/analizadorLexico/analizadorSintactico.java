@@ -704,6 +704,8 @@ public class analizadorSintactico {
 				return false;
 			}
 		}
+		
+		System.out.println(arbol);
 		AnalizadorSemantico as = new AnalizadorSemantico();
 		return as.analizar(asem);
 	}
