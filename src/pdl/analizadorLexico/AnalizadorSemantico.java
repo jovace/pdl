@@ -58,7 +58,13 @@ public class AnalizadorSemantico {
 		Nodo nodo=listaNodosPostorden.get(nodoN);
 		String codigo="";
 		if(tsActiva.existeSimbolo("$$iniciaFor$$", true)&&nodo.getId().equals("C")){tsActiva.removeSimbolo("$$iniciaFor$$");return "";}
-		//TODO transformar todo a ifs
+		if(nodo.hasProp("$$initFor$$")) {
+			nodo.removeProp("$$initFor$$");
+			return "";
+		}
+		
+		
+		
 		int prodN = nodo.getProdN();
 		if (prodN == 1) { // J -> D J
 		} else if (prodN == 2) { // J -> F J
@@ -738,6 +744,14 @@ public class AnalizadorSemantico {
 			Nodo E = nodo.getHijo("E");
 			Nodo XX = nodo.getHijo("XX");
 			
+			if(nodo.getPadre().getProdN()==49) {
+				Nodo SS = nodo.getPadre().getHijo("SS");
+				Nodo C = nodo.getPadre().getHijo("C");
+				
+				C.setPropRecursive("$$initFor$$", null);
+				SS.setPropRecursive("$$initFor$$", null);
+			}
+			
 
 			if (!XX.hasProp("valor")) {
 				nodo.setProp("tipo", E.getProp("tipo"));
@@ -1044,7 +1058,8 @@ public class AnalizadorSemantico {
 		    	for(int i=0;i<listaacondfor.size();i++) {
 		    		calcularCodigo(i,listaacondfor);
 		    	}
-		    	
+		    	SS.removeProp("$$initFor$$");
+		    	C.removeProp("$$initFor$$");
 		    }
 		    tsActiva=tsActiva.getTablaPadre();
 		}else if (prodN == 50) { //R -> X

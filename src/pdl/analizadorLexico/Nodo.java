@@ -121,4 +121,29 @@ public class Nodo {
 		return this.props.containsKey(nombre);
 	}
 	
+	public boolean removeProp(String nombre) {
+		if(this.hasProp(nombre)) {
+			this.props.remove(nombre);
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public void setPropRecursive(String nombre, Object valor) {
+		this.setProp(nombre, valor);
+		
+		for(Nodo nodo : hijos.values()) {
+			nodo.setPropRecursive(nombre, valor);
+		}
+	}
+	
+	public void removePropRecursive(String nombre) {
+		this.removeProp(nombre);
+		
+		for(Nodo nodo : hijos.values()) {
+			nodo.removePropRecursive(nombre);
+		}
+	}
+	
 }
