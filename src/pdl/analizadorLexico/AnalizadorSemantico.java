@@ -1058,8 +1058,8 @@ public class AnalizadorSemantico {
 		    	for(int i=0;i<listaacondfor.size();i++) {
 		    		calcularCodigo(i,listaacondfor);
 		    	}
-		    	SS.removeProp("$$initFor$$");
-		    	C.removeProp("$$initFor$$");
+		    	SS.removePropRecursive("$$initFor$$");
+		    	C.removePropRecursive("$$initFor$$");
 		    }
 		    tsActiva=tsActiva.getTablaPadre();
 		}else if (prodN == 50) { //R -> X

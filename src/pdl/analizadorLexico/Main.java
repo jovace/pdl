@@ -33,7 +33,7 @@ public class Main {
 		boolean todoOk=true;
 		
 		ArrayList<String> listaPruebas = new ArrayList<>();
-		listaPruebas.add("function suma(){var int i = 0;i=i+1; print(i);return;} suma(); \n");
+		//listaPruebas.add("function suma(){var int i = 0;i=i+1; print(i);return;} suma(); \n");
 		listaPruebas.add("for(var int i=0;i<5;i=i+1) {print(i);} \t");
 		listaPruebas.add("print(2<3); \t");
 		listaPruebas.add("var bool i = true; var bool j = false;var bool x=(i&&j); \n");
