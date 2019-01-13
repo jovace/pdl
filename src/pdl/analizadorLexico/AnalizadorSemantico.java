@@ -62,6 +62,10 @@ public class AnalizadorSemantico {
 			nodo.removeProp("$$initFor$$");
 			return "";
 		}
+		if(nodo.hasProp("$$initFunc$$")) {
+			nodo.removeProp("$$initFunc$$");
+			return "";
+		}
 		
 		
 		
@@ -71,8 +75,8 @@ public class AnalizadorSemantico {
 		} else if (prodN == 3) { // J -> S J
 		} else if (prodN == 4) { // J -> $
 			if(!hayError) {
-				System.out.println("\n \n \nPrograma termino con estado 0");
-				System.out.println(tsMain.toString());
+				System.out.println("\n \n \nPrograma termino correctamente");
+				System.out.println("Tabla de simbolos principal:\n\n"+tsMain.toString());
 			}else {
 				System.out.println("Errores en tiempo de ejecucion. Tabla de simbolos no mostrada.");
 			}
@@ -828,6 +832,10 @@ public class AnalizadorSemantico {
 		    }
 		    nodo.setProp("id", nodo.getHijo("id").getToken().getLexema());
 		    
+		    if(tsActiva.getTablaPadre()!=null) {
+		    	tsActiva=tsActiva.getTablaPadre();
+		    }
+		    
 		    if(!tsActiva.existeSimbolo((String)nodo.getProp("id"), true)) {
 		    	//Si funcion no existe en tsActual, la inicializamos
 		    	tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo("function",(String)nodo.getProp("id"),nodo,tsActiva));
@@ -835,14 +843,21 @@ public class AnalizadorSemantico {
 		    	System.out.println("Error, funcion ya esta declara en este ambito.");
 		    }
 		    
-		    if(tsActiva.getTablaPadre()!=null) {
-		    	tsActiva=tsActiva.getTablaPadre();
-		    }
+		    
 		}else if (prodN == 36) { // H-> T
 			Nodo T = nodo.getHijo("T");
 			nodo.setProp("tipoRetorno",T.getProp("tipo"));
+			
+			Nodo A = nodo.getPadre().getHijo("A");
+			Nodo C = nodo.getPadre().getHijo("C");
+			
+			//A.setPropRecursive("$$initFunc$$", null);
+			C.setPropRecursive("$$initFunc$$", null);
 		}else if (prodN == 37) { // H-> void
 			nodo.setProp("tipoRetorno", "void");
+			
+			Nodo C = nodo.getPadre().getHijo("C");
+			C.setPropRecursive("$$initFunc$$", null);
 		}else if(prodN==38) {// A -> T id AA
 			Nodo T = nodo.getHijo("T");
 			Nodo id = nodo.getHijo("id");

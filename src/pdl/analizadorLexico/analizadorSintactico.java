@@ -705,7 +705,8 @@ public class analizadorSintactico {
 			}
 		}
 		
-		System.out.println(arbol);
+		System.out.println("Parse: "+arbol);
+		System.out.println("Salida:");
 		AnalizadorSemantico as = new AnalizadorSemantico();
 		return as.analizar(asem);
 	}

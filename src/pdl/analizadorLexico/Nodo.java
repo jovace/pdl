@@ -146,4 +146,17 @@ public class Nodo {
 		}
 	}
 	
+	public String toString() {
+		String res="";
+		
+		res+="{id: "+id+"; hijos:[";
+		for(int i=0;i<hijosL.size()-1;i++) {
+			res+=hijosL.get(i).getId()+", ";
+		}
+		res+=hijosL.get(hijosL.size()-1).getId();
+		res+="]";
+				
+		return res;
+	}
+	
 }

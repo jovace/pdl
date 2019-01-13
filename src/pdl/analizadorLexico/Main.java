@@ -33,9 +33,9 @@ public class Main {
 		boolean todoOk=true;
 		
 		ArrayList<String> listaPruebas = new ArrayList<>();
-		//listaPruebas.add("function suma(){var int i = 0;i=i+1; print(i);return;} suma(); \n");
-		listaPruebas.add("for(var int i=0;i<5;i=i+1) {print(i);} \t");
-		listaPruebas.add("print(2<3); \t");
+		listaPruebas.add("function suma(){var int i = 0;i=i+6-3; print(i);return;} suma(); \n");
+		listaPruebas.add("for(var int i=0;i<5;i++) {print(i);} \t");
+		listaPruebas.add("print(2<3); \n");
 		listaPruebas.add("var bool i = true; var bool j = false;var bool x=(i&&j); \n");
 		listaPruebas.add("var bool i = true; var bool j = false;var bool x=(i||j); \n");
 		
@@ -50,7 +50,7 @@ public class Main {
 			if(test.equals("\n \n \n Cadenas con errores sintacticos \n \n")) {
 				System.out.println(test);
 			}else {
-				System.out.print(test+"-> ");
+				System.out.print("Test: "+test);
 				if(!lex.analizar(test)) {
 					todoOk=false;
 				}

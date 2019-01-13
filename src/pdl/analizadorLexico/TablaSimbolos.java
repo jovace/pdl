@@ -14,6 +14,10 @@ public class TablaSimbolos {
 		this.tablaPadre=tablaPadre;
 	}
 	
+	public String getScope() {
+		return this.scope;
+	}
+	
 	public Simbolo getSimbolo(String id) {
 		if(tabla.containsKey(id)) {
 			return tabla.get(id);
@@ -60,7 +64,11 @@ public class TablaSimbolos {
 		String res="";
 		
 		res+="Scope: "+this.scope+"\n";
-		res+="Tabla padre: "+this.tablaPadre+"\n";
+		if(tablaPadre!=null) {
+			res+="Tabla padre: "+this.tablaPadre.getScope()+"\n";
+		}else {
+			res+="Tabla padre: null\n";
+		}
 		for(String id : tabla.keySet()) {
 			Simbolo s = tabla.get(id);
 			res+=id +" -> {"+s.getTipo()+", "+s.getLexema()+", "+s.getValor().toString()+"} \n";
