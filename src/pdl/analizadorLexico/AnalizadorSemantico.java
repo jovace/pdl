@@ -821,15 +821,15 @@ public class AnalizadorSemantico {
 			
 			nodo.setProp("argsDef",A.getProp("argsDef"));
 
-		    if(!C.hasProp("tipoRetorno") && H.getProp("tipoRetorno").equals("void")){
-		        nodo.setProp("tipoRetorno",H.getProp("tipoRetorno"));
-		    }else if(H.getProp("tipoRetorno").equals(C.getProp("tipoRetorno"))) {
-		    	nodo.setProp("tipoRetorno",H.getProp("tipoRetorno"));
-		    }else{
-		        System.out.println("Error. Tipo de retorno de la funcion ("
-		                            + (String) H.getProp("tipoRetorno") + ") no coincide con tipo retornado (" + (String) C.getProp("tipoRetorno") +").");
-		        hayError=true;
-		    }
+//		    if(!C.hasProp("tipoRetorno") && H.getProp("tipoRetorno").equals("void")){
+//		        nodo.setProp("tipoRetorno",H.getProp("tipoRetorno"));
+//		    }else if(H.getProp("tipoRetorno").equals(C.getProp("tipoRetorno"))) {
+		    nodo.setProp("tipoRetorno",H.getProp("tipoRetorno"));
+//		    }else{
+//		        System.out.println("Error. Tipo de retorno de la funcion ("
+//		                            + (String) H.getProp("tipoRetorno") + ") no coincide con tipo retornado (" + (String) C.getProp("tipoRetorno") +").");
+//		        hayError=true;
+//		    }
 		    nodo.setProp("id", nodo.getHijo("id").getToken().getLexema());
 		    
 		    if(tsActiva.getTablaPadre()!=null) {

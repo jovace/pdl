@@ -7,8 +7,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 public class Arbol {
 	private Nodo raiz;
-	private Nodo nodoActual;
-	private Queue<Nodo> pila = new PriorityQueue<>();
+	
 	
 	public Arbol (Nodo raiz) {
 		this.raiz=raiz;
