@@ -1,4 +1,4 @@
-package pdl.analizadorLexico;
+package pdl.jsplInterpreter;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;

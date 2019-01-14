@@ -1,4 +1,4 @@
-package pdl.analizadorLexico;
+package pdl.jsplInterpreter;
 
 public class Simbolo {
 	private String lexema;

@@ -1,4 +1,4 @@
-package pdl.analizadorLexico;
+package pdl.jsplInterpreter;
 
 import java.util.ArrayList;
 
@@ -152,7 +152,8 @@ public class analizadorLexico{
 				switch(c) {
 					case '+':
 						resultado=new Token("++");
-						cadena="";
+						resultado.setConsumeCaracter(true);
+						cadena="++";
 						estadoActual=0;
 						break;
 					default:
@@ -166,7 +167,8 @@ public class analizadorLexico{
 				switch(c) {
 				case '-':
 					resultado=new Token("--");
-					cadena="";
+					resultado.setConsumeCaracter(true);
+					cadena="--";
 					estadoActual=0;
 					break;
 				default:
@@ -222,8 +224,10 @@ public class analizadorLexico{
 				estadoActual=0;
 				break;
 			}
-
-			resultado.setConsumeCaracter(c=='+' || c=='-');
+			
+			resultado.setConsumeCaracter(!cadena.equals(""));
+			cadena="";
+			//resultado.setConsumeCaracter(c=='+' || c=='-');
 		}else if(estadoActual==2){
 			if(Character.isDigit(c)) {
 				cadena+=c;

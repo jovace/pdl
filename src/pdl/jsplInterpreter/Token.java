@@ -1,4 +1,4 @@
-package pdl.analizadorLexico;
+package pdl.jsplInterpreter;
 
 public class Token{
 	private boolean completo;
@@ -62,6 +62,10 @@ public class Token{
 	
 	public void setConsumeCaracter(boolean bool) {
 		this.consumeCaracter=bool;
+	}
+	
+	public boolean getConsumeCaracter() {
+		return this.consumeCaracter;
 	}
 	
 	public int getNumero() {
