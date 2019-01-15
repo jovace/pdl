@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.SynchronousQueue;
 
 public class AnalizadorSemantico {
@@ -1071,7 +1072,20 @@ public class AnalizadorSemantico {
 		    nodo.setProp("valor", X.getProp("valor"));
 		    System.out.println(nodo.getProp("valor").toString());
 		}else if (prodN == 48) { //S -> prompt ( id ) ;
-		    //TODO prompt
+			Nodo id = nodo.getHijo("id");
+			
+			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
+				System.err.println("Variable "+id.getToken().getLexema()+" no existe.");
+			}else{
+				Simbolo s = tsActiva.getSimbolo(id.getToken().getLexema());
+				if(!s.getTipo().equals("string")) {
+					System.err.println("Error, variable "+s.getLexema()+" es del tipo "+s.getTipo()+". Se esperaba tipo string.");
+				}else {
+					Scanner sc = new Scanner(System.in);
+					String cadena = sc.nextLine();
+					s.setValor(cadena);
+				}
+			}
 		}else if (prodN == 49) { //S -> for ( D X ; SS ) { C }
 		    Nodo D = nodo.getHijo("D");
 		    Nodo X = nodo.getHijo("X");
