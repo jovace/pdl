@@ -1,5 +1,7 @@
 package pdl.jsplInterpreter;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +12,12 @@ public class AnalizadorSemantico {
 	
 	private ArrayList<Integer> arbolSintactico;
 	private ArrayList<Token> listaTokens;
-	private TablaSimbolos tsMain = new TablaSimbolos("main",null);
+	private TablaSimbolos tsMain = new TablaSimbolos("main",null,0);
 	private TablaSimbolos tsActiva = tsMain;
+	private Map<Integer, TablaSimbolos> tablasSimbolos=new HashMap<>();
 	private boolean hayError=false;
 	private ArrayList<Nodo> listaNodosPostorden;
+	private int tablaN=1;
 	/*
 	 *  tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo("function"+((Integer)nodoN).toString(),(String)nodo.getProp("id"),(Integer)nodoN       ,tsActiva));
 
@@ -24,6 +28,7 @@ public class AnalizadorSemantico {
 	public AnalizadorSemantico (ArrayList<Integer> arbolSintactico, ArrayList<Token> listaTokens) {
 		this.arbolSintactico=arbolSintactico;
 		this.listaTokens=listaTokens;
+		this.tablasSimbolos.put(0,tsMain);
 	}
 	
 	public AnalizadorSemantico(FileManager fileManager) {
@@ -31,6 +36,7 @@ public class AnalizadorSemantico {
 	}
 	
 	public boolean analizar(Arbol asin) {
+		this.tablasSimbolos.put(0,tsMain);
 		String codigoFinal="";
 		//Construir arbol semantico	-> DONE 	 
 		
@@ -78,7 +84,18 @@ public class AnalizadorSemantico {
 		} else if (prodN == 4) { // J -> $
 			if(!hayError) {
 				System.out.println("\n \n \nPrograma termino correctamente");
-				System.out.println("Tabla de simbolos principal:\n\n"+tsMain.toString());
+				
+				BufferedWriter bw = fileManager.getWriterTS();
+				
+				try {
+					for(TablaSimbolos ts : this.tablasSimbolos.values()) {
+						bw.write(ts.toStringF() + "\n\n\n");
+					}
+					bw.flush();
+				}catch(IOException ex) {
+					System.err.println("No se pudo escribir en el archivo de TS.");
+					ex.printStackTrace();
+				}
 			}else {
 				System.out.println("Errores en tiempo de ejecucion. Tabla de simbolos no mostrada.");
 			}
@@ -87,7 +104,9 @@ public class AnalizadorSemantico {
 			Nodo I = nodo.getHijo("I");
 			
 			if(nodo.getPadre().getProdN()==49) {
-				TablaSimbolos tsFor = new TablaSimbolos("tablaFor",tsActiva);
+				TablaSimbolos tsFor = new TablaSimbolos("tablaFor",tsActiva,tablaN);
+				this.tablasSimbolos.put(tablaN, tsFor);
+				tablaN++;
 				tsActiva=tsFor;
 				tsActiva.addSimbolo("$$iniciaFor$$", null);
 			}
@@ -304,7 +323,9 @@ public class AnalizadorSemantico {
 									nodo.setProp("tipo",definicionFuncion.getProp("tipoRetorno"));
 									
 									//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
-									TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva);
+									TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva,tablaN);
+									this.tablasSimbolos.put(tablaN, tsFuncion);
+									tablaN++;
 									for(int i=0;i<argumentosDef.size();i++) {
 										tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
 									}
@@ -873,7 +894,9 @@ public class AnalizadorSemantico {
 			nodo.setProp("argsDef", argsDef);
 			
 			String idFuncion=nodo.getPadre().getHijo("id").getToken().getLexema();
-			TablaSimbolos tsDefFunc=new TablaSimbolos("$$"+idFuncion+"$$",tsActiva);
+			TablaSimbolos tsDefFunc=new TablaSimbolos("DEF"+idFuncion,tsActiva,tablaN);
+			this.tablasSimbolos.put(tablaN, tsDefFunc);
+			tablaN++;
 			for(int i=0;i<argsDef.size();i++) {
 				tsDefFunc.addSimbolo(argsDef.get(i).getProp("id").toString(), new Simbolo(argsDef.get(i).getProp("tipo").toString(),argsDef.get(i).getProp("id").toString(),0,tsDefFunc));
 			}
@@ -884,7 +907,9 @@ public class AnalizadorSemantico {
 			nodo.setProp("argsDef", new HashMap<Integer,Nodo>());
 			
 			String idFuncion=nodo.getPadre().getHijo("id").getToken().getLexema();
-			TablaSimbolos tsDefFunc=new TablaSimbolos("$$"+idFuncion+"$$",tsActiva);
+			TablaSimbolos tsDefFunc=new TablaSimbolos("DEF"+idFuncion,tsActiva,tablaN);
+			this.tablasSimbolos.put(tablaN, tsDefFunc);
+			tablaN++;
 			if(tsDefFunc.getTablaPadre()==tsActiva) {
 				tsActiva=tsDefFunc;
 			}
@@ -998,7 +1023,9 @@ public class AnalizadorSemantico {
 									nodo.setProp("tipo",definicionFuncion.getProp("tipoRetorno"));
 									
 									//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
-									TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva);
+									TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva,tablaN);
+									this.tablasSimbolos.put(tablaN, tsFuncion);
+									tablaN++;
 									for(int i=0;i<argumentosDef.size();i++) {
 										tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
 									}
@@ -1057,8 +1084,11 @@ public class AnalizadorSemantico {
 	    	Arbol apostfor = new Arbol(SS);
 	    	ArrayList<Nodo> listaNodosPostFor = apostfor.getNodosPostorden();
 		    
+	    	int tablaNInnerFor = tablaN;
+			tablaN++;
 		    while((Boolean) X.getProp("valor")) {
-		    	TablaSimbolos tsInnerFor = new TablaSimbolos("innerFor",tsActiva);
+		    	TablaSimbolos tsInnerFor = new TablaSimbolos("innerFor",tsActiva,tablaNInnerFor);
+		    	this.tablasSimbolos.put(tablaNInnerFor, tsInnerFor);
 		    	tsActiva=tsInnerFor;
 		    	for(int i=0;i<listaNodosAFor.size();i++) {
 		    		calcularCodigo(i,listaNodosAFor);
@@ -1189,7 +1219,9 @@ public class AnalizadorSemantico {
 										nodo.setProp("tipo",definicionFuncion.getProp("tipoRetorno"));
 										
 										//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
-										TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva);
+										TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva,tablaN);
+										this.tablasSimbolos.put(tablaN, tsFuncion);
+										tablaN++;
 										for(int i=0;i<argumentosDef.size();i++) {
 											tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
 										}

@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class FileManager {
 	private BufferedReader readerCodigo;
@@ -14,9 +15,10 @@ public class FileManager {
 		try {
 			readerCodigo = new BufferedReader(new FileReader(pathCodigo));
 			writerTokens = new BufferedWriter(new FileWriter(pathTokens,false));
-//			writerTS = new BufferedWriter(new FileWriter(pathTS,false));
+			writerTS = new BufferedWriter(new FileWriter(pathTS,false));
 			writerParse = new BufferedWriter(new FileWriter(pathParse,false));
 		}catch(IOException ex) {
+			System.out.println(Paths.get(".").toAbsolutePath().normalize().toString());
 			System.err.println("No se ha podido abrir el archivo indicado.");
 			ex.printStackTrace();
 		}

@@ -5,13 +5,16 @@ import java.util.Map;
 
 public class TablaSimbolos {
 	String scope;
+	int numTabla;
 	private Map<String, Simbolo> tabla;
 	TablaSimbolos tablaPadre;
+	int lastPosicion=0;
 	
-	public TablaSimbolos(String scope, TablaSimbolos tablaPadre) {
+	public TablaSimbolos(String scope, TablaSimbolos tablaPadre, int numTabla) {
 		this.tabla=new HashMap<String, Simbolo>();
 		this.scope=scope;
 		this.tablaPadre=tablaPadre;
+		this.numTabla=numTabla;
 	}
 	
 	public String getScope() {
@@ -27,7 +30,18 @@ public class TablaSimbolos {
 	}
 	
 	public void addSimbolo(String id, Simbolo simbolo) {
+		if(simbolo==null) return;
+		simbolo.setAtributo("Despl", Integer.toString(lastPosicion));
 		this.tabla.put(id, simbolo);
+		
+		if(simbolo.getTipo().equals("int")) {
+			lastPosicion+=2;
+		}else if(simbolo.getTipo().equals("bool")) {
+			lastPosicion++;
+		}else if(simbolo.getTipo().equals("string")) {
+			lastPosicion+=((String)simbolo.getValor()).length();
+		}
+		
 	}
 	
 	public boolean removeSimbolo(String id) {
@@ -60,6 +74,10 @@ public class TablaSimbolos {
 		return this.tablaPadre;
 	}
 	
+	public int getLastPosicion() {
+		return this.lastPosicion;
+	}
+	
 	public String toString() {
 		String res="";
 		
@@ -76,5 +94,24 @@ public class TablaSimbolos {
 		res+="Total variables: "+this.tabla.size();
 		
 		return res;
+	}
+	
+	public String toStringF() {
+		String res="";
+		
+		res+=this.scope+" # "+this.numTabla+" : \n";
+		for(String id : tabla.keySet()) {
+			Simbolo s = tabla.get(id);
+			res+="* LEXEMA : '"+id+"' \n";
+			res+="ATRIBUTOS : \n";
+			for(String nomAtrib : s.getAtributos().keySet()) {
+				String valorAtrib = s.getAtributo(nomAtrib);
+				res+="+ "+nomAtrib + " : "+valorAtrib+"\n";
+			}
+			res+="------------------- \n";
+		}
+		
+		return res;
+		
 	}
 }
