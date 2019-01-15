@@ -42,8 +42,7 @@ public class AnalizadorLexico{
 			}
 			fw.flush();
 		}catch(IOException ex) {
-			System.err.println("No se ha podido escribir en el archivo indicado.");
-			ex.printStackTrace();
+			ErrorHandler.error(0, 0, 0, "Error durante escritura del archivo tokens.");
 		}
 		
 		AnalizadorSintactico a = new AnalizadorSintactico(fileManager);
@@ -158,6 +157,8 @@ public class AnalizadorLexico{
 					cadena+=c;
 					estadoActual=2;
 					break;
+				}else {
+					ErrorHandler.error(1, 1, lineaActual, Character.toString(c));
 				}
 			}	
 		}else if(estadoActual==1) {
@@ -178,19 +179,19 @@ public class AnalizadorLexico{
 				}
 				break;
 			case "-":
-				switch(c) {
-				case '-':
+				if(c=='-') {
 					resultado=new Token("--");
 					resultado.setConsumeCaracter(true);
 					cadena="--";
 					estadoActual=0;
-					break;
-				default:
+				}else if(Character.isDigit(c)) {
+					cadena="-";
+					estadoActual=9;
+				}else{
 					resultado=new Token("-");
 					cadena="";
 					estadoActual=0;
-					break;
-			}
+				}
 				break;
 			case "*":
 				resultado=new Token("*");
@@ -239,9 +240,9 @@ public class AnalizadorLexico{
 				break;
 			}
 			
-			resultado.setConsumeCaracter(!cadena.equals(""));
-			cadena="";
-			//resultado.setConsumeCaracter(c=='+' || c=='-');
+			resultado.setConsumeCaracter(!(cadena.equals("")||cadena.equals("-")));
+			//resultado.setConsumeCaracter(!cadena.equals(""));
+			if(!cadena.equals("-"))cadena="";
 		}else if(estadoActual==2){
 			if(Character.isDigit(c)) {
 				cadena+=c;
@@ -284,8 +285,6 @@ public class AnalizadorLexico{
 				cadena="";
 				estadoActual=0;
 			}
-		}else if(estadoActual==3){
-			//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 		}else if(estadoActual==4){
 			switch(c){
 				case '&':
@@ -294,8 +293,6 @@ public class AnalizadorLexico{
 					estadoActual=0;
 					break;
 				}
-		}else if(estadoActual==5){
-			//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 		}else if(estadoActual==6){
 			switch(c) {
 				case '|':
@@ -309,10 +306,6 @@ public class AnalizadorLexico{
 					estadoActual=0;
 					break;
 				}
-	}else if(estadoActual==7) {
-		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
-	}else if(estadoActual==8) {
-		//Quitar cuando estemos en revision final. Nunca llegamos a este estado.
 	}else if(estadoActual==9) {
 		if(Character.isDigit(c)) {
 			cadena+=c;
@@ -445,7 +438,7 @@ public class AnalizadorLexico{
 			cadena+=c;
 		}
 	}else if(estadoActual==22) {
-		if(c=='\\') {
+		if(c=='/') {
 			estadoActual=0;
 			cadena="";
 		}else{

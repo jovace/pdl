@@ -673,7 +673,7 @@ public class AnalizadorSintactico {
 					pila.pop();
 					puntero++;
 				} else {
-					printError("No se puede consumir caracter", X, a, pila, codigo, puntero, arbol, listaTokens);
+					ErrorHandler.error(2, 0, listaTokens.get(puntero).getLinea(), "Recibido: "+a+ ". Se esperaba: "+X+".");
 					return false;
 				}
 			} else if (noTerminales.contains(X)) {
@@ -681,7 +681,7 @@ public class AnalizadorSintactico {
 
 				ArrayList<String> produccion = tablaTransicion.get(X).get(a);
 				if (produccion == null) {
-					printError("No existe dicha entrada en tabla sintactica", X, a, pila, codigo, puntero, arbol, listaTokens);
+					ErrorHandler.error(2, 0, listaTokens.get(puntero).getLinea(), "Recibido: "+a+ ". Se esperaba: "+tablaTransicion.get(X).keySet().toString()+".");
 					return false;
 				}
 				
@@ -705,7 +705,7 @@ public class AnalizadorSintactico {
 				}
 				
 			} else {
-				printError("Simbolo no reconocido", X, a, pila, codigo, puntero, arbol, listaTokens);
+				ErrorHandler.error(2, 1, listaTokens.get(puntero).getLinea(), "Recibido: "+a+ ".");
 				return false;
 			}
 		}
@@ -719,32 +719,11 @@ public class AnalizadorSintactico {
 			}
 			fw.flush();
 		}catch(IOException ex) {
-			System.err.println("No se ha podido escribir en el archivo indicado.");
-			ex.printStackTrace();
+			ErrorHandler.error(0, 0, 0, "Error durante escritura del archivo parse.");
 		}
 		
 		AnalizadorSemantico as = new AnalizadorSemantico(fileManager);
 		return as.analizar(asem);
-	}
-
-	private void printError(String lugar, String X, String a, Stack<String> pila2, ArrayList<String> codigo,
-			int puntero, ArrayList<Integer> arbol, ArrayList<Token> listaToken) {
-		System.err.println(lugar);
-		System.err.println("Cima de pila: " + X.toString());
-		System.err.println("Token a leer: " + a.toString());
-		System.err.println("Pila: " + pila.toString());
-		System.err.println("Archivo leido: \n" + codigo.subList(0, puntero));
-		System.err.println("Arbol: \n" + arbol.toString());
-		System.err.println("Lista tokens: " + codigo.toString());
-		System.out.println("Error "+listaToken.get(puntero).getPosicion()+"\n \n");
-	}
-
-	private String getParseArbol(ArrayList<Integer> arbol) {
-		String resultado = "Desc ";
-		for (Integer entero : arbol) {
-			resultado = resultado + entero + " ";
-		}
-		return resultado;
 	}
 
 	private ArrayList<String> convertirTokenaTerminales(ArrayList<Token> listaTokens) {

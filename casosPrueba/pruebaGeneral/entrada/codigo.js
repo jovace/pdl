@@ -1,10 +1,11 @@
+
+/*
 var string cadena = "";
 
 prompt(cadena);
 print(cadena);
 
-
-
+*/
 
 var int a=1;
 var int b=1;
@@ -27,6 +28,9 @@ for(var int j=0;j<x;j++){
 }
 
 print(b);
+
+var int r=-1;
+print(r);
 
 
 

@@ -19,11 +19,7 @@ public class AnalizadorSemantico {
 	private boolean hayError=false;
 	private ArrayList<Nodo> listaNodosPostorden;
 	private int tablaN=1;
-	/*
-	 *  tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo("function"+((Integer)nodoN).toString(),(String)nodo.getProp("id"),(Integer)nodoN       ,tsActiva));
-
-		tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo((String) nodo.getProp("tipo"),         (String)nodo.getProp("id"),nodo.getProp("valor"),tsActiva));
-	 */
+	
 	
 	
 	public AnalizadorSemantico (ArrayList<Integer> arbolSintactico, ArrayList<Token> listaTokens) {
@@ -38,27 +34,19 @@ public class AnalizadorSemantico {
 	
 	public boolean analizar(Arbol asin) {
 		this.tablasSimbolos.put(0,tsMain);
-		String codigoFinal="";
-		//Construir arbol semantico	-> DONE 	 
+		String codigoFinal="";	 
 		
-		//Calcular propiedades recursivamente
 		listaNodosPostorden = asin.getNodosPostorden();
 		for(int i=0;i<listaNodosPostorden.size();i++) {
 			String codigo = calcularCodigo(i,listaNodosPostorden);
 			codigoFinal+=codigo;
+			//TODO Eliminar cuando implementados todos los errores
 			if(hayError) {
 				System.out.println("Errores en tiempo de ejecucion. Tabla de simbolos no mostrada.");
 				break;
 			}
 		}
-			
 		
-		//asin.calcularCodigo();
-		
-		//Recorrer arbol con recursividad
-		
-		
-		System.out.println(codigoFinal);
 		return true;
 	}
 
@@ -86,18 +74,16 @@ public class AnalizadorSemantico {
 			if(!hayError) {
 				System.out.println("\n \n \nPrograma termino correctamente");
 				
-				BufferedWriter bw = fileManager.getWriterTS();
-				
+				BufferedWriter bw = fileManager.getWriterTS();				
 				try {
 					for(TablaSimbolos ts : this.tablasSimbolos.values()) {
 						bw.write(ts.toStringF() + "\n\n\n");
 					}
 					bw.flush();
 				}catch(IOException ex) {
-					System.err.println("No se pudo escribir en el archivo de TS.");
-					ex.printStackTrace();
+					ErrorHandler.error(0, 0, 0, "Error durante escritura del archivo de tabla de simbolos.");
 				}
-			}else {
+			}else {//TODO eliminar una vez todos errores implementados
 				System.out.println("Errores en tiempo de ejecucion. Tabla de simbolos no mostrada.");
 			}
 		} else if (prodN == 5) { // D -> var T id I ;
@@ -114,21 +100,17 @@ public class AnalizadorSemantico {
 	
 			
 			if(!T.getProp("tipo").equals(I.getProp("tipo"))) {
-				System.out.println("Error en linea " + nodo.getHijo("id").getToken().getLinea() +". Valor no es del tipo especificado.");
-				hayError=true;
+				ErrorHandler.error(3, 1, nodo.getHijo("id").getToken().getLinea(), "Tipo del valor recibido: "+I.getProp("tipo")+". Tipo declarado: "+T.getProp("tipo")+".");
 			}else {
 				nodo.setProp("tipo", nodo.getHijo("T").getProp("tipo"));
 				nodo.setProp("valor", nodo.getHijo("I").getProp("valor"));
 				nodo.setProp("id", nodo.getHijo("id").getToken().getLexema());
 				if (tsActiva.existeSimbolo((String) nodo.getProp("id"), true)) {
 					System.out.println("Error en linea " + nodo.getHijo("id").getToken().getLinea() +". Variable "+nodo.getProp("id").toString()+" ya definida.");
+					ErrorHandler.error(3, 2, nodo.getHijo("id").getToken().getLinea(), "Identificador: "+nodo.getProp("id").toString()+".");
 					hayError=true;
 				} else {
-					tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo(
-							(String) nodo.getProp("tipo"),
-							(String) nodo.getProp("id"), 
-							nodo.getProp("valor"),
-							tsActiva));
+					tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo((String) nodo.getProp("tipo"),(String) nodo.getProp("id"),nodo.getProp("valor"),tsActiva));
 				}
 			}
 		} else if (prodN == 6) { // T -> int
@@ -142,10 +124,10 @@ public class AnalizadorSemantico {
 			nodo.setProp("tipo", nodo.getHijo("E").getProp("tipo"));
 		} else if (prodN == 10) { // I -> |= E
 			Nodo E = nodo.getHijo("E");
+			Nodo op=nodo.getHijo("|E");
 			
 			if(!E.getProp("tipo").equals("bool")) {
-				System.out.println("Error, se esperaba tipo bool. Encontrado " + (String) E.getProp("tipo")+ ".");
-				hayError=true;
+				ErrorHandler.error(3, 3, op.getToken().getLinea(), "Tipo del valor recibido: "+E.getProp("tipo")+". Tipo esperado: bool.");
 			}else {
 				nodo.setProp("valor", E.getProp("valor"));
 				nodo.setProp("tipo", E.getProp("tipo"));
@@ -161,11 +143,10 @@ public class AnalizadorSemantico {
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 22: // EE -> + G EE
-				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
+				// Comprobar que los componentes son del mismo tipo. 
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -183,8 +164,8 @@ public class AnalizadorSemantico {
 			case 23:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") - (Integer) EE.getProp("valor"));
@@ -194,8 +175,8 @@ public class AnalizadorSemantico {
 				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
 				// implicita de int->string? int->boolean?
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -211,8 +192,8 @@ public class AnalizadorSemantico {
 			case 26:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") / (Integer) EE.getProp("valor"));
@@ -221,8 +202,8 @@ public class AnalizadorSemantico {
 			case 27:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") % (Integer) EE.getProp("valor"));
@@ -239,8 +220,8 @@ public class AnalizadorSemantico {
 						nodo.setProp("valor",res);
 					}
 				}else {
-					System.out.println("Error, se esperaban valores de tipo bool.");
-					hayError=true;
+					//TODO linea hardcodeada
+					ErrorHandler.error(3, 3, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+". Esperado: bool.");
 				}
 			case 62:
 				if(G.getProp("tipo").equals("bool") && G.getProp("tipo").equals(EE.getProp("tipo"))){
@@ -253,8 +234,8 @@ public class AnalizadorSemantico {
 						nodo.setProp("valor",res);
 					}
 				}else {
-					System.out.println("Error, se esperaban valores de tipo bool.");
-					hayError=true;
+					//TODO linea hardcodeada
+					ErrorHandler.error(3, 3, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+". Esperado: bool.");
 				}
 			}
 		} else if (prodN == 13) { // G -> ( X )
@@ -266,8 +247,7 @@ public class AnalizadorSemantico {
 			
 			
 			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
-				System.out.println("Error en linea "+id.getToken().getLinea()+". Variable o funcion "+id.getToken().getLexema()+" no definida.");
-				hayError=true;
+				ErrorHandler.error(3, 5, id.getToken().getLinea(), "Identificador: "+id.getToken().getLexema()+".");
 			}else{
 				String tipo;
 				Object valor;
@@ -285,9 +265,7 @@ public class AnalizadorSemantico {
 							nodo.setProp("tipo", tipo);
 							nodo.setProp("valor", ((Integer)valor)-1);
 						}else {
-							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
-							nodo.setProp("tipo", tipo);
-							nodo.setProp("valor", valor);
+							ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+tipo+". Esperado: int.");
 						}
 						break;
 					case 21: //GG -> ++
@@ -297,9 +275,7 @@ public class AnalizadorSemantico {
 							nodo.setProp("tipo", tipo);
 							nodo.setProp("valor", ((Integer)valor)+1);
 						}else {
-							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador ++ restringido a variables de tipo int.");
-							nodo.setProp("tipo", tipo);
-							nodo.setProp("valor", valor);
+							ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+tipo+". Esperado: int.");
 						}
 						break;
 					case 61: //GG -> L
@@ -308,14 +284,13 @@ public class AnalizadorSemantico {
 							Nodo definicionFuncion=(Nodo) tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
 							Map<Integer,Nodo> argumentosDef = (Map<Integer, Nodo>) definicionFuncion.getProp("argsDef");
 							if(argumentosDef.size()!=args.size()) {
-								//ERROR, numero de argumentos no coincide
-								hayError=true;
+								ErrorHandler.error(3, 6, id.getToken().getLinea(), "Numero de argumentos recibido: "+args.size()+". Esperado: "+argumentosDef.size()+".");
 							}else{
 								boolean tipoArgumentoError=false;
 								for(int i=0;i<argumentosDef.size() && !tipoArgumentoError;i++) {
 									if(!argumentosDef.get(i).getProp("tipo").equals(args.get(i).getProp("tipo"))) {
-										tipoArgumentoError=true;
-										//ERROR, el tipo del parametro i no coicide con la definicion
+										ErrorHandler.error(3, 7, id.getToken().getLinea(), "Tipo del argumento recibido: "+args.get(i).getProp("tipo")+". "
+												+ "Esperado: "+argumentosDef.get(i).getProp("tipo")+". Nombre del argumento: "+argumentosDef.get(i).getProp("id").toString()+".");
 									}
 								}
 								if(!tipoArgumentoError) {
@@ -325,8 +300,8 @@ public class AnalizadorSemantico {
 									
 									//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
 									TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva,tablaN);
-									this.tablasSimbolos.put(tablaN, tsFuncion);
-									tablaN++;
+									//this.tablasSimbolos.put(tablaN, tsFuncion);
+									//tablaN++;
 									for(int i=0;i<argumentosDef.size();i++) {
 										tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
 									}
@@ -345,8 +320,7 @@ public class AnalizadorSemantico {
 									nodo.setProp("valor", tsActiva.getSimbolo("$$return$$").getValor());
 									tsActiva.removeSimbolo("$$return$$");
 								}else {
-									//ERROR, algo petó
-									hayError=true;
+									ErrorHandler.error(3, 0, id.getToken().getLinea(),"");
 								}
 							}
 						}
@@ -895,7 +869,7 @@ public class AnalizadorSemantico {
 			nodo.setProp("argsDef", argsDef);
 			
 			String idFuncion=nodo.getPadre().getHijo("id").getToken().getLexema();
-			TablaSimbolos tsDefFunc=new TablaSimbolos("DEF"+idFuncion,tsActiva,tablaN);
+			TablaSimbolos tsDefFunc=new TablaSimbolos("FUNC "+idFuncion,tsActiva,tablaN);
 			this.tablasSimbolos.put(tablaN, tsDefFunc);
 			tablaN++;
 			for(int i=0;i<argsDef.size();i++) {
@@ -908,7 +882,7 @@ public class AnalizadorSemantico {
 			nodo.setProp("argsDef", new HashMap<Integer,Nodo>());
 			
 			String idFuncion=nodo.getPadre().getHijo("id").getToken().getLexema();
-			TablaSimbolos tsDefFunc=new TablaSimbolos("DEF"+idFuncion,tsActiva,tablaN);
+			TablaSimbolos tsDefFunc=new TablaSimbolos("FUNC "+idFuncion,tsActiva,tablaN);
 			this.tablasSimbolos.put(tablaN, tsDefFunc);
 			tablaN++;
 			if(tsDefFunc.getTablaPadre()==tsActiva) {
@@ -1025,8 +999,8 @@ public class AnalizadorSemantico {
 									
 									//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
 									TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva,tablaN);
-									this.tablasSimbolos.put(tablaN, tsFuncion);
-									tablaN++;
+									//this.tablasSimbolos.put(tablaN, tsFuncion);
+									//tablaN++;
 									for(int i=0;i<argumentosDef.size();i++) {
 										tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
 									}
@@ -1234,8 +1208,8 @@ public class AnalizadorSemantico {
 										
 										//Inicializo una nueva tabla de simbolos para la ejecucion de la funcion
 										TablaSimbolos tsFuncion=new TablaSimbolos(id.getToken().getLexema(),tsActiva,tablaN);
-										this.tablasSimbolos.put(tablaN, tsFuncion);
-										tablaN++;
+										//this.tablasSimbolos.put(tablaN, tsFuncion);
+										//tablaN++;
 										for(int i=0;i<argumentosDef.size();i++) {
 											tsFuncion.addSimbolo(argumentosDef.get(i).getProp("id").toString(), new Simbolo(args.get(i).getProp("tipo").toString(),argumentosDef.get(i).getProp("id").toString(),args.get(i).getProp("valor"),tsFuncion));
 										}

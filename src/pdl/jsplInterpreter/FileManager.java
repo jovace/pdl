@@ -11,16 +11,30 @@ public class FileManager {
 	private BufferedReader readerCodigo;
 	private BufferedWriter writerTokens, writerTS, writerParse;
 	
-	public FileManager(String pathEntrada, String pathSalida, String pathCodigo, String pathTokens, String pathTS, String pathParse) {
+	public FileManager(String pathEntrada, String pathSalida, String pathCodigo, String pathTokens, String pathTS, String pathParse, String casoPrueba) {
+		casoPrueba="casosPrueba/"+casoPrueba+"/";
 		try {
-			readerCodigo = new BufferedReader(new FileReader(pathCodigo));
-			writerTokens = new BufferedWriter(new FileWriter(pathTokens,false));
-			writerTS = new BufferedWriter(new FileWriter(pathTS,false));
-			writerParse = new BufferedWriter(new FileWriter(pathParse,false));
+			readerCodigo = new BufferedReader(new FileReader(casoPrueba+pathCodigo));
 		}catch(IOException ex) {
-			System.out.println(Paths.get(".").toAbsolutePath().normalize().toString());
-			System.err.println("No se ha podido abrir el archivo indicado.");
-			ex.printStackTrace();
+			ErrorHandler.error(0, 1, 0, "Ruta de trabajo: "+Paths.get(".").toAbsolutePath().normalize().toString()+". Ruta al archivo: "+casoPrueba+pathCodigo+".");
+		}
+		
+		try {
+			writerTokens = new BufferedWriter(new FileWriter(casoPrueba+pathTokens,false));
+		}catch(IOException ex) {
+			ErrorHandler.error(0, 2, 0, "Ruta de trabajo: "+Paths.get(".").toAbsolutePath().normalize().toString()+". Ruta al archivo: "+casoPrueba+pathTokens+".");
+		}
+		
+		try {
+			writerTS = new BufferedWriter(new FileWriter(casoPrueba+pathTS,false));
+		}catch(IOException ex) {
+			ErrorHandler.error(0, 2, 0, "Ruta de trabajo: "+Paths.get(".").toAbsolutePath().normalize().toString()+". Ruta al archivo: "+casoPrueba+pathTS+".");
+		}
+		
+		try {
+			writerParse = new BufferedWriter(new FileWriter(casoPrueba+pathParse,false));
+		}catch(IOException ex) {
+			ErrorHandler.error(0, 2, 0, "Ruta de trabajo: "+Paths.get(".").toAbsolutePath().normalize().toString()+". Ruta al archivo: "+casoPrueba+pathParse+".");
 		}
 	}
 
