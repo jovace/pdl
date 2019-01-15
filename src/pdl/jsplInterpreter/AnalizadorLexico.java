@@ -1,5 +1,7 @@
 package pdl.jsplInterpreter;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AnalizadorLexico{
@@ -33,7 +35,16 @@ public class AnalizadorLexico{
 			}
 		}
 		
-		//SACAR POR ARCHIVO LISTA DE TOKENS
+		BufferedWriter fw = fileManager.getWriterTokens();
+		try{
+			for(Token t : listaTokens) {
+				fw.write(t.toString()+"\n");
+			}
+			fw.flush();
+		}catch(IOException ex) {
+			System.err.println("No se ha podido escribir en el archivo indicado.");
+			ex.printStackTrace();
+		}
 		
 		AnalizadorSintactico a = new AnalizadorSintactico(fileManager);
 		return a.analizar(listaTokens);

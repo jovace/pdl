@@ -13,10 +13,11 @@ public class FileManager {
 	public FileManager(String pathEntrada, String pathSalida, String pathCodigo, String pathTokens, String pathTS, String pathParse) {
 		try {
 			readerCodigo = new BufferedReader(new FileReader(pathCodigo));
-//			writerTokens = new BufferedWriter(new FileWriter(pathTokens,false));
+			writerTokens = new BufferedWriter(new FileWriter(pathTokens,false));
 //			writerTS = new BufferedWriter(new FileWriter(pathTS,false));
-//			writerParse = new BufferedWriter(new FileWriter(pathParse,false));
+			writerParse = new BufferedWriter(new FileWriter(pathParse,false));
 		}catch(IOException ex) {
+			System.err.println("No se ha podido abrir el archivo indicado.");
 			ex.printStackTrace();
 		}
 	}

@@ -1,5 +1,7 @@
 package pdl.jsplInterpreter;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -708,7 +710,18 @@ public class AnalizadorSintactico {
 			}
 		}
 		
-		//SACAR POR ARCHIVO LISTA DE TOKENS
+		//TODO Generar el archivo gramatica tambien???
+		BufferedWriter fw = fileManager.getWriterParse();
+		try{
+			fw.write("Desc ");
+			for(Integer i : arbol) {
+				fw.write(i.toString()+" ");
+			}
+			fw.flush();
+		}catch(IOException ex) {
+			System.err.println("No se ha podido escribir en el archivo indicado.");
+			ex.printStackTrace();
+		}
 		
 		AnalizadorSemantico as = new AnalizadorSemantico(fileManager);
 		return as.analizar(asem);
