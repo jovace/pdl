@@ -2,13 +2,18 @@ package pdl.jsplInterpreter;
 
 import java.util.ArrayList;
 
-public class analizadorLexico{
+public class AnalizadorLexico{
+	FileManager fileManager;
 	int estadoActual=0;
 	int lineaActual=1;
 	int caracterActual=1;
 	int caracterInicioToken=0;
 	String cadena="";
 	
+	public AnalizadorLexico(FileManager fileManager) {
+		this.fileManager=fileManager;
+	}
+
 	public boolean analizar(String codigo) {
 		ArrayList<Token> listaTokens = new ArrayList<Token>();
 
@@ -27,12 +32,10 @@ public class analizadorLexico{
 				caracterActual++;
 			}
 		}
-
-		//listaTokens contiene la lista de tokens completa, lo que hay que devolver. Se puede llamar a su metodo .toString para 
-		//el fichero de salida que hay que generar.
 		
+		//SACAR POR ARCHIVO LISTA DE TOKENS
 		
-		analizadorSintactico a = new analizadorSintactico();
+		AnalizadorSintactico a = new AnalizadorSintactico(fileManager);
 		return a.analizar(listaTokens);
 	}
 

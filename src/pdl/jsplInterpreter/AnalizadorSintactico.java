@@ -7,14 +7,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-public class analizadorSintactico {
+public class AnalizadorSintactico {
+	FileManager fileManager;
+	
 	Stack<String> pila = new Stack<>();
 	Map<String, Map<String, ArrayList<String>>> tablaTransicion = new HashMap<>();
 	Set<String> terminales = new HashSet<>();
 	Set<String> noTerminales = new HashSet<>();
 	Map<String, String> tokenaTerminales = new HashMap<>();
 
-	public analizadorSintactico() {
+	public AnalizadorSintactico(FileManager fileManager) {
+		this.fileManager=fileManager;
+		
 		// Inicializar lista terminales, no terminales y tabla de transicion
 
 		// iniz terminales
@@ -636,7 +640,6 @@ public class analizadorSintactico {
 		// Construccion de tabla de transiciones
 
 	}
-
 	/*
 	 * Recibimos lista de tokens de analizadorLexico. Lo transformamos en sus
 	 * correspondientes simbolos terminales. Analizamos sintacticamente
@@ -705,9 +708,9 @@ public class analizadorSintactico {
 			}
 		}
 		
-		System.out.println("Parse: "+arbol);
-		System.out.println("Salida:");
-		AnalizadorSemantico as = new AnalizadorSemantico();
+		//SACAR POR ARCHIVO LISTA DE TOKENS
+		
+		AnalizadorSemantico as = new AnalizadorSemantico(fileManager);
 		return as.analizar(asem);
 	}
 

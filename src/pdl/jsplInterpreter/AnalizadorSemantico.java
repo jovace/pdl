@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.concurrent.SynchronousQueue;
 
 public class AnalizadorSemantico {
+	private FileManager fileManager;
+	
 	private ArrayList<Integer> arbolSintactico;
 	private ArrayList<Token> listaTokens;
 	private TablaSimbolos tsMain = new TablaSimbolos("main",null);
@@ -24,8 +26,8 @@ public class AnalizadorSemantico {
 		this.listaTokens=listaTokens;
 	}
 	
-	public AnalizadorSemantico() {
-		
+	public AnalizadorSemantico(FileManager fileManager) {
+		this.fileManager=fileManager;
 	}
 	
 	public boolean analizar(Arbol asin) {
