@@ -1,0 +1,270 @@
+main # 0 : 
+* LEXEMA : 'bucle' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 4
++ EtiqFuncion : bucle
++ IdParam2 : z
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : x
++ TipoRetorno : void
++ NumParam : 2
+------------------- 
+* LEXEMA : 'i' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+tablaFor # 1 : 
+* LEXEMA : 'i' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 2 : 
+
+
+
+tablaFor # 3 : 
+* LEXEMA : 'i' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 4 : 
+
+
+
+tablaFor # 5 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 6 : 
+
+
+
+tablaFor # 7 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 8 : 
+
+
+
+tablaFor # 9 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 10 : 
+
+
+
+tablaFor # 11 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 12 : 
+
+
+
+tablaFor # 13 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 14 : 
+
+
+
+tablaFor # 15 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 16 : 
+
+
+
+tablaFor # 17 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 18 : 
+
+
+
+tablaFor # 19 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 20 : 
+
+
+
+tablaFor # 21 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 22 : 
+
+
+
+tablaFor # 23 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 24 : 
+
+
+
+tablaFor # 25 : 
+* LEXEMA : 'i' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 26 : 
+
+
+
+FUNC bucle # 27 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'z' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+tablaFor # 28 : 
+* LEXEMA : 'i' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 29 : 
+
+
+
+FUNC divisiones # 30 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+tablaFor # 31 : 
+* LEXEMA : 'i' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 32 : 
+
+
+
+tablaFor # 33 : 
+* LEXEMA : 'i' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 34 : 
+
+
+
+tablaFor # 35 : 
+* LEXEMA : 'i' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 36 : 
+
+
+

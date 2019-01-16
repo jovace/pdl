@@ -1,0 +1,125 @@
+main # 0 : 
+* LEXEMA : 'suma' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 8
++ EtiqFuncion : suma
++ IdParam2 : b
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : a
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+* LEXEMA : 'a' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+* LEXEMA : 'b' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'r' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 8
+------------------- 
+* LEXEMA : 'c' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 4
+------------------- 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 6
+------------------- 
+* LEXEMA : 'z' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 10
+------------------- 
+* LEXEMA : 'resta' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 8
++ EtiqFuncion : resta
++ IdParam2 : b
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : a
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+* LEXEMA : 'sumaMasUno' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 42
++ EtiqFuncion : sumaMasUno
++ IdParam2 : b
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : a
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+
+
+
+FUNC suma # 1 : 
+* LEXEMA : 'a' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'b' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+FUNC resta # 2 : 
+* LEXEMA : 'a' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'b' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+tablaFor # 3 : 
+* LEXEMA : 'j' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+innerFor # 4 : 
+
+
+
+FUNC sumaMasUno # 5 : 
+* LEXEMA : 'a' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'b' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
