@@ -72,6 +72,12 @@
 <++, >
 <), >
 <{, >
+<var, >
+<bool, >
+<id, d>
+<=, >
+<cte_logica, false>
+<;, >
 <id, c>
 <=, >
 <id, suma>

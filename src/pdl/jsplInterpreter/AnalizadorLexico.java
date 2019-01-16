@@ -434,6 +434,7 @@ public class AnalizadorLexico{
 			estadoActual=22;
 			cadena+=c;
 		}else {
+			if(c=='\n')lineaActual++;
 			estadoActual=21;
 			cadena+=c;
 		}
@@ -442,6 +443,7 @@ public class AnalizadorLexico{
 			estadoActual=0;
 			cadena="";
 		}else{
+			if(c=='\n')lineaActual++;
 			estadoActual=21;
 			cadena+=c;
 		}

@@ -4,10 +4,22 @@ ATRIBUTOS :
 + Tipo : 'function'
 + Despl : 8
 + EtiqFuncion : suma
-+ IdParam2 : b
++ IdParam2 : y
 + TipoParam2 : int
 + TipoParam1 : int
-+ IdParam1 : a
++ IdParam1 : x
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+* LEXEMA : 'div' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 8
++ EtiqFuncion : div
++ IdParam2 : y
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : x
 + TipoRetorno : int
 + NumParam : 2
 ------------------- 
@@ -21,35 +33,47 @@ ATRIBUTOS :
 + Tipo : 'int'
 + Despl : 2
 ------------------- 
-* LEXEMA : 'r' 
-ATRIBUTOS : 
-+ Tipo : 'int'
-+ Despl : 8
-------------------- 
 * LEXEMA : 'c' 
 ATRIBUTOS : 
 + Tipo : 'int'
 + Despl : 4
 ------------------- 
-* LEXEMA : 'x' 
+* LEXEMA : 'mult' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 8
++ EtiqFuncion : mult
++ IdParam2 : y
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : x
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+* LEXEMA : 'd' 
 ATRIBUTOS : 
 + Tipo : 'int'
 + Despl : 6
 ------------------- 
-* LEXEMA : 'z' 
+* LEXEMA : 'e' 
 ATRIBUTOS : 
 + Tipo : 'int'
 + Despl : 10
+------------------- 
+* LEXEMA : 'f' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 14
 ------------------- 
 * LEXEMA : 'resta' 
 ATRIBUTOS : 
 + Tipo : 'function'
 + Despl : 8
 + EtiqFuncion : resta
-+ IdParam2 : b
++ IdParam2 : y
 + TipoParam2 : int
 + TipoParam1 : int
-+ IdParam1 : a
++ IdParam1 : x
 + TipoRetorno : int
 + NumParam : 2
 ------------------- 
@@ -57,12 +81,12 @@ ATRIBUTOS :
 
 
 FUNC suma # 1 : 
-* LEXEMA : 'a' 
+* LEXEMA : 'x' 
 ATRIBUTOS : 
 + Tipo : 'int'
 + Despl : 2
 ------------------- 
-* LEXEMA : 'b' 
+* LEXEMA : 'y' 
 ATRIBUTOS : 
 + Tipo : 'int'
 + Despl : 0
@@ -71,12 +95,12 @@ ATRIBUTOS :
 
 
 FUNC resta # 2 : 
-* LEXEMA : 'a' 
+* LEXEMA : 'x' 
 ATRIBUTOS : 
 + Tipo : 'int'
 + Despl : 2
 ------------------- 
-* LEXEMA : 'b' 
+* LEXEMA : 'y' 
 ATRIBUTOS : 
 + Tipo : 'int'
 + Despl : 0
@@ -84,8 +108,13 @@ ATRIBUTOS :
 
 
 
-tablaFor # 3 : 
-* LEXEMA : 'j' 
+FUNC mult # 3 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'y' 
 ATRIBUTOS : 
 + Tipo : 'int'
 + Despl : 0
@@ -93,10 +122,15 @@ ATRIBUTOS :
 
 
 
-innerFor # 4 : 
-* LEXEMA : 'd' 
+FUNC div # 4 : 
+* LEXEMA : 'x' 
 ATRIBUTOS : 
-+ Tipo : 'bool'
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'y' 
+ATRIBUTOS : 
++ Tipo : 'int'
 + Despl : 0
 ------------------- 
 

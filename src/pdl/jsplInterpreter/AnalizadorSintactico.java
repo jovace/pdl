@@ -245,6 +245,12 @@ public class AnalizadorSintactico {
 		produccionEsum.add("G");
 		produccionEsum.add("EE");
 		filaEE.put("+", produccionEsum);
+		//??
+		ArrayList<String> produccionEsumalt = new ArrayList<>();
+		produccionEsumalt.add("21");
+		produccionEsumalt.add("G");
+		produccionEsumalt.add("EE");
+		filaEE.put("cte_int", produccionEsumalt);
 		produccionEresta.add("22");
 		produccionEresta.add("-");
 		produccionEresta.add("G");
@@ -316,7 +322,8 @@ public class AnalizadorSintactico {
 		filaGG.put("*", produccionGGlambda);
 		filaGG.put("+", produccionGGlambda);
 		filaGG.put("-", produccionGGlambda);
-		filaGG.put("//", produccionGGlambda);
+		filaGG.put("cte_int", produccionGGlambda);
+		filaGG.put("/", produccionGGlambda);
 		filaGG.put(";", produccionGGlambda);
 		filaGG.put(",", produccionGGlambda);
 		filaGG.put("<", produccionGGlambda);

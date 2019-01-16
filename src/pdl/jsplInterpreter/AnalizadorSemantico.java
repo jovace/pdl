@@ -124,7 +124,7 @@ public class AnalizadorSemantico {
 			nodo.setProp("tipo", nodo.getHijo("E").getProp("tipo"));
 		} else if (prodN == 10) { // I -> |= E
 			Nodo E = nodo.getHijo("E");
-			Nodo op=nodo.getHijo("|E");
+			Nodo op=nodo.getHijo("|=");
 			
 			if(!E.getProp("tipo").equals("bool")) {
 				ErrorHandler.error(3, 3, op.getToken().getLinea(), "Tipo del valor recibido: "+E.getProp("tipo")+". Tipo esperado: bool.");
@@ -195,6 +195,10 @@ public class AnalizadorSemantico {
 					//TODO Linea hardcodeada
 					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
+				
+				if((Integer)EE.getProp("valor")==0) {
+					//TODO Error dividir cero
+				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") / (Integer) EE.getProp("valor"));
 				nodo.setProp("tipo", G.getProp("tipo"));
@@ -204,6 +208,9 @@ public class AnalizadorSemantico {
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
 					//TODO Linea hardcodeada
 					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") % (Integer) EE.getProp("valor"));
@@ -331,14 +338,14 @@ public class AnalizadorSemantico {
 			Nodo B = nodo.getHijo("B");
 			//Comprobar que el valor de B es de tipo Bool
 			if(!B.getProp("tipo").equals("bool")) {
-				System.out.println("Error, se espera un valor booleano. Se encontro "+B.getProp("tipo").toString());
+				ErrorHandler.error(3, 3, 0, "Tipo del valor recibido: "+B.getProp("tipo").toString()+". Esperado: bool.");
 			}
 			if(B.getProp("valor").equals(true)) {
 				nodo.setProp("valor", !((Boolean)B.getProp("valor")));
 			}else if(B.getProp("valor").equals(false)) {
 				nodo.setProp("valor", !((Boolean)B.getProp("valor")));
 			}else {
-				System.out.println("Error, se esperaba un valor booleano. Se encontro "+B.getProp("valor").toString());
+				ErrorHandler.error(3, 3, 0, "Tipo del valor recibido: "+B.getProp("valor").toString()+". Esperado: bool.");
 			}
 			nodo.setProp("tipo", B.getProp("tipo"));			
 		} else if (prodN == 16) { // G -> cte_int
@@ -350,14 +357,7 @@ public class AnalizadorSemantico {
 		} else if (prodN == 18) { // G -> cte_logica
 			nodo.setProp("valor", Boolean.parseBoolean(nodo.getHijo("cte_logica").getToken().getLexema()));
 			nodo.setProp("tipo", "bool");
-		} else if (prodN == 19) { // GG -> lambda
-			
-		}else if (prodN == 20) { //
-			
-		}else if (prodN == 21) {
-			
 		}else if (prodN == 22) {
-			// TODO Una vez pasado a ifs, renombrar de vuelta
 			Nodo EE1 = nodo.getHijo("EE");
 			Nodo G1 = nodo.getHijo("G");
 			switch (EE1.getProdN()) {
@@ -366,11 +366,10 @@ public class AnalizadorSemantico {
 				nodo.setProp("tipo", G1.getProp("tipo"));
 				break;
 			case 22: // EE -> + G EE
-				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
+				// Comprobar que los componentes son del mismo tipo.
 				if (!G1.getProp("tipo").equals(EE1.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G1.getProp("tipo") + " EE:" + (String) EE1.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G1.getProp("tipo")+" y "+EE1.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -388,8 +387,8 @@ public class AnalizadorSemantico {
 			case 23:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G1.getProp("tipo").equals(EE1.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G1.getProp("tipo") + " EE:" + (String) EE1.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G1.getProp("tipo")+" y "+EE1.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G1.getProp("valor") - (Integer) EE1.getProp("valor"));
@@ -399,8 +398,8 @@ public class AnalizadorSemantico {
 				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
 				// implicita de int->string? int->boolean?
 				if (!G1.getProp("tipo").equals(EE1.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G1.getProp("tipo") + " EE:" + (String) EE1.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G1.getProp("tipo")+" y "+EE1.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -410,14 +409,17 @@ public class AnalizadorSemantico {
 					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G1.getProp("valor") && (Boolean) EE1.getProp("valor"));
+					break;
+				default:
+					//TODO Tipo esperado int o boolean
 				}
 				nodo.setProp("tipo", G1.getProp("tipo"));
 				break;
 			case 26:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G1.getProp("tipo").equals(EE1.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G1.getProp("tipo") + " EE:" + (String) EE1.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G1.getProp("tipo")+" y "+EE1.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G1.getProp("valor") / (Integer) EE1.getProp("valor"));
@@ -426,8 +428,11 @@ public class AnalizadorSemantico {
 			case 27:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G1.getProp("tipo").equals(EE1.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G1.getProp("tipo") + " EE:" + (String) EE1.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G1.getProp("tipo")+" y "+EE1.getProp("tipo")+".");
+				}
+				if((Integer) EE1.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G1.getProp("valor") % (Integer) EE1.getProp("valor"));
@@ -444,10 +449,9 @@ public class AnalizadorSemantico {
 				break;
 			case 22: // EE -> + G EE
 				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -464,20 +468,20 @@ public class AnalizadorSemantico {
 				break;
 			case 23:
 				// Comprobar que los componentes son del mismo tipo.
+				//TODO comprobar que son tipo int
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") - (Integer) EE.getProp("valor"));
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 25:
-				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
+				// Comprobar que los componentes son del mismo tipo. 
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -487,14 +491,20 @@ public class AnalizadorSemantico {
 					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") && (Boolean) EE.getProp("valor"));
+					break;
+				default:
+					//TODO Error esperado bool o int
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 26:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") / (Integer) EE.getProp("valor"));
@@ -503,8 +513,11 @@ public class AnalizadorSemantico {
 			case 27:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") % (Integer) EE.getProp("valor"));
@@ -521,10 +534,9 @@ public class AnalizadorSemantico {
 				break;
 			case 22: // EE -> + G EE
 				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -541,20 +553,20 @@ public class AnalizadorSemantico {
 				break;
 			case 23:
 				// Comprobar que los componentes son del mismo tipo.
+				//TODO comprobar que son tipo int
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") - (Integer) EE.getProp("valor"));
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 25:
-				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
+				// Comprobar que los componentes son del mismo tipo. 
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -564,14 +576,20 @@ public class AnalizadorSemantico {
 					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") && (Boolean) EE.getProp("valor"));
+					break;
+				default:
+					//TODO Error esperado bool o int
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 26:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") / (Integer) EE.getProp("valor"));
@@ -580,8 +598,11 @@ public class AnalizadorSemantico {
 			case 27:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") % (Integer) EE.getProp("valor"));
@@ -598,10 +619,9 @@ public class AnalizadorSemantico {
 				break;
 			case 22: // EE -> + G EE
 				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -618,20 +638,20 @@ public class AnalizadorSemantico {
 				break;
 			case 23:
 				// Comprobar que los componentes son del mismo tipo.
+				//TODO comprobar que son tipo int
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") - (Integer) EE.getProp("valor"));
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 25:
-				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
+				// Comprobar que los componentes son del mismo tipo. 
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -641,14 +661,20 @@ public class AnalizadorSemantico {
 					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") && (Boolean) EE.getProp("valor"));
+					break;
+				default:
+					//TODO Error esperado bool o int
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 26:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") / (Integer) EE.getProp("valor"));
@@ -657,8 +683,11 @@ public class AnalizadorSemantico {
 			case 27:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") % (Integer) EE.getProp("valor"));
@@ -675,10 +704,9 @@ public class AnalizadorSemantico {
 				break;
 			case 22: // EE -> + G EE
 				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -695,20 +723,20 @@ public class AnalizadorSemantico {
 				break;
 			case 23:
 				// Comprobar que los componentes son del mismo tipo.
+				//TODO comprobar que son tipo int
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") - (Integer) EE.getProp("valor"));
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 25:
-				// Comprobar que los componentes son del mismo tipo. TODO Posible conversion
-				// implicita de int->string? int->boolean?
+				// Comprobar que los componentes son del mismo tipo. 
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
 				}
 
 				// Dependiendo del tipo tendremos una operacion u otra
@@ -718,14 +746,20 @@ public class AnalizadorSemantico {
 					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") && (Boolean) EE.getProp("valor"));
+					break;
+				default:
+					//TODO Error esperado bool o int
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
 			case 26:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") / (Integer) EE.getProp("valor"));
@@ -734,8 +768,11 @@ public class AnalizadorSemantico {
 			case 27:
 				// Comprobar que los componentes son del mismo tipo.
 				if (!G.getProp("tipo").equals(EE.getProp("tipo"))) {
-					System.out.println("Error, deben ser valores del mismo tipo. Encontrado G:"
-							+ (String) G.getProp("tipo") + " EE:" + (String) EE.getProp("tipo"));
+					//TODO Linea hardcodeada
+					ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+G.getProp("tipo")+" y "+EE.getProp("tipo")+".");
+				}
+				if((Integer) EE.getProp("valor")==0) {
+					//TODO Error dividir por cero
 				}
 
 				nodo.setProp("valor", (Integer) G.getProp("valor") % (Integer) EE.getProp("valor"));
@@ -778,8 +815,7 @@ public class AnalizadorSemantico {
 					nodo.setProp("valor",res);
 				}
 			}else {
-				System.out.println("Error. Tipos no coinciden.");
-				hayError=true;
+				ErrorHandler.error(3, 4, 0, "Tipos del valores recibidos: "+E.getProp("tipo")+" y "+XX.getProp("tipo")+".");
 			}
 		}else if(prodN==29) {//XX-> == E
 			Nodo E = nodo.getHijo("E");
@@ -838,7 +874,7 @@ public class AnalizadorSemantico {
 		    	//Si funcion no existe en tsActual, la inicializamos
 		    	tsActiva.addSimbolo((String) nodo.getProp("id"), new Simbolo("function",(String)nodo.getProp("id"),nodo,tsActiva));
 		    }else {
-		    	System.out.println("Error, funcion ya esta declara en este ambito.");
+		    	ErrorHandler.error(3, 2, nodo.getHijo("id").getToken().getLinea(), "Identificador: "+nodo.getHijo("id").getToken().getLexema()+".");
 		    }
 		    
 		    
@@ -849,7 +885,6 @@ public class AnalizadorSemantico {
 			Nodo A = nodo.getPadre().getHijo("A");
 			Nodo C = nodo.getPadre().getHijo("C");
 			
-			//A.setPropRecursive("$$initFunc$$", null);
 			C.setPropRecursive("$$initFunc$$", null);
 		}else if (prodN == 37) { // H-> void
 			nodo.setProp("tipoRetorno", "void");
@@ -925,8 +960,7 @@ public class AnalizadorSemantico {
 		    Nodo M = nodo.getHijo("M");
 		    
 			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
-				System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no definida.");
-				hayError=true;
+				ErrorHandler.error(3, 5, id.getToken().getLinea(), "Identificador: "+id.getToken().getLexema()+".");
 			}else{
 				String tipo;
 				Object valor=null;
@@ -936,8 +970,7 @@ public class AnalizadorSemantico {
 						if(M.hasProp("operacion") && M.getProp("operacion").equals("|=")) {
 							Simbolo s = tsActiva.getSimbolo(id.getToken().getLexema());
 							if(!s.getTipo().equals("bool")) {
-								System.out.println("Error, se esperaba tipo bool. Encontrado " + (String) s.getTipo()+ ".");
-								hayError=true;
+								ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+s.getTipo()+". Esperado: bool.");
 							}else {
 								valor = ((Boolean)s.getValor())||((Boolean)M.getProp("valor"));
 							}
@@ -956,9 +989,7 @@ public class AnalizadorSemantico {
 							nodo.setProp("tipo", tipo);
 							nodo.setProp("valor", ((Integer)valor)-1);
 						}else {
-							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
-							nodo.setProp("tipo", tipo);
-							nodo.setProp("valor", valor);
+							ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+tipo+". Esperado: int.");
 						}
 						tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
 						break;
@@ -969,9 +1000,7 @@ public class AnalizadorSemantico {
 							nodo.setProp("tipo", tipo);
 							nodo.setProp("valor", ((Integer)valor)+1);
 						}else {
-							System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador ++ restringido a variables de tipo int.");
-							nodo.setProp("tipo", tipo);
-							nodo.setProp("valor", valor);
+							ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+tipo+". Esperado: int.");
 						}
 						tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
 						break;
@@ -982,14 +1011,13 @@ public class AnalizadorSemantico {
 							Nodo definicionFuncion=(Nodo) tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
 							Map<Integer,Nodo> argumentosDef = (Map<Integer, Nodo>) definicionFuncion.getProp("argsDef");
 							if(argumentosDef.size()!=args.size()) {
-								//ERROR, numero de argumentos no coincide
-								hayError=true;
+								ErrorHandler.error(3, 6, id.getToken().getLinea(), "Numero de argumentos recibido: "+args.size()+". Esperado: "+argumentosDef.size()+".");
 							}else{
 								boolean tipoArgumentoError=false;
 								for(int i=0;i<argumentosDef.size() && !tipoArgumentoError;i++) {
 									if(!argumentosDef.get(i).getProp("tipo").equals(args.get(i).getProp("tipo"))) {
-										tipoArgumentoError=true;
-										//ERROR, el tipo del parametro i no coicide con la definicion
+										ErrorHandler.error(3, 7, id.getToken().getLinea(), "Tipo del argumento recibido: "+args.get(i).getProp("tipo")+". "
+												+ "Esperado: "+argumentosDef.get(i).getProp("tipo")+". Nombre del argumento: "+argumentosDef.get(i).getProp("id").toString()+".");
 									}
 								}
 								if(!tipoArgumentoError) {
@@ -1019,8 +1047,7 @@ public class AnalizadorSemantico {
 									nodo.setProp("valor", tsActiva.getSimbolo("$$return$$").getValor());
 									tsActiva.removeSimbolo("$$return$$");
 								}else {
-									//ERROR, algo petó
-									hayError=true;
+									ErrorHandler.error(3, 0, id.getToken().getLinea(),"");
 								}
 							}
 						}
@@ -1033,9 +1060,10 @@ public class AnalizadorSemantico {
 		    Nodo R = nodo.getHijo("R");
 		    nodo.setProp("tipoRetorno",R.getProp("tipo"));
 		    nodo.setProp("valor",R.getProp("valor"));
-		    //TODO Como saco el retorno del scope que toca.
+
 		    if(tsActiva.getTablaPadre()!=null) {
 		    	TablaSimbolos tablaPadre = tsActiva.getTablaPadre();
+		    	if(tablaPadre.getScope().equals("tablaFor")||tablaPadre.getScope().equals("innerFor"))tablaPadre=tablaPadre.getTablaPadre();
 		    	tablaPadre.addSimbolo("$$return$$", new Simbolo(nodo.getProp("tipoRetorno").toString(),"$$return$$",nodo.getProp("valor"),tablaPadre));
 		    	tsActiva=tablaPadre;
 		    	codigo="return";
@@ -1049,7 +1077,7 @@ public class AnalizadorSemantico {
 			Nodo id = nodo.getHijo("id");
 			
 			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
-				System.err.println("Variable "+id.getToken().getLexema()+" no existe.");
+				ErrorHandler.error(3, 5, id.getToken().getLinea(), "Identificador: "+id.getToken().getLexema()+".");
 			}else{
 				Simbolo s = tsActiva.getSimbolo(id.getToken().getLexema());
 				if(!s.getTipo().equals("string")) {
@@ -1081,7 +1109,7 @@ public class AnalizadorSemantico {
 		    	for(int i=0;i<listaNodosAFor.size();i++) {
 		    		calcularCodigo(i,listaNodosAFor);
 		    	}
-		    	tsActiva=tsActiva.getTablaPadre();
+		    	tsActiva=tsInnerFor.getTablaPadre();//?
 		    	
 		    	
 		    	for(int i=0;i<listaNodosPostFor.size();i++) {
@@ -1115,12 +1143,11 @@ public class AnalizadorSemantico {
 		}else if (prodN == 54) { //B -> id
 			Nodo id = nodo.getHijo("id");
 			if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
-				System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no definida.");
-				hayError=true;
+				ErrorHandler.error(3, 5, id.getToken().getLinea(), "Identificador: "+id.getToken().getLexema()+".");
 			}else{
 				Simbolo var = tsActiva.getSimbolo(id.getToken().getLexema());
 				if(!var.getTipo().equals("bool")) {
-					System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no es de tipo bool.");
+					ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+var.getTipo()+". Esperado: bool.");
 					hayError=true;
 				}else {
 					nodo.setProp("tipo",var.getTipo());
@@ -1132,8 +1159,7 @@ public class AnalizadorSemantico {
 				Nodo M = nodo.getHijo("M");
 				Nodo id = nodo.getHijo("id");
 				if(!tsActiva.existeSimbolo(id.getToken().getLexema(), false)) {
-					System.out.println("Error en linea "+id.getToken().getLinea()+". Variable "+id.getToken().getLexema()+" no definida.");
-					hayError=true;
+					ErrorHandler.error(3, 5, id.getToken().getLinea(), "Identificador: "+id.getToken().getLexema()+".");
 				}else{
 					String tipo;
 					Object valor=null;
@@ -1144,8 +1170,7 @@ public class AnalizadorSemantico {
 								if(M.hasProp("operacion") && M.getProp("operacion").equals("|=")) {
 									Simbolo s = tsActiva.getSimbolo(id.getToken().getLexema());
 									if(!s.getTipo().equals("bool")) {
-										System.out.println("Error, se esperaba tipo bool. Encontrado " + (String) s.getTipo()+ ".");
-										hayError=true;
+										ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+s.getTipo()+". Esperado: bool.");
 									}else {
 										valor = ((Boolean)s.getValor())||((Boolean)M.getProp("valor"));
 									}
@@ -1164,9 +1189,7 @@ public class AnalizadorSemantico {
 								nodo.setProp("tipo", tipo);
 								nodo.setProp("valor", ((Integer)valor)-1);
 							}else {
-								System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador -- restringido a variables de tipo int.");
-								nodo.setProp("tipo", tipo);
-								nodo.setProp("valor", valor);
+								ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+tipo+". Esperado: int.");
 							}
 							tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
 							break;
@@ -1177,9 +1200,7 @@ public class AnalizadorSemantico {
 								nodo.setProp("tipo", tipo);
 								nodo.setProp("valor", ((Integer)valor)+1);
 							}else {
-								System.out.println("Warn en linea "+id.getToken().getLinea()+". Operador ++ restringido a variables de tipo int.");
-								nodo.setProp("tipo", tipo);
-								nodo.setProp("valor", valor);
+								ErrorHandler.error(3, 3, id.getToken().getLinea(), "Tipo del valor recibido: "+tipo+". Esperado: int.");
 							}
 							tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
 							break;
@@ -1191,14 +1212,13 @@ public class AnalizadorSemantico {
 								Nodo definicionFuncion=(Nodo) tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
 								Map<Integer,Nodo> argumentosDef = (Map<Integer, Nodo>) definicionFuncion.getProp("argsDef");
 								if(argumentosDef.size()!=args.size()) {
-									//ERROR, numero de argumentos no coincide
-									hayError=true;
+									ErrorHandler.error(3, 6, id.getToken().getLinea(), "Numero de argumentos recibido: "+args.size()+". Esperado: "+argumentosDef.size()+".");
 								}else{
 									boolean tipoArgumentoError=false;
 									for(int i=0;i<argumentosDef.size() && !tipoArgumentoError;i++) {
 										if(!argumentosDef.get(i).getProp("tipo").equals(args.get(i).getProp("tipo"))) {
-											tipoArgumentoError=true;
-											//ERROR, el tipo del parametro i no coicide con la definicion
+											ErrorHandler.error(3, 7, id.getToken().getLinea(), "Tipo del argumento recibido: "+args.get(i).getProp("tipo")+". "
+													+ "Esperado: "+argumentosDef.get(i).getProp("tipo")+". Nombre del argumento: "+argumentosDef.get(i).getProp("id").toString()+".");
 										}
 									}
 									if(!tipoArgumentoError) {
@@ -1239,15 +1259,6 @@ public class AnalizadorSemantico {
 			}else { //Deshacer el comando en SS
 				Nodo M = nodo.getHijo("M");
 				Nodo id = nodo.getHijo("id");
-				
-//				tsActiva.removeSimbolo("$$iniciaFor$$");
-//				Integer valor=(Integer) tsActiva.getSimbolo(id.getToken().getLexema()).getValor();
-//				
-//				if(M.getProdN()==58) { //M -> ++
-//					tsActiva.getSimbolo(id.getToken().getLexema()).setValor(valor--);
-//				}else if(M.getProdN()==59) { //M -> --
-//					tsActiva.getSimbolo(id.getToken().getLexema()).setValor(valor++);
-//				}
 			}
 		}else if (prodN == 56) { //S -> print ( X )
 			if(!tsActiva.existeSimbolo("$$iniciaFor$$", true)) {
@@ -1255,8 +1266,6 @@ public class AnalizadorSemantico {
 			    nodo.setProp("tipo", X.getProp("tipo"));
 			    nodo.setProp("valor", X.getProp("valor"));
 			    System.out.println(nodo.getProp("valor").toString());
-			}else {
-//				tsActiva.removeSimbolo("$$iniciaFor$$");
 			}
 		}else if(prodN==60){
 			Nodo I = nodo.getHijo("I");
@@ -1305,8 +1314,9 @@ public class AnalizadorSemantico {
 			Map<Integer,Nodo> args = (Map<Integer,Nodo>)RR.getProp("args");
 			args.put(args.size(), E);
 			nodo.setProp("args", args);
-		}else {
-			//TODO prodN fuera de rango
+		}else if(prodN==-1){
+			//Recibimos un terminal. No hacer nada.
+			//TODO maybe ir actualizando linea actual con este caracter, para cuando no tenga otra opcion coger la linea actual de aqui
 		}
 		return codigo;
 	}
