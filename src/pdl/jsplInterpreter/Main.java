@@ -34,6 +34,7 @@ public class Main {
 		Set<String> casosPruebaValidos=new HashSet<String>();
 		casosPruebaValidos.add("pruebaGeneral");
 		casosPruebaValidos.add("correcto1");
+		casosPruebaValidos.add("correcto2");
 		
 		System.out.println("Seleccione el caso de prueba:");
 		System.out.println("-> pruebaGeneral");

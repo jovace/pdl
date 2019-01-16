@@ -155,9 +155,11 @@ public class AnalizadorSemantico {
 					nodo.setProp("valor", (Integer) G.getProp("valor") + (Integer) EE.getProp("valor"));
 					break;
 				case "string":
-					nodo.setProp("valor", (String) G.getProp("valor") + "" + (Integer) EE.getProp("valor"));
+					nodo.setProp("valor", (String) G.getProp("valor") + "" + (String) EE.getProp("valor"));
+					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") || (Boolean) EE.getProp("valor"));
+					break;
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
@@ -378,9 +380,11 @@ public class AnalizadorSemantico {
 					nodo.setProp("valor", (Integer) G1.getProp("valor") + (Integer) EE1.getProp("valor"));
 					break;
 				case "string":
-					nodo.setProp("valor", (String) G1.getProp("valor") + "" + (Integer) EE1.getProp("valor"));
+					nodo.setProp("valor", (String) G1.getProp("valor") + "" + (String) EE1.getProp("valor"));
+					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G1.getProp("valor") || (Boolean) EE1.getProp("valor"));
+					break;
 				}
 				nodo.setProp("tipo", G1.getProp("tipo"));
 				break;
@@ -460,9 +464,11 @@ public class AnalizadorSemantico {
 					nodo.setProp("valor", (Integer) G.getProp("valor") + (Integer) EE.getProp("valor"));
 					break;
 				case "string":
-					nodo.setProp("valor", (String) G.getProp("valor") + "" + (Integer) EE.getProp("valor"));
+					nodo.setProp("valor", (String) G.getProp("valor") + "" + (String) EE.getProp("valor"));
+					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") || (Boolean) EE.getProp("valor"));
+					break;
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
@@ -545,9 +551,11 @@ public class AnalizadorSemantico {
 					nodo.setProp("valor", (Integer) G.getProp("valor") + (Integer) EE.getProp("valor"));
 					break;
 				case "string":
-					nodo.setProp("valor", (String) G.getProp("valor") + "" + (Integer) EE.getProp("valor"));
+					nodo.setProp("valor", (String) G.getProp("valor") + "" + (String) EE.getProp("valor"));
+					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") || (Boolean) EE.getProp("valor"));
+					break;
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
@@ -630,9 +638,11 @@ public class AnalizadorSemantico {
 					nodo.setProp("valor", (Integer) G.getProp("valor") + (Integer) EE.getProp("valor"));
 					break;
 				case "string":
-					nodo.setProp("valor", (String) G.getProp("valor") + "" + (Integer) EE.getProp("valor"));
+					nodo.setProp("valor", (String) G.getProp("valor") + "" + (String) EE.getProp("valor"));
+					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") || (Boolean) EE.getProp("valor"));
+					break;
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
@@ -715,9 +725,11 @@ public class AnalizadorSemantico {
 					nodo.setProp("valor", (Integer) G.getProp("valor") + (Integer) EE.getProp("valor"));
 					break;
 				case "string":
-					nodo.setProp("valor", (String) G.getProp("valor") + "" + (Integer) EE.getProp("valor"));
+					nodo.setProp("valor", (String) G.getProp("valor") + "" + (String) EE.getProp("valor"));
+					break;
 				case "bool":
 					nodo.setProp("valor", (Boolean) G.getProp("valor") || (Boolean) EE.getProp("valor"));
+					break;
 				}
 				nodo.setProp("tipo", G.getProp("tipo"));
 				break;
@@ -908,7 +920,13 @@ public class AnalizadorSemantico {
 			this.tablasSimbolos.put(tablaN, tsDefFunc);
 			tablaN++;
 			for(int i=0;i<argsDef.size();i++) {
-				tsDefFunc.addSimbolo(argsDef.get(i).getProp("id").toString(), new Simbolo(argsDef.get(i).getProp("tipo").toString(),argsDef.get(i).getProp("id").toString(),0,tsDefFunc));
+				if(argsDef.get(i).getProp("tipo").equals("int")) {
+					tsDefFunc.addSimbolo(argsDef.get(i).getProp("id").toString(), new Simbolo(argsDef.get(i).getProp("tipo").toString(),argsDef.get(i).getProp("id").toString(),0,tsDefFunc));
+				}else if(argsDef.get(i).getProp("tipo").equals("bool")) {
+					tsDefFunc.addSimbolo(argsDef.get(i).getProp("id").toString(), new Simbolo(argsDef.get(i).getProp("tipo").toString(),argsDef.get(i).getProp("id").toString(),false,tsDefFunc));
+				}else if(argsDef.get(i).getProp("tipo").equals("string")) {
+					tsDefFunc.addSimbolo(argsDef.get(i).getProp("id").toString(), new Simbolo(argsDef.get(i).getProp("tipo").toString(),argsDef.get(i).getProp("id").toString(),"",tsDefFunc));
+				}
 			}
 			if(tsDefFunc.getTablaPadre()==tsActiva) {
 				tsActiva=tsDefFunc;

@@ -1,0 +1,95 @@
+main # 0 : 
+* LEXEMA : 'oo' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 3
++ EtiqFuncion : oo
++ IdParam2 : y
++ TipoParam2 : bool
++ TipoParam1 : bool
++ IdParam1 : x
++ TipoRetorno : bool
++ NumParam : 2
+------------------- 
+* LEXEMA : 'yy' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 3
++ EtiqFuncion : yy
++ IdParam2 : y
++ TipoParam2 : bool
++ TipoParam1 : bool
++ IdParam1 : x
++ TipoRetorno : bool
++ NumParam : 2
+------------------- 
+* LEXEMA : 'saludar' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 12
++ EtiqFuncion : saludar
++ TipoParam1 : string
++ IdParam1 : name
++ TipoRetorno : string
++ NumParam : 1
+------------------- 
+* LEXEMA : 'varTrue' 
+ATRIBUTOS : 
++ Tipo : 'bool'
++ Despl : 0
+------------------- 
+* LEXEMA : 'varFalse' 
+ATRIBUTOS : 
++ Tipo : 'bool'
++ Despl : 1
+------------------- 
+* LEXEMA : 'oIgual' 
+ATRIBUTOS : 
++ Tipo : 'bool'
++ Despl : 2
+------------------- 
+* LEXEMA : 'nombre' 
+ATRIBUTOS : 
++ Tipo : 'string'
++ Despl : 12
+------------------- 
+
+
+
+FUNC oo # 1 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'bool'
++ Despl : 1
+------------------- 
+* LEXEMA : 'y' 
+ATRIBUTOS : 
++ Tipo : 'bool'
++ Despl : 0
+------------------- 
+
+
+
+FUNC yy # 2 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'bool'
++ Despl : 1
+------------------- 
+* LEXEMA : 'y' 
+ATRIBUTOS : 
++ Tipo : 'bool'
++ Despl : 0
+------------------- 
+
+
+
+FUNC saludar # 3 : 
+* LEXEMA : 'name' 
+ATRIBUTOS : 
++ Tipo : 'string'
++ Despl : 0
+------------------- 
+
+
+
