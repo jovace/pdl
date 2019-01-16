@@ -32,13 +32,12 @@ EE -> * G EE
 EE -> / G EE
 EE -> % G EE
 X -> E XX
+XX -> == E
+EE -> || G EE
 XX -> < E
 XX -> > E
 XX -> >= E
 XX -> <= E
-XX -> == E
-
-
 F -> function H id ( A ) { C }
 H -> T
 H -> lambda
@@ -64,18 +63,15 @@ SS -> print ( X )
 XX -> lambda
 M -> ++
 M -> --
-M -> I
-M -> L  
+M -> I 
 GG -> L
+EE -> && G EE
 S -> L ;
 L -> ( AR )
 AR -> E RR
 AR -> lambda
 RR -> , RRR
 RR -> lambda
+M -> L 
 RRR -> E RR
-EE -> || G EE
-EE -> && G EE
-
-
 } 
