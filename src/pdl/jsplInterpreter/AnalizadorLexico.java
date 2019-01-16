@@ -265,6 +265,8 @@ public class AnalizadorLexico{
 					resultado=new Token("bool");
 				}else if(comp.equals("for")) {
 					resultado=new Token("for");
+				}else if(comp.equals("if")) {
+					resultado=new Token("if");
 				}else if(comp.equals("true")) {
 					resultado=new Token(comp,true);
 				}else if(comp.equals("false")) {

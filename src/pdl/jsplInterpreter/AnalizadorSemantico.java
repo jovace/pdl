@@ -63,6 +63,10 @@ public class AnalizadorSemantico {
 			nodo.removeProp("$$initFunc$$");
 			return "";
 		}
+		if(nodo.hasProp("$$initIf$$")) {
+			nodo.removeProp("$$initIf$$");
+			return "";
+		}
 		
 		
 		
@@ -801,6 +805,9 @@ public class AnalizadorSemantico {
 				
 				C.setPropRecursive("$$initFor$$", null);
 				SS.setPropRecursive("$$initFor$$", null);
+			}else if(nodo.getPadre().getProdN()==71) {
+				Nodo SS = nodo.getPadre().getHijo("SS");
+				SS.setPropRecursive("$$initIf$$", null);
 			}
 			
 
@@ -1112,15 +1119,13 @@ public class AnalizadorSemantico {
 		    Nodo SS = nodo.getHijo("SS");
 		    Nodo C = nodo.getHijo("C");
 		    
-		    Arbol afor = new Arbol(C);
-	    	ArrayList<Nodo> listaNodosAFor = afor.getNodosPostorden();
-	    	
-	    	Arbol apostfor = new Arbol(SS);
-	    	ArrayList<Nodo> listaNodosPostFor = apostfor.getNodosPostorden();
 		    
 	    	int tablaNInnerFor = tablaN;
 			tablaN++;
 		    while((Boolean) X.getProp("valor")) {
+		    	Arbol afor = new Arbol(C);
+		    	ArrayList<Nodo> listaNodosAFor = afor.getNodosPostorden();
+		    	
 		    	TablaSimbolos tsInnerFor = new TablaSimbolos("innerFor",tsActiva,tablaNInnerFor);
 		    	this.tablasSimbolos.put(tablaNInnerFor, tsInnerFor);
 		    	tsActiva=tsInnerFor;
@@ -1129,6 +1134,8 @@ public class AnalizadorSemantico {
 		    	}
 		    	tsActiva=tsInnerFor.getTablaPadre();//?
 		    	
+		    	Arbol apostfor = new Arbol(SS);
+		    	ArrayList<Nodo> listaNodosPostFor = apostfor.getNodosPostorden();
 		    	
 		    	for(int i=0;i<listaNodosPostFor.size();i++) {
 		    		calcularCodigo(i,listaNodosPostFor);
@@ -1332,6 +1339,18 @@ public class AnalizadorSemantico {
 			Map<Integer,Nodo> args = (Map<Integer,Nodo>)RR.getProp("args");
 			args.put(args.size(), E);
 			nodo.setProp("args", args);
+		}else if (prodN == 71) { //S -> if ( X ) SS ;
+		    Nodo X = nodo.getHijo("X");
+		    Nodo SS = nodo.getHijo("SS");
+		    
+		    if((Boolean) X.getProp("valor")) {
+		    	Arbol aif = new Arbol(SS);
+		    	ArrayList<Nodo> listaNodosIf = aif.getNodosPostorden();
+		    	
+		    	for(int i=0;i<listaNodosIf.size();i++) {
+		    		calcularCodigo(i,listaNodosIf);
+		    	}	
+		    }
 		}else if(prodN==-1){
 			//Recibimos un terminal. No hacer nada.
 			//TODO maybe ir actualizando linea actual con este caracter, para cuando no tenga otra opcion coger la linea actual de aqui

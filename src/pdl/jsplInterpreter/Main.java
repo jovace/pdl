@@ -35,6 +35,8 @@ public class Main {
 		casosPruebaValidos.add("pruebaGeneral");
 		casosPruebaValidos.add("correcto1");
 		casosPruebaValidos.add("correcto2");
+		casosPruebaValidos.add("correcto3");
+		casosPruebaValidos.add("correcto4");
 		
 		System.out.println("Seleccione el caso de prueba:");
 		System.out.println("-> pruebaGeneral");

@@ -60,6 +60,7 @@ public class AnalizadorSintactico {
 		terminales.add("false");//
 		terminales.add("true");//
 		terminales.add("for");//
+		terminales.add("if");
 		terminales.add("char");//
 		terminales.add("cte_int");
 		terminales.add("cte_cadena");
@@ -385,6 +386,7 @@ public class AnalizadorSintactico {
 		filaJ.put("$", produccionJdol);
 		filaJ.put("for", produccionJSJ);
 		filaJ.put("id", produccionJSJ);
+		filaJ.put("if", produccionJSJ);
 		filaJ.put("print", produccionJSJ);
 		filaJ.put("prompt", produccionJSJ);
 		filaJ.put("return", produccionJSJ);
@@ -444,6 +446,7 @@ public class AnalizadorSintactico {
 		Map<String, ArrayList<String>> filaS = new HashMap<>();
 		ArrayList<String> produccionSforpDpuntocomaXpuntocomaetc = new ArrayList<>();
 		ArrayList<String> produccionSidM = new ArrayList<>();
+		ArrayList<String> produccionSif = new ArrayList<>();
 		ArrayList<String> produccionSprintpxp = new ArrayList<>();
 		ArrayList<String> produccionSpromtpidp = new ArrayList<>();
 		ArrayList<String> produccionSreturnR = new ArrayList<>();
@@ -482,7 +485,15 @@ public class AnalizadorSintactico {
 		produccionSidM.add("id");
 		produccionSidM.add("M");
 		produccionSidM.add(";");
+		produccionSif.add("70");
+		produccionSif.add("if");
+		produccionSif.add("(");
+		produccionSif.add("X");
+		produccionSif.add(")");
+		produccionSif.add("SS");
+		produccionSif.add(";");
 		filaS.put("for", produccionSforpDpuntocomaXpuntocomaetc);
+		filaS.put("if", produccionSif);
 		filaS.put("id", produccionSidM);
 		filaS.put("(", produccionSLpuntocoma);
 		filaS.put("print", produccionSprintpxp);
