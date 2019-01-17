@@ -103,7 +103,17 @@
 <;, >
 <print, >
 <(, >
+<cte_cadena, Resultado esperado es 3>
+<), >
+<;, >
+<print, >
+<(, >
 <id, e>
+<), >
+<;, >
+<print, >
+<(, >
+<cte_cadena, Resultado esperado es false>
 <), >
 <;, >
 <print, >
@@ -115,9 +125,19 @@
 <;, >
 <print, >
 <(, >
+<cte_cadena, Resultado esperado es true>
+<), >
+<;, >
+<print, >
+<(, >
 <id, e>
 <<=, >
 <cte_int, 3>
+<), >
+<;, >
+<print, >
+<(, >
+<cte_cadena, Resultado esperado es true>
 <), >
 <;, >
 <print, >
@@ -129,9 +149,19 @@
 <;, >
 <print, >
 <(, >
+<cte_cadena, Resultado esperado es true>
+<), >
+<;, >
+<print, >
+<(, >
 <id, e>
 <>=, >
 <cte_int, 3>
+<), >
+<;, >
+<print, >
+<(, >
+<cte_cadena, Resultado esperado es false>
 <), >
 <;, >
 <print, >
@@ -154,12 +184,22 @@
 <;, >
 <print, >
 <(, >
+<cte_cadena, Resultado esperado es 3>
+<), >
+<;, >
+<print, >
+<(, >
 <id, div>
 <(, >
 <id, e>
 <,, >
 <id, f>
 <), >
+<), >
+<;, >
+<print, >
+<(, >
+<cte_cadena, Resultado esperado es 8>
 <), >
 <;, >
 <print, >
