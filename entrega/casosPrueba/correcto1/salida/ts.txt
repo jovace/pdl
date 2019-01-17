@@ -1,0 +1,138 @@
+main # 0 : 
+* LEXEMA : 'suma' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 8
++ EtiqFuncion : suma
++ IdParam2 : y
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : x
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+* LEXEMA : 'div' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 8
++ EtiqFuncion : div
++ IdParam2 : y
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : x
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+* LEXEMA : 'a' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+* LEXEMA : 'b' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'c' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 4
+------------------- 
+* LEXEMA : 'mult' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 8
++ EtiqFuncion : mult
++ IdParam2 : y
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : x
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+* LEXEMA : 'd' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 6
+------------------- 
+* LEXEMA : 'e' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 10
+------------------- 
+* LEXEMA : 'f' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 14
+------------------- 
+* LEXEMA : 'resta' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 8
++ EtiqFuncion : resta
++ IdParam2 : y
++ TipoParam2 : int
++ TipoParam1 : int
++ IdParam1 : x
++ TipoRetorno : int
++ NumParam : 2
+------------------- 
+
+
+
+FUNC suma # 1 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'y' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+FUNC resta # 2 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'y' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+FUNC mult # 3 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'y' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+FUNC div # 4 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 2
+------------------- 
+* LEXEMA : 'y' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+

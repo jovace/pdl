@@ -1,0 +1,42 @@
+main # 0 : 
+* LEXEMA : 'fibonacci' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 0
++ EtiqFuncion : fibonacci
++ TipoParam1 : int
++ IdParam1 : x
++ TipoRetorno : int
++ NumParam : 1
+------------------- 
+* LEXEMA : 'collatz' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 6
++ EtiqFuncion : collatz
++ TipoParam1 : int
++ IdParam1 : x
++ TipoRetorno : int
++ NumParam : 1
+------------------- 
+
+
+
+FUNC fibonacci # 1 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+
+FUNC collatz # 2 : 
+* LEXEMA : 'x' 
+ATRIBUTOS : 
++ Tipo : 'int'
++ Despl : 0
+------------------- 
+
+
+

@@ -1,0 +1,8 @@
+PRACTICA PROCESADORES DE LENGUAJES
+CONVOCATORIA ENERO 2019
+
+Autores:
+-> Alfonso Ventosa Bonilla         02588399W        x15m027		alfonso.ventosab@alumnos.upm.es
+-> Fernando Magdalena Laorden      71735296K        x15m018		fernando.magdalena.laorden@alumnos.upm.es
+-> Jorge Vázquez Acevedo           02308940Q        y16m023		jorge.vazquez.acevedo@alumnos.upm.es
+

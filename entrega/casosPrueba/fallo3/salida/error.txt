@@ -1,0 +1,4 @@
+Error sintactico: token inesperado.
+Informacion adicional: Recibido: cte_int. Se esperaba: [print, var, for, (, id, if, prompt, }, return].
+Linea 1.
+Codigo 2x0

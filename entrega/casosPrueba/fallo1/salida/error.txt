@@ -1,0 +1,4 @@
+Error lexico: caracter no reconocido.
+Informacion adicional: ^
+Linea 1.
+Codigo 1x1

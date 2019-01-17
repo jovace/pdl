@@ -1,0 +1,1 @@
+for(int x= 1^1;i+1;i<0){ int x= y; x=x+y;print x;}
