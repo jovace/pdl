@@ -313,7 +313,11 @@ public class AnalizadorLexico{
 			cadena+=c;
 			estadoActual=9;
 		}else {
+			try {
 			resultado=new Token(Integer.parseInt(cadena));
+			}catch(NumberFormatException ex) {
+				ErrorHandler.error(1,0,lineaActual,"Valor entero fuera de rango: "+cadena);
+			}
 			resultado.setConsumeCaracter(false);
 			cadena="";
 			estadoActual=0;

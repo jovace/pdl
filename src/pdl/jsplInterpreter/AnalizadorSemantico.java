@@ -1230,7 +1230,7 @@ public class AnalizadorSemantico {
 							tsActiva.getSimbolo(id.getToken().getLexema()).setValor(nodo.getProp("valor"));
 							break;
 						case 69: // M -> L
-							Nodo GG = nodo.getHijo("L");
+							Nodo GG = nodo.getHijo("M").getHijo("L");
 							
 							Map<Integer,Nodo> args = (Map<Integer, Nodo>) GG.getProp("args");
 							if(GG.hasProp("function") && (Boolean)GG.getProp("function")) {

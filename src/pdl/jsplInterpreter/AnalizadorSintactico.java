@@ -161,6 +161,7 @@ public class AnalizadorSintactico {
 		produccionCSC.add("S");
 		produccionCSC.add("C");
 		filaC.put("for", produccionCSC);
+		filaC.put("if", produccionCSC);
 		filaC.put("id", produccionCSC);
 		filaC.put("print", produccionCSC);
 		filaC.put("prompt", produccionCSC);
