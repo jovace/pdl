@@ -1,7 +1,7 @@
 //// Comentario de inicio de fichero 
 
 NoTerminales = { J D T I E G GG EE X XX F H A AA C S R B SS L AR RR M RRR } 
-Terminales = { var id int string $ = ( ) ! bool + ++ - -- < > >= <= == { } function return ; , * |= / % && || print prompt false true for char cte_int cte_cadena cte_logica } 
+Terminales = { var id int string $ = ( ) ! bool + ++ - -- < > >= <= == { } function return ; , * |= / % && || print prompt false true for char cte_int cte_cadena cte_logica if } 
 Axioma = J 
 Producciones = { 
 J -> D J  
@@ -74,4 +74,5 @@ RR -> , RRR
 RR -> lambda
 M -> L 
 RRR -> E RR
+S -> if ( X ) SS ;
 } 

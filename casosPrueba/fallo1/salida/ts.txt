@@ -1,0 +1,16 @@
+main # 0 : 
+* LEXEMA : 'sumaUno' 
+ATRIBUTOS : 
++ Tipo : 'function'
++ Despl : 0
++ EtiqFuncion : sumaUno
++ TipoRetorno : void
++ NumParam : 0
+------------------- 
+
+
+
+FUNC sumaUno # 1 : 
+
+
+

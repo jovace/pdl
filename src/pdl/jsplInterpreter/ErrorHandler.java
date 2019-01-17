@@ -37,6 +37,4 @@ public final class ErrorHandler {
         staticMap.put("3x7", "Error semantico: el argumento recibido no es del tipo esperado.\nInformacion adicional: %s\nLinea %d.\nCodigo %s");
         errores = Collections.unmodifiableMap(staticMap);
     }
-	
-	
 }
