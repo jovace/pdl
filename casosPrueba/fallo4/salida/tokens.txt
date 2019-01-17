@@ -1,0 +1,6 @@
+<var, >
+<int, >
+<id, x>
+<=, >
+<cte_logica, false>
+<;, >

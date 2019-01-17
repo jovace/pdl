@@ -20,10 +20,6 @@ public class Main {
 	static AnalizadorLexico lex;
 	
 	public static void main(String[] args){
-//		AnalizadorSintactico asem = new AnalizadorSintactico(null);
-//		asem.getProducciones();
-//		System.exit(0);
-		
 		String pathCodigo="entrada/codigo.js";
 		String pathTokens="salida/tokens.txt";
 		String pathTS="salida/ts.txt";
@@ -39,6 +35,10 @@ public class Main {
 		casosPruebaValidos.add("correcto4");
 		casosPruebaValidos.add("correcto5");
 		casosPruebaValidos.add("fallo1");
+		casosPruebaValidos.add("fallo2");
+		casosPruebaValidos.add("fallo3");
+		casosPruebaValidos.add("fallo4");
+		casosPruebaValidos.add("fallo5");
 		
 		System.out.println("Seleccione el caso de prueba:");
 		System.out.println("-> pruebaGeneral");

@@ -1,0 +1,4 @@
+Error semantico: numero de argumentos no es el esperado.
+Informacion adicional: Numero de argumentos recibido: 1. Esperado: 2.
+Linea 2.
+Codigo 3x6

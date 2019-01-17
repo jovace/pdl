@@ -1,0 +1,4 @@
+Error sintactico: token inesperado.
+Informacion adicional: Recibido: int. Se esperaba: (.
+Linea 1.
+Codigo 2x0

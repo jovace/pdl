@@ -1,0 +1,4 @@
+Error semantico: el valor recibido no es del tipo declarado.
+Informacion adicional: Tipo del valor recibido: bool. Tipo declarado: int.
+Linea 1.
+Codigo 3x1
